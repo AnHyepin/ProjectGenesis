@@ -1,4 +1,5 @@
-package org.green.backend.dto;
+package org.green.frontend.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
