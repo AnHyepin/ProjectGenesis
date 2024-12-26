@@ -12,13 +12,12 @@ public class TestController {
         return "12345512313213ccccccccc1231zzzzzzzzzzzzzzzzzdddddddddddddddd2312312355";
     }
 
-    @PostMapping("/test2")
-    public String postTest(@RequestBody TestDto request) {
-        System.out.println("테스트@@@@@@@@@@@@@@@@@@@@@@@ " + request.toString());
+    @GetMapping("/test2")
+    public String postTest(@RequestParam("id")String id) {
         return "success";
     }
 
-    @PutMapping("/test3")
+    @PostMapping("/test3")
     public String putTest(@RequestBody TestDto request) {
         System.out.println("테스트@@@@@@@@@@@@@@@@@@@@@@@ " + request.toString());
 
