@@ -28,6 +28,7 @@ public class GlobalException extends ResponseEntityExceptionHandler {
     private List<StackTraceElement> extractStackTrace(Exception ex) {
         return stackTrace ? Arrays.asList(ex.getStackTrace()) : null;
     }
+
     @Override
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -50,6 +51,16 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         log.error("에러 ::: [AllException]", ex);
         return new ErrorResponse(extractStackTrace(ex), ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+    /*    @ExceptionHandler(DataIntegrityViolationException.class)
+        @ResponseStatus(HttpStatus.CONFLICT)
+        public final ErrorResponse handleDataIntegrityViolation(DataIntegrityViolationException ex, WebRequest request) {
+            log.error("에러 ::: [중복값]", ex);
+            String message = "중복된 값이 존재합니다.";
+            return new ErrorResponse(extractStackTrace(ex), message, HttpStatus.CONFLICT);
+        }*/
+
 
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="3wh@dupal.site" uuid="f493a482-693a-4f34-9119-cd3897b607a4">
+    <data-source source="LOCAL" name="dupal.site" uuid="f493a482-693a-4f34-9119-cd3897b607a4">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
