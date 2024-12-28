@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.green.backend.repository.dao.jeyeon.ApplicationDao">
+    <insert id="insertApplication">
+        INSERT INTO `tbl_applications` (
+            `username`,
+            `application_title`,
+            `start_date`,
+            `deadline_date`,
+            `application_code`,
+            `salary`,
+            `career_code`,
+            `position_code`,
+            `education_gbn_code`,
+            `employment_code`,
+            `working_area`,
+            `role_code`,
+            `content`,
+            `procedure_code`,
+            `delete_yn`,
+            `regist_dt`
+            )
+        VALUES (
+        'admin',
+        IFNULL(NULLIF(#{applicationRequestDto.applicationTitle}, ''), NULL),  -- 채용공고 제목
+        IFNULL(NULLIF(#{applicationRequestDto.startDate}, ''), NULL),         -- 공고 시작일
+        IFNULL(NULLIF(#{applicationRequestDto.deadlineDate}, ''), NULL),      -- 공고 마감일
+        #{applicationRequestDto.applicationCode},                             -- 채용 구분
+        #{applicationRequestDto.salary},                                      -- 연봉
+        IFNULL(NULLIF(#{applicationRequestDto.careerCode}, ''), NULL),        -- 경력
+        IFNULL(NULLIF(#{applicationRequestDto.positionCode}, ''), NULL),      -- 직책/직급
+        IFNULL(NULLIF(#{applicationRequestDto.educationGbnCode}, ''), NULL),  -- 학력
+        #{applicationRequestDto.employmentCode},                              -- 근무형태
+        IFNULL(NULLIF(#{applicationRequestDto.workingArea}, ''), NULL),       -- 근무지역
+        IFNULL(NULLIF(#{applicationRequestDto.roleCode}, ''), NULL),          -- 개발 직무
+        IFNULL(NULLIF(#{applicationRequestDto.content}, ''), NULL),           -- 모집부문
+        #{applicationRequestDto.procedureCode},                               -- 전형 절차
+        'N',                                                           -- 삭제 여부
+        NOW()                                                          -- 생성일
+        );
+    </insert>
+
+    <select id="selectLastApplicationNo">
+        SELECT MAX(application_no)
+        FROM tbl_applications
+        ORDER BY application_no desc
+    </select>
+</mapper>

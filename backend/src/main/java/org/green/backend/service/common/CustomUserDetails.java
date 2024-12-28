@@ -1,7 +1,5 @@
 package org.green.backend.service.common;
 
-import org.green.backend.entity.Company;
-import org.green.backend.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,8 +1,6 @@
 package org.green.backend.service.common;
 
 import lombok.RequiredArgsConstructor;
-import org.green.backend.entity.Company;
-import org.green.backend.entity.User;
 import org.green.backend.repository.jpa.hws.CompanyRepository;
 import org.green.backend.repository.jpa.hws.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

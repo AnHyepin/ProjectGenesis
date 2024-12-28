@@ -7,8 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.green.backend.entity.Company;
-import org.green.backend.entity.User;
 import org.green.backend.global.common.ApiResponse;
 import org.green.backend.global.common.ErrorResponse;
 import org.green.backend.service.common.CustomUserDetails;
