@@ -20,4 +20,5 @@ public class UserDto {
     private Address address;
     private LocalDate registDt;
     private Character deleteYn;
+
 }

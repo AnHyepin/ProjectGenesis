@@ -24,4 +24,5 @@ public class CompanyDto {
     private Integer sale;
     private String role;
     private Character deleteYn;
+
 }
