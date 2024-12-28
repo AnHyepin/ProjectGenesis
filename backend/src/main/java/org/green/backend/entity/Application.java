@@ -59,8 +59,8 @@ public class Application {
     @Column(name="content", columnDefinition="TEXT")
     private String content;                // 모집부문 및 상세내용
 
-    @Column(name = "`procedure`")
-    private Integer procedure;             // 1차(1), 2차(2), 3차(3)
+    @Column(name = "procedure_code")
+    private Integer procedureCode;             // 1차(1), 2차(2), 3차(3)
 
     @Column(name="delete_yn", nullable = false, columnDefinition="CHAR(1) DEFAULT 'N'")
     private String deleteYn;               // 삭제여부 (N: 미삭제, Y: 삭제)

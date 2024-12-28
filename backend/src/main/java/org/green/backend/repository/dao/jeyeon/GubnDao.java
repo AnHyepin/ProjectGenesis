@@ -20,4 +20,6 @@ public interface GubnDao {
     public List<GubnDto> getStack1thList();
 
     public List<GubnDto> getApplicationList();
+
+    public List<GubnDto> getProcedureList();
 }

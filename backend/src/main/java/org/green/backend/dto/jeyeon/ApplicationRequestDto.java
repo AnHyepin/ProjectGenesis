@@ -1,13 +1,16 @@
 package org.green.backend.dto.jeyeon;
 
+
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * 12-27 (작성자: 안제연)
+ * 12-28 (작성자: 안제연)
  * 이 클래스는 채용공고 Dto입니다.
  */
 @Data
-public class ApplicationDto {
+public class ApplicationRequestDto {
     private Long applicationNo;            // 채용공고 번호
     private String username;               // 사용자 고유 ID
     private String applicationTitle;       // 채용공고 제목
@@ -22,10 +25,9 @@ public class ApplicationDto {
     private String workingArea;            // 근무지역
     private String roleCode;               // 개발직무
     private String content;                // 모집부문 및 상세내용
-    private Integer procedure;             // 1차(1), 2차(2), 3차(3)
+    private Integer procedureCode;             // 1차(1), 2차(2), 3차(3)
     private String deleteYn;               // 삭제여부 (N: 미삭제, Y: 삭제)
     private String registDt;                // 생성일
     private String modiDt;                  // 수정일
-
-
+    private List<String> skillList;
 }

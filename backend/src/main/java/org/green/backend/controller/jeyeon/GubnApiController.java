@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 12-27 (작성자: 안제연)
+ * 이 클래스는 구분 RestController입니다.
+ */
 @RestController
 @RequestMapping("/api/gubn")
 public class GubnApiController {
@@ -60,5 +64,9 @@ public class GubnApiController {
         return applicationList;
     }
 
-
+    @GetMapping("/procedure")
+    public List<GubnDto> procedureList() {
+        List<GubnDto> procedureList = gubnService.getProcedureList();
+        return procedureList;
+    }
 }

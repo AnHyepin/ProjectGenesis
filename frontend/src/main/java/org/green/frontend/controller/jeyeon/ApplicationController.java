@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/application")
 public class ApplicationController {
 
-
     private final ApiRequestService apiService;
-
 
     @GetMapping("/regist")
     public String applicationRegist(Model model) {
@@ -30,6 +28,7 @@ public class ApplicationController {
         var stackResponse = apiService.fetchData("/api/gubn/stack");
         var stack1thResponse = apiService.fetchData("/api/gubn/stack1th");
         var applicationResponse = apiService.fetchData("/api/gubn/application");
+        var procedureResponse = apiService.fetchData("/api/gubn/procedure");
 
         /*System.out.println(applicationResponse.getBody());
           System.out.println(positionResponse);*/
@@ -41,6 +40,7 @@ public class ApplicationController {
         var stackList = stackResponse.getBody();
         var stack1thList = stack1thResponse.getBody();
         var applicationList = applicationResponse.getBody();
+        var procedureList = procedureResponse.getBody();
 
         model.addAttribute("careerList", careerList);
         model.addAttribute("positionList", positionList);
@@ -49,6 +49,7 @@ public class ApplicationController {
         model.addAttribute("stackList", stackList);
         model.addAttribute("stack1thList", stack1thList);
         model.addAttribute("applicationList", applicationList);
+        model.addAttribute("procedureList", procedureList);
 
         return "/jeyeon/application-regist";
     }

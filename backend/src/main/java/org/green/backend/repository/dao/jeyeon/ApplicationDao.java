@@ -1,6 +1,8 @@
 package org.green.backend.repository.dao.jeyeon;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 
 
 /**
@@ -9,5 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ApplicationDao {
-
+    public void insertApplication(@Param("applicationRequestDto") ApplicationRequestDto applicationRequestDto);
+    public int selectLastApplicationNo();
 }

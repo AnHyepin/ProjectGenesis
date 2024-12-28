@@ -6,9 +6,19 @@
 
 }
 
-span{
+.application span{
     color:red;
     padding-right: 5px;
+}
+
+.application button {
+    all: unset; /* 모든 기본 스타일을 제거 */
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    font: inherit; /* 폰트 스타일 상속 */
+    color: inherit; /* 텍스트 색상 상속 */
+    cursor: pointer; /* 클릭 가능하게 표시 */
 }
 
 .application .form-container {
@@ -40,6 +50,7 @@ span{
 
 .application .form-group input[type="text"],
 .application .form-group input[type="date"],
+.application .form-group input[type="number"],
 .application .form-group textarea,
 .application .form-group select {
     width: 100%;
@@ -53,6 +64,7 @@ span{
 
 .application .form-group input[type="text"]:focus,
 .application .form-group input[type="date"]:focus,
+.application .form-group input[type="number"]:focus,
 .application .form-group textarea:focus,
 .application .form-group select:focus {
     border-color: #F2BB16; /* 테두리 색상을 변경 */
@@ -67,10 +79,10 @@ span{
 .application .form-group .skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    /*gap: 10px;*/
 }
 
-.application .skill-tag {
+.application .skill-btn {
     padding: 8px 15px;  /* 텍스트 주위 여백 */
     margin: 5px;         /* 요소들 간 여백 */
     border: 1px solid #ddd;
@@ -86,17 +98,17 @@ span{
     min-width: 50px;       /* 최소 너비 설정 (필요시 조정) */
 }
 
-.application .skill-tag i {
+.application .skill-btn i {
     margin-right: 5px; /* 아이콘 오른쪽에 여유 공간 추가 */
 }
 
-.application .skill-tag.active {
+.application .skill-btn.active {
     background-color: #ffc107;
     border-color: #ffc107;
     color: #000000;
 }
 
-.application .btn {
+/*.application .btn {
     display: block;
     width: 30%;
     padding: 10px;
@@ -106,7 +118,7 @@ span{
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-}
+}*/
 
 .application .btn:hover {
     background-color: #e0a800;
@@ -129,4 +141,50 @@ span{
 
 .application .file-upload input {
     flex: 1;
+}
+
+.application .file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.application .file-upload input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    pointer-events: none; /* 텍스트 박스를 클릭할 수 없게 설정 */
+}
+
+.application .file-upload label,
+.application .btn {
+    margin-top: 3px;
+    display: block;
+    width: 30%;
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;        /* 글자 크기를 통일 */
+    font-weight: normal;    /* 글자 굵기를 통일 */
+    cursor: pointer;
+    text-align: center;     /* 텍스트 중앙 정렬 */
+    line-height: 1.5;       /* 텍스트 세로 중앙 정렬 */
+    box-sizing: border-box; /* padding 포함하여 전체 크기 맞추기 */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.application .file-upload label:hover,
+.application .btn:hover {
+    background-color: #e0a800; /* 호버 시 동일한 색상 변경 */
+}
+
+.application .file-upload input[type="file"] {
+    display: none; /* 실제 파일 선택 버튼 숨기기 */
 }

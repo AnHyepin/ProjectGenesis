@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview</title>
+
+</head>
+<header>
+<!-- 전체 박스 -->
+<div class="header-container">
+    <!-- 로고 -->
+    <div class="header-logo">
+        <a href=""> <img src="/static/img/genesis.png" alt="로고이미지" /> </a>
+    </div>
+
+    <div class="menu">
+        <p id="recruitment" onclick="handleClick(event)">채용공고</p>
+        <div class="resumeManagement">
+            <p id="resumeManagement" onclick="handleClick(event)">이력서 관리</p>
+            <div class="resume-dropdown">
+                <p id="resume-regist" onclick="secondHandleClick(event)"><a href="">이력서 등록</a></p>
+                <p id="resume-list" onclick="secondHandleClick(event)"><a href="">내 이력서 목록</a></p>
+                <p id="resume-status" onclick="secondHandleClick(event)"><a href="">지원 공고 현황</a></p>
+            </div>
+        </div>
+
+        <p id="matching" onclick="handleClick(event)">매칭리스트</p>
+        <p id="support" onclick="handleClick(event)">고객센터</p>
+    </div>
+
+    <!-- 회색 줄 -->
+    <div class="header-divider"></div>
+
+    <!-- 오른쪽 메뉴 -->
+    <div class="right-menu">
+        <div class="login-user">
+            <p><img src="/static/img/bell.png" width="30px"></p>
+            <p><img src="/static/img/증명사진.jpg" width="50px" style="border-radius: 50%;"></p>
+            <p><span class="username">[[${username}]]</span><span > 님</span></p>
+        </div>
+        <div class="service-button">
+            회원 서비스
+            <div class="arrow">^</div>
+            <div class="service-dropdown">
+                <p> <a href="">개인정보 관리</a></p>
+                <p> <a href="">이력서 관리</a></p>
+                <p> <a href="">스크랩</a></p>
+                <p> <a href="">북마크</a></p>
+                <p> <a href="">별점 관리</a></p>
+                <p> <a href="">로그아웃</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+</html>

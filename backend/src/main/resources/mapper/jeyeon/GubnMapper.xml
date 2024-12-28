@@ -48,4 +48,9 @@
         WHERE group_code = 'application_code';
     </select>
 
+    <select id="getProcedureList" resultType="org.green.backend.dto.jeyeon.GubnDto">
+        SELECT group_code, gubn_code, gubn_name
+        FROM tbl_gubn
+        WHERE group_code = 'procedure_code';
+    </select>
 </mapper>

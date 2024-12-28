@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+}
+
+.header-container {
+    width: 100%;
+    margin: 0 auto;
+    height: 115px;
+    position: relative;
+    background-color: rgba(242, 187, 22, 0.1);
+    overflow: visible;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header-logo {
+    position: absolute;
+    top: 20px;
+    left: 15%;
+}
+.header-logo img {
+    width: 130px;
+}
+
+.menu {
+    position: absolute;
+    top: 60px;
+    left: 15%;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.menu p {
+    font-size: 17px;
+    font-weight: bolder;
+    text-align: center;
+    color: #5e5e5e;
+}
+
+.menu p:hover {
+    color: #3af26e;
+    cursor: pointer;
+}
+
+.menu p.active {
+    color: #3af26e;
+}
+
+.header-divider {
+    position: absolute;
+    top: 115px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #d3d3d3;
+}
+
+.right-menu {
+    position: absolute;
+    top: 20px;
+    right: 15%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.right-menu p {
+    font-size: 17px;
+    font-weight: 500;
+    color: #5e5e5e;
+    cursor: pointer;
+}
+
+.right-menu p .username{
+    color: black;
+}
+.service-button {
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 30px;
+    border: 1px solid #5e5e5e;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #5e5e5e;
+    gap: 5px;
+}
+
+.arrow {
+    display: inline-block;
+    font-size: 14px;
+    color: #5e5e5e;
+    text-align: center;
+    line-height: 16px;
+    transform: rotate(180deg);
+    margin-left: 5px;
+}
+
+.service-dropdown {
+    display: none;
+    position: absolute;
+    top: 42px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    width: 120px;
+    z-index: 9999;
+}
+
+.service-button:hover .service-dropdown {
+    display: block;
+}
+
+.service-dropdown p {
+    font-size: 14px;
+    margin: 0;
+    padding: 10px;
+    color: #5e5e5e;
+    cursor: pointer;
+    text-align: center;
+}
+
+.service-dropdown p:hover {
+    background-color: #3af26e;
+    color: black;
+}
+
+.applicationManagement:hover .application-dropdown {
+    display: block;
+}
+
+.application-dropdown {
+    display: none;
+    position: absolute;
+    top: 40px; /* "이력서 관리" 메뉴 바로 아래 */
+    left: 17%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 150px;
+    z-index: 9999;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.application-dropdown p {
+    margin: 0;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #5e5e5e;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.application-dropdown p:hover {
+    background-color: #3af26e;
+    color: black;
+}
+
+.login-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.login-user p {
+    margin: 0;
+}
+
+.footer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬 */
+    margin-top: 50px; /* 내용과 간격 추가 */
+}
+
+.footer-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #d3d3d3;
+}
+
+.color {
+    background-color: rgba(242, 187, 22, 0.1);
+    width: 100%;
+    padding: 20px 0; /* 위아래 여백 추가 */
+    display: flex;
+    justify-content: center; /* 로고를 중앙 정렬 */
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 130px;
+}
+
