@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<h1>Main Page</h1>
+asdasd
+<button onclick="test()">get 슈웅</button>
+<button onclick="test2()">post 슈웅</button>
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/static/js/api.js"></script>
+<script>
+    function test() {
+        api.get('/test2', {id: 'value'})
+            .then(data => console.log(data.body))
+            .catch(error => console.error(error));
+    }
+
+    function test2() {
+        const requestData = {
+            name: "이름1",
+            name2: "2이름",
+            name3: "이3름"
+        };
+
+        api.post('/test3123', requestData)
+            .then(data => {
+                alert("성공: " + data.body);
+            })
+            .catch(error => {
+                alert("실패: " + error);
+            });
+    }
+</script>
+
+</html>
