@@ -1,0 +1,144 @@
+.genesis-join-container {
+    max-width: 1080px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 auto;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.genesis-join-container .title{
+    color: #3AF26E;
+}
+
+.genesis-join-container .profile-box {
+    border: solid 1px #3AF26E;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 222px;
+    position: relative;
+    overflow: hidden;
+}
+
+.genesis-join-container .profile-box h1 {
+    color: #3AF26E;
+    font-size: 24px;
+    z-index: 1;
+}
+
+.genesis-join-container .profile-box input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.genesis-join-container .input-group {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.genesis-join-container .input-title{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.genesis-join-container .input-title span{
+    color: #D9310B;
+    font-size: 14px;
+}
+
+.genesis-join-container .input-group .detail{
+    display: flex;
+    gap: 10px;
+    min-width: 400px;
+    max-width: 400px;
+}
+
+.genesis-join-container .input-group .detail input {
+    width: 100%;
+    border: 1px solid #E5E5E5;
+    padding: 14px 12px;
+    border-radius: 10px;
+}
+
+.genesis-join-container .input-group .detail button {
+   background-color: #3AF26E;
+    color: white;
+    width: 91px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+}
+
+.genesis-join-container .input-group .detail:has(button) input {
+    width: calc(100% - 120px);
+}
+
+.genesis-join-container .input-group .detail input:focus {
+    border: 1px solid #3AF26E;
+    outline: none;
+    color: black;
+}
+
+
+
+
+.genesis-join-container .radio-group input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+.genesis-join-container .radio-group input[type="radio"]:checked {
+    background-color: #3AF26E;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #3AF26E;
+}
+
+.genesis-join-container .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.genesis-join-container .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+
+.join-btn {
+    background: linear-gradient(90deg, #3AF26E 0%, #39F09F 41%, #38EDE4 100%);
+    border: none;
+    border-radius: 20px;
+    padding: 15px 30px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    min-width: 400px;
+    max-width: 400px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}

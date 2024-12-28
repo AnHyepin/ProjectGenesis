@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout-test/layout}">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/hws/join.css">
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function openDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    document.querySelector('input[name="zipcode"]').value = data.zonecode;
+                    document.querySelector('input[name="address"]').value = data.roadAddress;
+                }
+            }).open();
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            const previewBox = document.querySelector('.profile-box');
+            const plusSign = previewBox.querySelector('h1');
+
+            if (file) {
+                reader.onload = function(e) {
+
+                    plusSign.style.display = 'none';
+
+                    const existingImage = previewBox.querySelector('img');
+                    if (existingImage) {
+                        previewBox.removeChild(existingImage);
+                    }
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '8px';
+                    previewBox.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                plusSign.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body layout:fragment="content">
+<div class="genesis-join-container">
+
+    <h1 class="title"> 구직자 </h1>
+    <div class="profile-box">
+        <h1>+</h1>
+        <input type="file" name="profilePicture" accept="image/*" onchange="previewImage(event)">
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>아이디</div>
+        </div>
+        <div class="detail">
+            <input name="username" type="text" placeholder="아이디를 입력하세요...">
+            <button>중복 확인</button>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>비밀번호</div>
+        </div>
+        <div class="detail">
+            <input name="password" type="password" placeholder="비밀번호...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>비밀번호 확인</div>
+        </div>
+        <div class="detail">
+            <input name="passwordCheck" type="password" placeholder="비밀번호 확인...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>이름</div>
+        </div>
+        <div class="detail">
+            <input name="name" type="text" placeholder="이름을 입력하세요...">
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="gender" value="male">
+                    <span>남</span>
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="female">
+                    <span>여</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>생년월일</div>
+        </div>
+        <div class="detail">
+            <input name="birth" type="date" placeholder="생년월일 (예시 : 20000131)">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>이메일</div>
+        </div>
+        <div class="detail">
+            <input name="email" type="email" placeholder="이메일을 입력하세요...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>휴대폰번호</div>
+        </div>
+        <div class="detail">
+            <input name="phone" type="text" placeholder="휴대폰 번호 (-) 제외">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>주소검색</div>
+        </div>
+        <div class="detail">
+            <input name="zipcode" type="text" placeholder="우편번호" readonly>
+            <button type="button" onclick="openDaumPostcode()">검색</button>
+        </div>
+        <div class="detail">
+            <input name="address" type="text" placeholder="주소를 입력하세요" readonly>
+        </div>
+        <div class="detail">
+            <input name="detail" type="text" placeholder="상세 주소를 입력하세요">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <button class="join-btn">회원가입</button>
+    </div>
+
+</div>
+</body>
+</html>
