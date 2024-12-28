@@ -1,8 +1,10 @@
 package org.green.backend.controller;
 
 
-import org.green.backend.dto.TestDto;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
@@ -13,14 +15,13 @@ public class TestController {
     }
 
     @GetMapping("/test2")
-    public String postTest(@RequestParam("id")String id) {
+    public String postTest(@RequestParam("id") String id) {
         return "success";
     }
 
-    @PostMapping("/test3")
-    public String putTest(@RequestBody TestDto request) {
-        System.out.println("테스트@@@@@@@@@@@@@@@@@@@@@@@ " + request.toString());
-
+    @GetMapping("/test3")
+    public String putTest() {
+        System.out.println("테스트@@@@@@@@@@@@@@@@@@@@@@@ @");
         return "success";
     }
 
