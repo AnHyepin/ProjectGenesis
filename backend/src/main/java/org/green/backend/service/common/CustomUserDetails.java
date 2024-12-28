@@ -8,10 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * CustomUserDetails 클래스는 Spring Security의 UserDetails를 구현하여
- * 유저(User)와 기업(Company) 객체를 처리할 수 있도록 설계되었습니다.
- */
 public class CustomUserDetails implements UserDetails {
 
     private final String username;
@@ -20,8 +16,6 @@ public class CustomUserDetails implements UserDetails {
 
     /**
      * 유저(User) 엔티티를 기반으로 생성
-     *
-     * @param user 유저 엔티티
      */
     public CustomUserDetails(User user) {
         this.username = user.getUsername();
@@ -31,8 +25,6 @@ public class CustomUserDetails implements UserDetails {
 
     /**
      * 기업(Company) 엔티티를 기반으로 생성
-     *
-     * @param company 기업 엔티티
      */
     public CustomUserDetails(Company company) {
         this.username = company.getUsername();

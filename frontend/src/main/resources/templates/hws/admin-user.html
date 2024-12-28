@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Admin</title>
+    <link rel="stylesheet" href="/static/css/hws/admin.css">
+</head>
+<body>
+
+<aside class="genesis-admin-sidebar">
+    <h2>Genesis</h2>
+    <ul>
+        <li><a href="/admin" class="active">구직자 관리</a></li>
+        <li><a href="/admin/company">기업 관리</a></li>
+    </ul>
+</aside>
+
+<main class="genesis-admin-main-content">
+    <h1>구직자 관리</h1>
+    <div class="genesis-admin-table-header">
+        <input type="text" id="search-input" placeholder="이름 검색..."/>
+    </div>
+
+    <table class="genesis-admin-table">
+        <thead>
+        <tr>
+            <th>이름</th>
+            <th>이메일</th>
+            <th>성별</th>
+            <th>생년월일</th>
+            <th>휴대폰 번호</th>
+            <th>주소</th>
+            <th>상태</th>
+            <th>변경</th>
+        </tr>
+        </thead>
+        <tbody id="user-table-body" th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.gender == 'M' ? '남자' : '여자'}"></td>
+            <td th:text="${user.birth}"></td>
+            <td th:text="${#strings.substring(user.phone, 0, 3) + '-' + #strings.substring(user.phone, 3, 7) + '-' + #strings.substring(user.phone, 7)}"></td>
+            <td th:text="${user.address.address} + ', ' + ${user.address.addressDetail}"></td>
+            <td th:text="${user.deleteYn == 'N' ? '활성화' : '비활성화'}"></td>
+            <td>
+                <button class="genesis-admin-delete" th:data-id="${user.username}" th:text="'상태변경'"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!-- 페이징 -->
+    <div class="pagination-wrapper">
+        <nav class="pagination-nav">
+            <ul class="pagination">
+                <!-- 처음 페이지 버튼 -->
+                <li th:class="${paging.firstPageBtn ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link"
+                       th:href="${paging.firstPageBtn ? '/admin?page=1&size=10' : '#'}"
+                       aria-label="처음">&laquo;</a>
+                </li>
+
+                <!-- 이전 페이지 버튼 -->
+                <li th:class="${paging.prevBtn ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link"
+                       th:href="${paging.prevBtn ? '/admin?page=' + (paging.startPage - 1) + '&size=10' : '#'}"
+                       aria-label="이전">&lt;</a>
+                </li>
+
+                <!-- 페이지 번호 리스트 -->
+                <li th:each="i : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+                    th:class="${paging.currentPage == i ? 'page-item active' : 'page-item'}">
+                    <a class="page-link" th:href="@{/admin(page=${i-1}, size=10)}"
+                       th:text="${i}"></a>
+                </li>
+
+                <!-- 다음 페이지 버튼 -->
+                <li th:class="${paging.nextBtn ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link"
+                       th:href="${paging.nextBtn ? '/admin?page=' + (paging.endPage + 1) + '&size=10' : '#'}"
+                       aria-label="다음">&gt;</a>
+                </li>
+
+                <!-- 마지막 페이지 버튼 -->
+                <li th:class="${paging.lastPageBtn ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link"
+                       th:href="${paging.lastPageBtn ? '/admin?page=' + paging.totalPage + '&size=10' : '#'}"
+                       aria-label="마지막">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    </div>
+</main>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/static/js/api.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#search-input").on("input", function () {
+            const query = $(this).val().toLowerCase();
+
+            $("#user-table-body tr").each(function () {
+                const nameCell = $(this).find("td:first").text().toLowerCase();
+                if (nameCell.startsWith(query)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+
+        //TODO : 토큰 처리 추가 해야함 로그인 완료 후
+        $(".genesis-admin-delete").on("click", function () {
+            const userId = $(this).data("id");
+
+            api.put(`/api/admin/${userId}`)
+                .then(() => {
+                    alert("상태 변경 성공");
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error("상태 변경 실패:", error);
+                    alert("상태 변경 실패");
+                });
+        });
+    });
+</script>
+
+
+</html>

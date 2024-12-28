@@ -24,6 +24,8 @@ repositories {
 }
 
 dependencies {
+    //aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 
     //webfluex 디팬더시
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
