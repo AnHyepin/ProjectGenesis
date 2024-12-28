@@ -1,7 +1,6 @@
 package org.green.backend.service.hws;
 
 import org.green.backend.dto.hws.UserDto;
-import org.green.backend.entity.User;
 import org.green.backend.repository.jpa.hws.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

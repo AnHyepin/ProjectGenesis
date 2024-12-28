@@ -7,7 +7,6 @@ import org.green.backend.entity.common.Address;
 import org.green.backend.entity.common.Auditable;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
