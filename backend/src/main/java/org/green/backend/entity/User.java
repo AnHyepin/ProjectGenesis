@@ -46,7 +46,7 @@ public class User extends Auditable {
     @Column(name = "role", nullable = false, length = 100)
     private String role = "ROLE_USER";
 
-    //TODO: 해당 컬럼이 객체 에서 필요한 지 여부 추후 생각 해보기 일단은 고정 N값 으로 넣어둠.
+    //TODO: 해당 컬럼이 객체 에서 필요한 지 여부 추후 생각 해보기 일단은 고정 N값 으로 넣어둠. 1111
     @ColumnDefault("'N'")
     @Column(name = "delete_yn", nullable = false)
     private Character deleteYn = 'N';
