@@ -49,7 +49,7 @@ public class SecurityConfig {
         http
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/test3").hasRole("ADMIN")
+                        .requestMatchers("/test3", "/api/admin").hasRole("ADMIN")   //TODO : 어드민페이지 컨트롤러들 여기다가 작업해야함 로그인 완료 후 진행
                         .requestMatchers("/test").authenticated()
                         .anyRequest().permitAll());
 

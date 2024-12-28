@@ -1,0 +1,220 @@
+/* 전체 레이아웃 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* 사이드바 */
+.genesis-admin-sidebar {
+    width: 240px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e6e6e6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.genesis-admin-sidebar h2 {
+    font-size: 24px;
+    margin: 0 0 30px 0;
+    color: #333;
+}
+
+.genesis-admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.genesis-admin-sidebar ul li {
+    margin: 15px 0;
+}
+
+.genesis-admin-sidebar ul li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.genesis-admin-sidebar ul li a:hover {
+    color: #3AF26E;
+}
+
+.genesis-admin-sidebar ul li a.active {
+    color: #3AF26E;
+    font-weight: bold;
+}
+
+/* 메인 콘텐츠 */
+.genesis-admin-main-content {
+    margin-left: 260px;
+    padding: 20px;
+}
+
+.genesis-admin-main-content h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.genesis-admin-table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.genesis-admin-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.genesis-admin-table-header .genesis-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.genesis-admin-table-header input {
+    width: 130px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    background-color: #F4F7FE;
+}
+
+.genesis-admin-table-header input:focus {
+    border-color: #3AF26E;
+    outline: none;
+}
+
+.genesis-admin-table-header button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #3AF26E;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.genesis-admin-table-header button:hover {
+    background-color: #45a049;
+}
+
+.genesis-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.genesis-admin-table th, .genesis-admin-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.genesis-admin-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.genesis-admin-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.genesis-admin-table td input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.genesis-admin-table .genesis-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.genesis-admin-table .genesis-actions button.active {
+    background-color: #3AF26E;
+    color: white;
+}
+
+.genesis-admin-table .genesis-actions button.inactive {
+    background-color: #f44336;
+    color: white;
+}
+
+.genesis-admin-delete {
+    padding: 8px 12px;
+    border: none;
+    background-color: #3AF26E;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* 페이징 컨테이너 */
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-nav {
+    display: flex;
+    gap: 5px;
+}
+
+.pagination-nav ul.pagination {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination-nav ul.pagination li {
+    display: inline-block;
+}
+
+.pagination-nav ul.pagination li a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 2px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.pagination-nav ul.pagination li a:hover {
+    color: #ffffff;
+    background-color: #3AF26E;
+    border-color: #3AF26E;
+}
+
+.pagination-nav ul.pagination li.page-item.active a {
+    color: #ffffff;
+    background-color: #3AF26E;
+    border-color: #3AF26E;
+    font-weight: bold;
+}
+
+.pagination-nav ul.pagination li.page-item.disabled a {
+    color: #ddd;
+    background-color: #f9f9f9;
+    border-color: #ddd;
+    pointer-events: none;
+    cursor: default;
+}

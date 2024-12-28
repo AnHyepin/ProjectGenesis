@@ -1,8 +1,7 @@
 package org.green.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.green.backend.entity.common.Address;
 import org.green.backend.entity.common.Auditable;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,6 +12,9 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "tbl_users")
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class User extends Auditable {
 
     @Id
