@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="header" class="header-container">
+
+    <!-- 로고 -->
+    <div class="header-logo">
+        <a href=""> <img src="/static/img/genesis.png" alt="로고이미지" /> </a>
+    </div>
+
+    <div class="menu">
+        <p id="recruitment" onclick="handleClick(event)">채용공고</p>
+        <div class="applicationManagement">
+            <p id="applicationManagement" onclick="handleClick(event)">공고 관리</p>
+            <div class="application-dropdown">
+                <p id="application-regist" onclick="secondHandleClick(event)"><a href="">공고 등록</a></p>
+                <p id="application-list" onclick="secondHandleClick(event)"><a href="">내 공고 목록</a></p>
+                <p id="application-management" onclick="secondHandleClick(event)"><a href="">지원자 관리</a></p>
+            </div>
+        </div>
+
+        <p id="matching" onclick="handleClick(event)">매칭리스트</p>
+        <p id="support" onclick="handleClick(event)">고객센터</p>
+    </div>
+
+    <!-- 회색 줄 -->
+    <div class="header-divider"></div>
+
+    <!-- 오른쪽 메뉴 -->
+    <div class="right-menu">
+        <div class="login-user">
+            <p><img src="/static/img/증명사진.jpg" width="50px" style="border-radius: 50%;"></p>
+            <p><span class="username">[[${username}]]</span><span > 님</span></p>
+        </div>
+        <div class="service-button">
+            기업 서비스
+            <div class="arrow">^</div>
+            <div class="service-dropdown">
+                <p> <a href="">기업정보 관리</a></p>
+                <p> <a href="">공고 등록</a></p>
+                <p> <a href="">스크랩</a></p>
+                <p> <a href="">로그아웃</a></p>
+            </div>
+        </div>
+    </div>
+
+</header>
+</html>
