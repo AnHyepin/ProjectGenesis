@@ -8,6 +8,11 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
+
+/**
+ * 12-27 (작성자: 한우성)
+ * 이 클래스는 구직자 Entity입니다.
+ */
 @Getter
 @Setter
 @Entity

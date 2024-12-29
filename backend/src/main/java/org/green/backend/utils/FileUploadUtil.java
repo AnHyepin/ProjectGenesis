@@ -50,21 +50,18 @@ public class FileUploadUtil {
             throw new IllegalArgumentException("빈 파일은 저장할 수 없습니다.");
         }
 
-        // 파일 이름 생성 (UUID 사용)
         String originalFilename = file.getOriginalFilename();
         String fileExt = getFileExtension(originalFilename);
         Long fileSize = file.getSize();
         String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
 
-        // 파일 저장 경로 설정
         Path targetPath = Paths.get(uploadDir, newFileName);
 
-        // 파일 저장
         Files.copy(file.getInputStream(), targetPath);
 
         FileDto fileDto = new FileDto();
-        fileDto.setFileGbnCd(fileGbnCd);
-        fileDto.setFileRefId(fileRefId);
+        fileDto.setFileGubnCode(fileGbnCd);
+        fileDto.setFileRefNo(fileRefId);
         fileDto.setFileNewName(newFileName);
         fileDto.setFileOldName(originalFilename);
         fileDto.setFileExt(fileExt);
@@ -79,7 +76,6 @@ public class FileUploadUtil {
      * 파일 확장자 추출
      *
      * @param fileName 파일 이름
-     * @return 파일 확장자 (예: .jpg)
      */
 
     private String getFileExtension(String fileName) {
@@ -93,7 +89,6 @@ public class FileUploadUtil {
      * 파일 삭제
      *
      * @param filePath 삭제할 파일 경로
-     * @return 삭제 성공 여부
      */
 
     public boolean deleteFile(String filePath) {

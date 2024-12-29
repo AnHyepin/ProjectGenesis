@@ -1,43 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout-test/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/hws/join.css">
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
-<body>
-<h1>Main Page</h1>
-asdasd
-<button onclick="test()">get 슈웅</button>
-<button onclick="test2()">post 슈웅</button>
-<div th:if="${message}">
-    <p th:text="${message}"></p>
+<body layout:fragment="content">
+<div class="genesis-join-container">
+
+    <h1 class="title"> 기업 </h1>
+    <div class="profile-box">
+        <h1>+</h1>
+        <input type="file" name="profilePicture" accept="image/*" onchange="previewImage(event)">
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>아이디(사업자번호)</div>
+        </div>
+        <div class="detail">
+            <input maxlength="10" name="username" type="text" placeholder="사업자번호를 입력하세요">
+            <button onclick="idCheck()">중복 확인</button>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>비밀번호</div>
+        </div>
+        <div class="detail">
+            <input name="password" type="password" placeholder="비밀번호...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>비밀번호 확인</div>
+        </div>
+        <div class="detail">
+            <input name="passwordCheck" type="password" placeholder="비밀번호 확인...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>기업명</div>
+        </div>
+        <div class="detail">
+            <input name="name" type="text" placeholder="이름을 입력하세요...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>창립일</div>
+        </div>
+        <div class="detail">
+            <input name="birth" type="date" placeholder="생년월일 (예시 : 20000131)">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>기업이메일</div>
+        </div>
+        <div class="detail">
+            <input name="email" type="email" placeholder="이메일을 입력하세요...">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>기업 번호</div>
+        </div>
+        <div class="detail">
+            <input maxlength="11" name="phone" type="text" placeholder="휴대폰 번호 (-) 제외">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>주소검색</div>
+        </div>
+        <div class="detail">
+            <input name="zipcode" type="text" placeholder="우편번호" readonly>
+            <button type="button" onclick="openDaumPostcode()">검색</button>
+        </div>
+        <div class="detail">
+            <input name="roadAddress" type="text" placeholder="주소를 입력하세요" readonly>
+        </div>
+        <div class="detail">
+            <input name="detailAddress" type="text" placeholder="상세 주소를 입력하세요">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <span>*</span>
+            <div>대표자명</div>
+        </div>
+        <div class="detail">
+            <input name="ceoName" type="text" placeholder="이름을 입력하세요">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <div>홈페이지주소</div>
+        </div>
+        <div class="detail">
+            <input name="homepage" type="email" placeholder="aaaaa@naver.com">
+        </div>
+    </div>
+
+
+    <div class="input-group">
+        <div class="input-title">
+            <div>사원수</div>
+            <div style="margin-left: 160px">매출액</div>
+        </div>
+        <div class="detail">
+            <input name="employees" type="number" placeholder="사원수 입력">
+            <input name="sale" type="number" placeholder="매출액 입력">
+        </div>
+    </div>
+
+
+    <div class="input-group">
+        <div class="input-title">
+            <div>회사소개</div>
+        </div>
+        <div class="detail">
+            <textarea name="content" type="email" placeholder="회사소개"></textarea>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-title">
+            <label for="file-input" class="file-btn">+ 파일 추가</label>
+        </div>
+        <div class="detail">
+            <input id="file-input" type="file" name="files" multiple style="display: none;" onchange="updateFileList()">
+            <input id="file-names" type="text" placeholder="선택된 파일이 여기에 표시됩니다." readonly>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <button onclick="submitForm()" class="join-btn">회원가입</button>
+    </div>
+
+
 </div>
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/static/js/api.js"></script>
-<script>
-    function test() {
-        api.get('/test2', {id: 'value'})
-            .then(data => console.log(data.body))
-            .catch(error => console.error(error));
-    }
-
-    function test2() {
-        const requestData = {
-            name: "이름1",
-            name2: "2이름",
-            name3: "이3름"
-        };
-
-        api.post('/test3123', requestData)
-            .then(data => {
-                alert("성공: " + data.body);
-            })
-            .catch(error => {
-                alert("실패: " + error);
-            });
-    }
-</script>
-
 </html>
+<script src="/static/js/hws/join-company.js"></script>

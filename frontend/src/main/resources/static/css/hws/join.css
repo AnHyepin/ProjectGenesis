@@ -73,6 +73,24 @@
     border-radius: 10px;
 }
 
+.genesis-join-container .input-group .detail textarea {
+    width: 400px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px #929292 solid;
+    text-align: left;
+    vertical-align: top;
+    resize: none;
+    overflow: auto;
+}
+
+.genesis-join-container .input-group .detail textarea:focus {
+    border: 1px solid #3AF26E !important;
+    outline: none;
+}
+
+
 .genesis-join-container .input-group .detail button {
    background-color: #3AF26E;
     color: white;
@@ -80,6 +98,14 @@
     font-weight: bold;
     border-radius: 10px;
     border: none;
+}
+
+
+.genesis-join-container .input-group .detail button.disabled {
+    background-color: #d3d3d3;
+    color: #ffffff;
+    font-weight: normal;
+    cursor: not-allowed;
 }
 
 .genesis-join-container .input-group .detail:has(button) input {
@@ -142,3 +168,34 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
 }
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.file-btn {
+    display: inline-block;
+    background-color: #3AF26E;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.file-btn:hover {
+    background-color: #2DC05C;
+}
+
