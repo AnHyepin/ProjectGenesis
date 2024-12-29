@@ -13,6 +13,7 @@
 <div class="form-container">
     <h1>채용 공고 등록</h1>
 <form enctype="multipart/form-data" id="applicationRegForm">
+<!--    <input type="hidden" name="username" th:value="${}">-->
     <div class="form-group">
         <label for="applicationTitle"><span>*</span>제목</label>
         <input type="text" id="applicationTitle" name="applicationTitle" placeholder="공고 제목을 입력하세요">
@@ -94,7 +95,7 @@
         <div class="file-upload">
             <input type="text" id="fileNewName" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
             <label for="file-upload-input" class="btn">모집공고 이미지</label>
-            <input type="file" id="file-upload-input" style="display: none;" onchange="updateFileName()"/>
+            <input type="file" id="file-upload-input" name="file" style="display: none;" onchange="updateFileName()"/>
         </div>
     </div>
 
