@@ -11,6 +11,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
+
+/**
+ * 12-27 (작성자: 한우성)
+ * 공통으로 사용가능한 서버 to 서버 통신
+ * get 전용
+ */
 @Service
 @Slf4j
 public class ApiRequestService {
@@ -54,16 +60,25 @@ public class ApiRequestService {
         }
     }
 
+    /**
+     * GET 요청으로 데이터 조회(파라미터 없이).
+     */
     public ApiResponse fetchData(String uri) {
         return fetchData(uri, null, null);
     }
 
+    /**
+     * GET 요청으로 데이터 조회(파라미터 포함, 토큰 제외).
+     */
     public ApiResponse fetchData(String uri, Map<String, String> params) {
         return fetchData(uri, params, null);
     }
 
 
-    //TODO: 차후 기능 개선
+    /**
+     * 응답 처리 및 인증 체크.
+     *  TODO: 차후 기능 개선
+     */
     private Mono<ApiResponse> handleResponseWithAuthCheck(ClientResponse response) {
         HttpStatus statusCode = (HttpStatus) response.statusCode();
 

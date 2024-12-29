@@ -9,6 +9,10 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
+/**
+ * 12-27 (작성자: 한우성)
+ * 이 클래스는 기업 Entity입니다.
+ */
 @Getter
 @Setter
 @Entity
@@ -42,6 +46,9 @@ public class Company extends Auditable {
 
     @Column(name = "ceo_name", length = 50)
     private String ceoName;
+
+    @Column(name = "homepage", length = 255)
+    private String homepage;
 
     @ColumnDefault("0")
     @Column(name = "employees", nullable = false)

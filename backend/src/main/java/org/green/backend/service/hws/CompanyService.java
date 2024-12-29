@@ -4,14 +4,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.entity.Company;
+import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
 import org.green.backend.repository.jpa.hws.CompanyRepository;
+import org.green.backend.service.common.FileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * 12-27 (작성자: 한우성)
+ * 기업 정보를 관리하는 서비스
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -20,8 +30,13 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final FileService fileService;
 
-    public void saveCompany(CompanyDto company) {
+
+    /**
+     * 회사 정보를 저장하고 프로필 및 관련 파일을 저장
+     */
+    public void saveCompany(CompanyDto company, MultipartFile profilePicture, List<MultipartFile> files) throws IOException {
         log.info("save company {}", company);
 
         Boolean isExist = companyRepository.existsByUsername(company.getUsername());
@@ -32,29 +47,54 @@ public class CompanyService {
 
         Company companyEntity = modelMapper.map(company, Company.class);
         companyEntity.setPassword(passwordEncoder.encode(companyEntity.getPassword()));
-        companyEntity.setDeleteYn('N'); //TODO: 유저쪽과 더불어 추후제거 일단임시
+        Address address = company.toAddress();
+        companyEntity.setAddress(address);
+        companyEntity.setDeleteYn('N');
 
         companyRepository.save(companyEntity);
+
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            fileService.saveFile(profilePicture, "profile_company", company.getUsername(), company.getUsername());
+        }
+
+        if (files != null && !files.isEmpty()) {
+            for (MultipartFile file : files) {
+                fileService.saveFile(file, "company_detail", company.getUsername(), file.getOriginalFilename());
+            }
+        }
     }
 
+    /**
+     * 모든 회사 사용자 정보를 페이징  조회
+     */
     public Page<CompanyDto> getAllUsers(Pageable pageable) {
 
         Page<Company> companyPage = companyRepository.findAll(pageable);
         return companyPage.map(company -> modelMapper.map(company, CompanyDto.class));
+
     }
 
+    /**
+     * 회사의 상태(삭제 여부)를 변경
+     */
     public String companyStatusChange(String username) {
+
         Company company = companyRepository.findByUsername(username);
 
         if (company == null) {
             return "변경 실패";
         }
 
-        log.info(company.toString());
-
         company.setDeleteYn(company.getDeleteYn().equals('Y') ? 'N' : 'Y');
-
         companyRepository.save(company);
+
         return "변경 성공";
+    }
+
+    /**
+     * 회사 사용자 아이디의 중복 여부 체크
+     */
+    public String duplicateCheck(String username) {
+        return companyRepository.findByUsername(username) != null ? "중복됨" : "사용 가능";
     }
 }

@@ -21,6 +21,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+
+/**
+ * 2024-12-29(한우성)
+ * 토큰 유효성을 검사함.
+ */
 @Slf4j
 public class JWTFilter extends OncePerRequestFilter {
 

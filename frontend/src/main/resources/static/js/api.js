@@ -37,9 +37,9 @@ const api = {
     client: axios.create({
         baseURL: 'http://localhost:8080',
         timeout: 5000,
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        /*    headers: {
+                'Content-Type': 'application/json',
+            },*/
     }),
 
     get(url, params = {}, headers = {}) {
@@ -52,6 +52,7 @@ const api = {
     post(url, data = {}, headers = {}) {
         return this.client.post(url, data, {
             headers,
+            withCredentials: true,
         });
     },
 
@@ -90,3 +91,4 @@ api.client.interceptors.response.use(
     }
 );
 
+window.myapi = api;

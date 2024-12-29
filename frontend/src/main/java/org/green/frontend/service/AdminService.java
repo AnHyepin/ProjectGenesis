@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+
+/**
+ * 12-27 (작성자: 한우성)
+ * 관리자 서비스
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -17,10 +22,16 @@ public class AdminService {
     private final ObjectMapper objectMapper;
     private static final int PAGE_BUTTON_COUNT = 5;
 
+    /**
+     * 관리자 사용자 정보를 조회.
+     */
     public Map<String, Object> getAdminUsers(int page, int size) {
         return fetchAndProcessData("/api/admin", page, size);
     }
 
+    /**
+     * 관리자 회사 정보를 조회.
+     */
     public Map<String, Object> getAdminCompany(int page, int size) {
         return fetchAndProcessData("/api/admin/company", page, size);
     }

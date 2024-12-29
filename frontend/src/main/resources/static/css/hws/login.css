@@ -1,0 +1,118 @@
+.genesis-login-container {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.genesis-login-container-custom {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.genesis-tab-container-custom {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.genesis-tab-custom {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #5F7C8D66;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.genesis-tab-active-custom {
+    color: #3AF26E;
+    border-bottom: 2px solid #3AF26E;
+}
+
+.genesis-login-form-custom {
+    display: flex;
+    flex-direction: column;
+}
+
+.genesis-input-group-custom {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.genesis-input-group-custom input {
+    width: 90%;
+    padding: 14px;
+    padding-left: 50px;
+    border: 1px solid #E5E5E5;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.genesis-input-group-custom input:focus {
+    border-color: #3AF26E;
+    outline: none;
+}
+
+.genesis-input-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000;
+}
+
+.genesis-error-message-custom {
+    font-size: 12px;
+    color: red;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    display: none;
+    text-align: start;
+}
+
+.genesis-login-button-custom {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(90deg, #3AF26E 0%, #39F09F 41%, #38EDE4 100%);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.genesis-login-button-custom i {
+    margin-right: 10px;
+}
+
+.genesis-login-button-custom:hover {
+    background: linear-gradient(45deg, #81c784, #3AF26E);
+}
+
+.genesis-register-link-custom {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #767676;
+}
+
+.genesis-register-link-custom a {
+    color: #767676;
+    text-decoration: none;
+    font-weight: bold;
+}

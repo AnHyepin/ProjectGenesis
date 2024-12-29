@@ -19,10 +19,16 @@ public class CompanyDto {
     private String content;
     private LocalDate birth;
     private Address address;
+    private Integer zipcode;
+    private String roadAddress;
+    private String detailAddress;
     private String ceoName;
     private Integer employees;
     private Integer sale;
-    private String role;
+    private String homepage;
     private Character deleteYn;
+    public Address toAddress() {
+        return new Address(roadAddress, detailAddress, zipcode);
+    }
 
 }
