@@ -12,6 +12,7 @@ public class CustomUserDetails implements UserDetails {
 
     private final String username;
     private final String password;
+    private final String name;
     private final Collection<? extends GrantedAuthority> authorities;
 
     /**
@@ -20,6 +21,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
+        this.name = user.getName();
         this.authorities = List.of(user::getRole);
     }
 
@@ -29,6 +31,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(Company company) {
         this.username = company.getUsername();
         this.password = company.getPassword();
+        this.name = company.getName();
         this.authorities = List.of(company::getRole);
     }
 
@@ -45,6 +48,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getName(){
+        return name;
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.green.backend.service.hws;
 
 import org.green.backend.dto.hws.UserDto;
+import org.green.backend.entity.User;
 import org.green.backend.repository.jpa.hws.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,6 @@ class UserServiceTest {
         // Given
         String searchName = "John";
         Pageable pageable = PageRequest.of(0, 10);
-
         User user = new User("john123", "password", "John", "john@example.com", 'M', null, "1234567890", null, "ROLE_USER", 'N');
         UserDto userDto = new UserDto();
         userDto.setUsername("john123");

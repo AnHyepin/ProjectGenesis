@@ -1,5 +1,6 @@
 package org.green.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,8 +11,9 @@ import lombok.*;
 @Entity
 @Table(name = "tbl_applications")
 @Getter
-@ToString
+@Setter
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Application {
@@ -70,5 +72,10 @@ public class Application {
 
     @Column(name="modi_dt")
     private String modiDt;                  // 수정일
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "username", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Company company;
 
 }

@@ -25,20 +25,18 @@ public class AdminService {
     /**
      * 관리자 사용자 정보를 조회.
      */
-    public Map<String, Object> getAdminUsers(int page, int size) {
-        return fetchAndProcessData("/api/admin", page, size);
+    public Map<String, Object> getAdminUsers(int page, int size, String token) {
+        return fetchAndProcessData("/api/admin", page, size,token);
     }
 
     /**
      * 관리자 회사 정보를 조회.
      */
-    public Map<String, Object> getAdminCompany(int page, int size) {
-        return fetchAndProcessData("/api/admin/company", page, size);
+    public Map<String, Object> getAdminCompany(int page, int size,String token) {
+        return fetchAndProcessData("/api/admin/company", page, size,token);
     }
 
-    private Map<String, Object> fetchAndProcessData(String endpoint, int page, int size) {
-        // TODO: 토큰 삭제 해야함 테스트를 위한 임시용임
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Inlpb2s3OSIsInJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzM1MzYyMTcyLCJleHAiOjE3MzU0NDg1NzJ9.5VWkK-DnRNu7A7qCMXowX1Ohf4mfK5IzR5yb4Mex-sI";
+    private Map<String, Object> fetchAndProcessData(String endpoint, int page, int size,String token) {
 
         var response = apiRequestService.fetchData(endpoint, Map.of("page", String.valueOf(page), "size", String.valueOf(size)), token);
 
