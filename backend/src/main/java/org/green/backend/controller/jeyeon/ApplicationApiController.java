@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.service.jeyeon.ApplicationService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -19,9 +21,10 @@ public class ApplicationApiController {
     private final ApplicationService applicationService;
 
     @PostMapping
-    public void register(@ModelAttribute ApplicationRequestDto applicationRequestDto) {
+    public void register(@ModelAttribute ApplicationRequestDto applicationRequestDto,
+                         @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         System.out.println("폼 데이터: " + applicationRequestDto);
 
-        applicationService.registApplication(applicationRequestDto);
+        applicationService.registApplication(applicationRequestDto, file);
     }
 }
