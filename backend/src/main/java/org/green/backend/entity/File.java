@@ -24,7 +24,7 @@ public class File {
     private String fileGubnCode;   // 파일구분
 
     @Column(name="file_ref_no")
-    private String fileRefNo;     // 파일 영향받는 아이디
+    private int fileRefNo;     // 파일 영향받는 아이디
 
     @Column(name="file_old_name", length = 255)
     private String fileOldName;    // 파일 관리명

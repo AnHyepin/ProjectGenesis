@@ -40,8 +40,8 @@ public class Application {
     @Column(name="salary",nullable = false)
     private int salary = 0;                    // 연봉
 
-    @Column(name="careerCode",nullable = false)
-    private String career_code;             // 경력 (S:신입, G:경력, SG:신입/경력)
+    @Column(name="career_code",nullable = false)
+    private String careerCode;             // 경력 (S:신입, G:경력, SG:신입/경력)
 
     @Column(name="position_code", length = 20)
     private String positionCode;           // 직책/직급코드
