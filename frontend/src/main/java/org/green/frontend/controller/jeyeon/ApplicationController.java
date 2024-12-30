@@ -27,8 +27,8 @@ public class ApplicationController {
         var positionResponse = apiService.fetchData("/api/gubn/position");
         var educationResponse = apiService.fetchData("/api/gubn/education");
         var employmentResponse = apiService.fetchData("/api/gubn/employment");
-        var stackResponse = apiService.fetchData("/api/gubn/stack");
-        var stack1thResponse = apiService.fetchData("/api/gubn/stack1th");
+        var stackResponse = apiService.fetchData("/api/gubn/stack2nd");
+        var stack1thResponse = apiService.fetchData("/api/gubn/stack");
         var applicationResponse = apiService.fetchData("/api/gubn/application");
         var procedureResponse = apiService.fetchData("/api/gubn/procedure");
 
@@ -54,5 +54,10 @@ public class ApplicationController {
         model.addAttribute("procedureList", procedureList);
 
         return "/jeyeon/application-regist";
+    }
+
+    @GetMapping("/detail")
+    public String applicationDetail() {
+        return "/jeyeon/application-detail";
     }
 }
