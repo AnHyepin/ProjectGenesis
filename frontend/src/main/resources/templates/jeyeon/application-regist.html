@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout-test/layout}">
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -8,12 +10,12 @@
     <link rel="stylesheet" href="/static/css/common.css" />
     <title>Application Form</title>
 </head>
-<body>
+<body layout:fragment="content">
 <div class="application">
 <div class="form-container">
     <h1>채용 공고 등록</h1>
 <form enctype="multipart/form-data" id="applicationRegForm">
-<!--    <input type="hidden" name="username" th:value="${}">-->
+    <input type="hidden" name="username" id="username" th:value="${username}">
     <div class="form-group">
         <label for="applicationTitle"><span>*</span>제목</label>
         <input type="text" id="applicationTitle" name="applicationTitle" placeholder="공고 제목을 입력하세요">
@@ -52,7 +54,7 @@
 
         <div class="form-group">
             <label for="salary">연봉</label>
-            <input type="number" id="salary" name="salary" placeholder="연봉">
+            <input type="number" id="salary" name="salary" placeholder="연봉" value="0">
         </div>
 
         <div class="form-group">
@@ -93,9 +95,9 @@
 
     <div class="form-group">
         <div class="file-upload">
-            <input type="text" id="file-input" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
+            <input type="text" id="file-names" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
             <label for="file-input" class="btn">+ 모집공고 이미지 추가</label>
-            <input type="file" id="file-upload-input" name="file" style="display: none;" onchange="updateFileList()"/>
+            <input type="file" id="file-input" name="files" multiple style="display: none;" onchange="updateFileList()"/>
         </div>
     </div>
 
@@ -144,9 +146,21 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/static/js/api.js"></script>
 <script src="/static/js/jeyeon/regist-application.js"></script>
 <script>
+
+    //username 반환
+    window.onload = function() {
+        // sessionStorage에서 값 가져오기
+        const username = sessionStorage.getItem('username');
+
+        // 해당 input의 값 업데이트
+        if (username) {
+            document.getElementById('username').value = username;
+        }
+    };
+
+
     // 기술 스택 태그 클릭 시 active 클래스 토글
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.skill-btn').forEach(tag => {
@@ -202,20 +216,24 @@
             console.log(entry[0], entry[1]);
         }*/
 
-        axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/application/regist', // 서버의 정확한 URL
-            data: formData,  // FormData 객체를 그대로 전송
-            headers: {
-                'Content-Type': 'multipart/form-data'  // 이 헤더는 axios가 자동으로 설정하지만, 명시적으로 설정할 수도 있습니다
-            }
-        })
+
+        if(validationCheck()){
+            axios({
+                method: 'post',
+                url: 'http://localhost:8080/api/application/regist', // 서버의 정확한 URL
+                data: formData,  // FormData 객체를 그대로 전송
+                headers: {
+                    'Content-Type': 'multipart/form-data'  // 이 헤더는 axios가 자동으로 설정하지만, 명시적으로 설정할 수도 있습니다
+                }
+            })
             .then(response => {
-                console.log(response);
+                alert('공고 등록이 완료되었습니다.');
             })
             .catch(error => {
                 console.log("실패: " + error);
             });
+        }
+
     });
 
 </script>

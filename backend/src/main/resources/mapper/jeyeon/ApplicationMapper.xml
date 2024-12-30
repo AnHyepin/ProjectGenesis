@@ -23,7 +23,7 @@
             `regist_dt`
             )
         VALUES (
-        'admin',
+        #{applicationRequestDto.username},                                    -- 회사명
         IFNULL(NULLIF(#{applicationRequestDto.applicationTitle}, ''), NULL),  -- 채용공고 제목
         IFNULL(NULLIF(#{applicationRequestDto.startDate}, ''), NULL),         -- 공고 시작일
         IFNULL(NULLIF(#{applicationRequestDto.deadlineDate}, ''), NULL),      -- 공고 마감일
@@ -37,8 +37,8 @@
         IFNULL(NULLIF(#{applicationRequestDto.roleCode}, ''), NULL),          -- 개발 직무
         IFNULL(NULLIF(#{applicationRequestDto.content}, ''), NULL),           -- 모집부문
         #{applicationRequestDto.procedureCode},                               -- 전형 절차
-        'N',                                                           -- 삭제 여부
-        NOW()                                                          -- 생성일
+        'N',                                                                  -- 삭제 여부
+        NOW()                                                                 -- 생성일
         );
     </insert>
 

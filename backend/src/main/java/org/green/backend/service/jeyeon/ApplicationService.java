@@ -1,6 +1,7 @@
 package org.green.backend.service.jeyeon;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.entity.ApplicationStack;
 import org.green.backend.entity.File;
@@ -18,13 +19,14 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ApplicationService {
 
     private final ApplicationDao applicationDao;
     private final ApplicationStackService applicationStackService;
     private final FileService fileService;
 
-    public void registApplication(ApplicationRequestDto applicationRequestDto, MultipartFile file) throws IOException {
+    public void registApplication(ApplicationRequestDto applicationRequestDto, List<MultipartFile> files) throws IOException {
         applicationDao.insertApplication(applicationRequestDto);
 
         int lastApplicationNo = getLastApplicationNo();
@@ -42,10 +44,13 @@ public class ApplicationService {
             }
         }
 
-        if(file != null) {
-            fileService.saveFile(file,"application_no",String.valueOf(lastApplicationNo) ,"test1");
-        }
 
+        log.error("파일 확인 {}",files.get(0).getOriginalFilename());
+        if (!files.get(0).getOriginalFilename().isEmpty()) {
+            for (MultipartFile file : files) {
+                fileService.saveFile(file, "application_no", String.valueOf(lastApplicationNo), applicationRequestDto.getUsername());
+            }
+        }
     }
 
     private int getLastApplicationNo() {
