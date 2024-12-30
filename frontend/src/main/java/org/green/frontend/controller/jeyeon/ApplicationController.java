@@ -55,4 +55,9 @@ public class ApplicationController {
 
         return "/jeyeon/application-regist";
     }
+
+    @GetMapping("/detail")
+    public String applicationDetail() {
+        return "/jeyeon/application-detail";
+    }
 }
