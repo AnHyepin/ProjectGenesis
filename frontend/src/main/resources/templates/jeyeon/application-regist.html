@@ -93,9 +93,9 @@
 
     <div class="form-group">
         <div class="file-upload">
-            <input type="text" id="fileNewName" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
-            <label for="file-upload-input" class="btn">모집공고 이미지</label>
-            <input type="file" id="file-upload-input" name="file" style="display: none;" onchange="updateFileName()"/>
+            <input type="text" id="file-input" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
+            <label for="file-input" class="btn">+ 모집공고 이미지 추가</label>
+            <input type="file" id="file-upload-input" name="file" style="display: none;" onchange="updateFileList()"/>
         </div>
     </div>
 
@@ -162,17 +162,6 @@
             });
         });
     });
-
-    function updateFileName() {
-        const fileInput = document.getElementById('file-upload-input');
-        const fileNameField = document.getElementById('fileNewName');
-
-        if (fileInput.files.length > 0) {
-            fileNameField.value = fileInput.files[0].name;  // 선택된 파일명 표시
-        } else {
-            fileNameField.value = "선택된 파일이 없습니다.";  // 파일이 없을 경우 기본 텍스트
-        }
-    }
 
     // 폼 제출 이벤트 처리
     document.getElementById("applicationRegForm").addEventListener("submit", function (event) {
