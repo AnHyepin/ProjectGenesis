@@ -35,10 +35,10 @@ public class FileUploadUtil {
     /**
      * 파일 저장
      *
-     * @param file 업로드할 파일
+     * @param file      업로드할 파일
      * @param fileGbnCd 파일구분코드
      * @param fileRefId 파일 영향 받는 키
-     * @param userId 작성자
+     * @param userId    작성자
      * @throws IOException 파일 저장 중 오류
      */
 
@@ -55,7 +55,7 @@ public class FileUploadUtil {
         Long fileSize = file.getSize();
         String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
 
-        Path targetPath = Paths.get(uploadDir, newFileName);
+        Path targetPath = Paths.get(uploadDir, newFileName + fileExt);
 
         Files.copy(file.getInputStream(), targetPath);
 
@@ -66,7 +66,7 @@ public class FileUploadUtil {
         fileDto.setFileOldName(originalFilename);
         fileDto.setFileExt(fileExt);
         fileDto.setFileSize(fileSize);
-        fileDto.setFileUrl(targetPath.toString());
+        fileDto.setFileUrl("/static/upload/" + newFileName + fileExt);
         fileDto.setInstId(userId);
 
         return fileDto;

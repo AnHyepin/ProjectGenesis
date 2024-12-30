@@ -2,254 +2,254 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout-test/layout}">
-<head>
-    <title>Main Page</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <style>
-        .genesis-main-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px 15px;
-        }
+    <head>
+        <title>Main Page</title>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <style>
+            .genesis-main-container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px 15px;
+            }
 
-        .swiper {
-            width: 100%;
-            height: 400px;
-            margin-top: 40px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+            .swiper {
+                width: 100%;
+                height: 400px;
+                margin-top: 40px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
 
-        .swiper-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+            .swiper-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
 
-        .genesis-main-section {
-            margin-top: 40px;
-        }
+            .genesis-main-section {
+                margin-top: 40px;
+            }
 
-        .genesis-main-section-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            align-items: center;
-            font-weight: bold;
-        }
+            .genesis-main-section-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                align-items: center;
+                font-weight: bold;
+            }
 
-        .genesis-main-section-header h2 {
-            font-size: 24px;
-            margin: 0;
-            color: #000000;
-        }
+            .genesis-main-section-header h2 {
+                font-size: 24px;
+                margin: 0;
+                color: #000000;
+            }
 
-        .genesis-main-section-header .genesis-more-link {
-            font-size: 14px;
-            color: #007bff;
-            cursor: pointer;
-            text-decoration: none;
-        }
+            .genesis-main-section-header .genesis-more-link {
+                font-size: 14px;
+                color: #007bff;
+                cursor: pointer;
+                text-decoration: none;
+            }
 
-        .genesis-main-section-header .genesis-more-link:hover {
-            text-decoration: underline;
-        }
+            .genesis-main-section-header .genesis-more-link:hover {
+                text-decoration: underline;
+            }
 
-        .genesis-main-cards {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+            .genesis-main-cards {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
 
-        .genesis-main-card {
-            flex: 1 1 calc(33.333% - 20px);
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-            max-width: 380px;
-        }
+            .genesis-main-card {
+                flex: 1 1 calc(33.333% - 20px);
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                position: relative;
+                max-width: 380px;
+            }
 
-        .genesis-main-card.two {
-            flex: 1 1 calc(50% - 20px);
-            max-width: 580px;
-        }
+            .genesis-main-card.two {
+                flex: 1 1 calc(50% - 20px);
+                max-width: 580px;
+            }
 
-        .genesis-main-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+            .genesis-main-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
 
-        .genesis-main-card-content {
-            padding: 15px;
-        }
+            .genesis-main-card-content {
+                padding: 15px;
+            }
 
-        .genesis-main-card-content h3 {
-            margin: 10px 0 5px;
-            font-size: 20px;
-            font-weight: bold;
-        }
+            .genesis-main-card-content h3 {
+                margin: 10px 0 5px;
+                font-size: 20px;
+                font-weight: bold;
+            }
 
-        .genesis-main-card-content p {
-            font-size: 14px;
-            color: #666;
-        }
+            .genesis-main-card-content p {
+                font-size: 14px;
+                color: #666;
+            }
 
-        .genesis-card-label {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #ff5252;
-            color: #fff;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 3px;
-        }
+            .genesis-card-label {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: #ff5252;
+                color: #fff;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 5px 10px;
+                border-radius: 3px;
+            }
 
-        .genesis-card-heart {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            background: #e0e0e0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            .genesis-card-heart {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 24px;
+                height: 24px;
+                background: #e0e0e0;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        .genesis-card-heart img {
-            width: 16px;
-            height: 16px;
-        }
+            .genesis-card-heart img {
+                width: 16px;
+                height: 16px;
+            }
 
-        .genesis-main-service-card {
-            flex: 1 1 calc(50% - 20px);
-            max-width: 580px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            text-align: center;
-        }
+            .genesis-main-service-card {
+                flex: 1 1 calc(50% - 20px);
+                max-width: 580px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                text-align: center;
+            }
 
-        .genesis-main-service-card img {
-            width: 100%;
-            height: 200px;
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
+            .genesis-main-service-card img {
+                width: 100%;
+                height: 200px;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+            }
 
-        .genesis-main-service-card-content {
-            padding: 20px;
-            width: 50%;
-        }
+            .genesis-main-service-card-content {
+                padding: 20px;
+                width: 50%;
+            }
 
-        .genesis-main-service-card-content h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #333;
-        }
-    </style>
-</head>
-<body layout:fragment="content">
+            .genesis-main-service-card-content h3 {
+                margin: 0;
+                font-size: 18px;
+                color: #333;
+            }
+        </style>
+    </head>
+    <body layout:fragment="content">
 
-<div class="genesis-main-container">
+        <div class="genesis-main-container">
 
-    <div class="swiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="/static/img/img_default_banner.png" alt="Slide 2">
-            </div>
-            <div class="swiper-slide">
-                <img src="/static/img/증명사진.jpg" alt="Slide 3">
-            </div>
-        </div>
-    </div>
-
-    <!-- 인기 공고 섹션 -->
-    <div class="genesis-main-section">
-        <div class="genesis-main-section-header">
-            <h2>인기 공고</h2>
-            <a href="#" class="genesis-more-link">더보기 +</a>
-        </div>
-        <div class="genesis-main-cards">
-            <div th:each="popularApp : ${mainData.popularApplications}" class="genesis-main-card two">
-                <img src="https://via.placeholder.com/580x200" alt="Popular Application">
-                <div class="genesis-card-heart">
-                    <img src="https://via.placeholder.com/16x16" alt="Heart">
-                </div>
-
-                <div class="genesis-card-label"
-                     th:if="${popularApp.applicationData.daysLeft != null and popularApp.applicationData.daysLeft != 'D-0'}"
-                     th:text="${popularApp.applicationData.daysLeft}"></div>
-                <div class="genesis-main-card-content">
-                    <h3 th:text="${popularApp.applicationData.applicationTitle}"></h3>
-                    <p th:text="'회사: ' + ${popularApp.companyName} + ' / 지역: ' + ${popularApp.applicationData.workingArea}"></p>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="/static/img/img_default_banner.png" alt="Slide 2">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/static/img/증명사진.jpg" alt="Slide 3">
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="genesis-main-section">
-        <div class="genesis-main-section-header">
-            <h2>추천 서비스</h2>
-            <a href="#" class="genesis-more-link">더보기 +</a>
-        </div>
-        <div class="genesis-main-cards">
-            <div class="genesis-main-service-card">
-                <img src="/static/img/img_main_content1.png" alt="Matching Service">
-            </div>
-            <div class="genesis-main-service-card">
-                <img src="/static/img/img_main_content2.png" alt="Position Offers">
-            </div>
-        </div>
-    </div>
-
-    <!-- 평점 높은 기업 섹션 -->
-    <div class="genesis-main-section">
-        <div class="genesis-main-section-header">
-            <h2>평점 높은 기업공고</h2>
-            <a href="#" class="genesis-more-link">더보기 +</a>
-        </div>
-        <div class="genesis-main-cards">
-            <div th:each="topCompany : ${mainData.topRatedCompanies}" class="genesis-main-card">
-                <img src="https://via.placeholder.com/380x200" alt="Top Rated Company">
-                <div class="genesis-card-heart">
-                    <img src="https://via.placeholder.com/16x16" alt="Heart">
+            <!-- 인기 공고 섹션 -->
+            <div class="genesis-main-section">
+                <div class="genesis-main-section-header">
+                    <h2>인기 공고</h2>
+                    <a href="#" class="genesis-more-link">더보기 +</a>
                 </div>
-                <div class="genesis-card-label"
-                     th:if="${topCompany.applicationData.daysLeft != null and topCompany.applicationData.daysLeft != 'D-0'}"
-                     th:text="${topCompany.applicationData.daysLeft}"></div>
-                <div class="genesis-main-card-content">
-                    <h3 th:text="${topCompany.applicationData.applicationTitle}"></h3>
-                    <p th:text="'회사: ' + ${topCompany.name} + ' / 지역: ' + ${topCompany.applicationData.workingArea}"></p>
-                    <p th:text="'평점: ' + ${topCompany.averageStar}"></p>
+                <div class="genesis-main-cards">
+                    <div th:each="popularApp : ${mainData.popularApplications}" class="genesis-main-card two">
+                        <img src="/static/upload/20241230094808802.jpg" alt="Popular Application">
+                        <div class="genesis-card-heart">
+                            <img src="https://via.placeholder.com/16x16" alt="Heart">
+                        </div>
+
+                        <div class="genesis-card-label"
+                             th:if="${popularApp.applicationData.daysLeft != null and popularApp.applicationData.daysLeft != 'D-0'}"
+                             th:text="${popularApp.applicationData.daysLeft}"></div>
+                        <div class="genesis-main-card-content">
+                            <h3 th:text="${popularApp.applicationData.applicationTitle}"></h3>
+                            <p th:text="'회사: ' + ${popularApp.companyName} + ' / 지역: ' + ${popularApp.applicationData.workingArea}"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="genesis-main-section">
+                <div class="genesis-main-section-header">
+                    <h2>추천 서비스</h2>
+                    <a href="#" class="genesis-more-link">더보기 +</a>
+                </div>
+                <div class="genesis-main-cards">
+                    <div class="genesis-main-service-card">
+                        <img src="/static/img/img_main_content1.png" alt="Matching Service">
+                    </div>
+                    <div class="genesis-main-service-card">
+                        <img src="/static/img/img_main_content2.png" alt="Position Offers">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 평점 높은 기업 섹션 -->
+            <div class="genesis-main-section">
+                <div class="genesis-main-section-header">
+                    <h2>평점 높은 기업공고</h2>
+                    <a href="#" class="genesis-more-link">더보기 +</a>
+                </div>
+                <div class="genesis-main-cards">
+                    <div th:each="topCompany : ${mainData.topRatedCompanies}" class="genesis-main-card">
+                        <img src="https://via.placeholder.com/380x200" alt="Top Rated Company">
+                        <div class="genesis-card-heart">
+                            <img src="https://via.placeholder.com/16x16" alt="Heart">
+                        </div>
+                        <div class="genesis-card-label"
+                             th:if="${topCompany.applicationData.daysLeft != null and topCompany.applicationData.daysLeft != 'D-0'}"
+                             th:text="${topCompany.applicationData.daysLeft}"></div>
+                        <div class="genesis-main-card-content">
+                            <h3 th:text="${topCompany.applicationData.applicationTitle}"></h3>
+                            <p th:text="'회사: ' + ${topCompany.name} + ' / 지역: ' + ${topCompany.applicationData.workingArea}"></p>
+                            <p th:text="'평점: ' + ${topCompany.averageStar}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
 
-</div>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script>
+            const swiper = new Swiper('.swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                speed: 600,
+            });
+        </script>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-    const swiper = new Swiper('.swiper', {
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        speed: 600,
-    });
-</script>
-
-</body>
+    </body>
 </html>
