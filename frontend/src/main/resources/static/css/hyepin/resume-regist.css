@@ -1,0 +1,492 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/*select 박스 공통 영역*/
+select{
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #929292;
+}
+
+/*input 박스 공통 영역*/
+input{
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #929292;
+}
+
+textarea{
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #929292;
+    width: 100%;
+    height: 150px;
+    resize: vertical;
+}
+
+/*radio 공통 영역*/
+input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #929292; /* 원하는 테두리 색상 */
+    border-radius: 50%; /* 동그라미 모양 */
+    background-color: white; /* 배경색 */
+}
+
+input[type="radio"]:checked {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3af26e; /* 원하는 테두리 색상 */
+    border-radius: 50%; /* 동그라미 모양 */
+    background-color: white; /* 배경색 */
+    box-shadow: inset 0 0 0 4px #3af26e; /* 내부 크기 줄이기 */
+}
+
+/* checkbox 박스 공통 영역 */
+input[type="checkbox"] {
+    appearance: none;     /* 기본 스타일 제거 */
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid #929292;
+    background-color: white;
+    position: relative;
+    margin-right: 10px;
+}
+
+/* 체크박스를 체크했을 때 배경색 변경 */
+input[type="checkbox"]:checked {
+    background-color: #3af26e;
+    border-color: #3af26e;
+}
+
+/* 체크박스 안에 체크 마크 표시 */
+input[type="checkbox"]:checked::before {
+    content: '\2713';  /* 체크 마크 */
+    color: white;      /* 체크 마크 색상 */
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.checkbox{
+    display: flex;
+    align-items: center;
+}
+
+/*달력 공통 영역*/
+.month-label{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: gray;
+    pointer-events: none;
+    font-size: 14px;
+}
+
+input[type="month"],
+input[type="date"] {
+    padding-left: 80px;
+}
+
+/*section 공통 영역*/
+.section {
+    margin-bottom: 50px;
+}
+
+.section_box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.section h2 span{
+    color: red;
+}
+
+.section h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px 0px 0px 10px;
+}
+
+.section p {
+    font-size: 12px;
+    margin: 0px 10px 5px 0px;
+    display: flex;
+    justify-content: center;
+    align-items:end;
+}
+
+/*section 내용 공통 영역*/
+.section_box2{
+    padding: 20px;
+}
+
+.section_box2_detail{
+    display: flex;
+    justify-content: space-between;
+}
+
+.section_box2_detail_info,
+.section_box2_detail_modi{
+    display: flex;
+    gap: 15px;
+    align-items: end;
+}
+
+.section_box2_detail_info div:nth-of-type(1) {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/*추가 버튼 클릭시 공통*/
+.plus_btn{
+    cursor: pointer;
+}
+
+/*section plus창 공통 영역*/
+.section_plus_box{
+    border: 1px solid #929292;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.section_plus_box_save_btn{
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    margin-right: 20px;
+    padding: 10px;
+}
+
+.cancelBtn{
+    background-color: transparent;
+    border: 2px solid #3AF26E;
+    color: #3AF26E;
+    padding: 5px 20px;
+    width: 90px;
+    font-size: 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    color: black;
+}
+
+.cancelBtn:hover, .saveBtn:hover{
+    background-color: #3AF26E;
+    transform: scale(1.1);
+}
+
+.saveBtn{
+    background-color:#3AF26E;
+    border: 2px solid #3AF26E;
+    color: #3AF26E;
+    padding: 5px 20px;
+    width: 90px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+}
+
+/*divider 공통 영역*/
+.divider {
+    border: 0;
+    height: 1px;
+    background: #b9b9b9;
+    margin: 10px 0px 20px 0px ;
+}
+
+
+/*information 박스 영역*/
+.information{
+    padding: 30px 30px 0px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.information_box1{
+    display: flex;
+    gap: 50px;
+}
+
+.information_box1 div select{
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.resume_name{
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    border: #3af26e 1px solid;
+    margin-top: 10px;
+}
+
+.resume_name:focus {
+    border: 2px solid #3af26e;
+    outline: none;
+}
+
+.information_box2,
+.information_box3,
+.information_box4 {
+    margin: 15px 0; /* 위아래 마진 추가 */
+}
+
+.information_right_box{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.information_right_box > .right_img{
+    width: 100px;
+    height: 130px;
+    border: 1px solid black;
+}
+
+.resume-container {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+
+/*학력 박스 영역*/
+.section_plus_box_detail1,
+.section_plus_box_detail2,
+.section_plus_box_detail3,
+.section_plus_box_detail4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.section_box2_detail2{
+    margin-top: 10px;
+    color: #5D5D5D;
+}
+
+.section_box2_detail2 > div{
+    margin-top: 10px;
+}
+
+.section_box2_detail2 div div:nth-of-type(1),
+.section_box2_detail2 div div:nth-of-type(2) {
+    display: flex;
+    gap: 50px;
+}
+
+.section_plus_box_detail1 input[type="checkbox"] {
+    margin: 5px;
+}
+
+/*스킬영역*/
+/*스킬 검색창*/
+#result-list{
+    margin: 0;
+    padding: 10px 10px 10px 10px;
+}
+
+/*li 공통 영역*/
+#result-list li{
+    list-style: none; /* 기본 리스트 아이콘 제거 */
+    padding: 0; /* 패딩을 제거하여 깔끔하게 유지 */
+}
+
+.skill-list{
+    display: flex;
+    flex-wrap: wrap; /* 요소들이 넘칠 때 다음 줄로 내려가도록 설정 */
+}
+
+.input-skill-list{
+    margin-top: 10px;
+    display: flex;
+    border: 1px solid #929292;
+    border-radius: 50px;
+    padding: 10px;
+    margin: 10px 10px 5px 0px;
+}
+
+.input-skill-list :nth-child(1){
+    margin-left: 5px;
+}
+
+.input-skill-list :nth-child(2){
+    color: #929292;;
+    margin-left: 15px;
+}
+
+.input-skill-cancle{
+    all: unset; /* 모든 기본 스타일 초기화 */
+    cursor: pointer;
+}
+
+/*자격증*/
+.certificate-section_plus_box_detail1{
+    padding-left: 10px;
+}
+
+#certificate-results-wrapper {
+    padding-left: 10px;
+    width: 42%;
+    margin-top: 0px;
+}
+
+#certificate-results{
+    margin-top: 0px;
+}
+
+#certificate-result-list{
+    padding-left: 10px;
+}
+
+#certificate-result-list li{
+    list-style: none; /* 기본 리스트 아이콘 제거 */
+    padding: 0; /* 패딩을 제거하여 깔끔하게 유지 */
+    margin: 10px 0px 0px 0px;
+    cursor: pointer;
+}
+
+.certificate-detail div span{
+    margin-left: 5px;
+    font-weight: normal;
+    color: #4e4e4e;
+}
+
+
+/*파일*/
+.file-section_box2{
+    margin: 20px 10px 10px 10px;
+    padding: 20px;
+    background-color: #C0FFD2;
+    border-radius: 10px;
+}
+
+.file-name{
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.file-section_box2 .section_box2_detail2 div{
+    margin: 5px 0px 0px 10px;
+}
+
+.file-section_plus_box_detail1{
+    display: flex;
+    gap: 20px;
+}
+.file-section_plus_box_detail1 div label{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+input[type="file"], .file-section_plus_box_detail2{
+    width: 80%;
+}
+
+/*포지션 제안*/
+.position-radio{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.position-radio-detail{
+    display: flex;
+    gap: 5px;
+    justify-content: left;
+    align-items: center;
+    border: #929292 1px solid;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    width: 50%;
+    height: 30px;
+    padding: 9px;
+    margin: 0;
+}
+
+.position-section_box2_detail2{
+    justify-content: center;
+    text-align: center;
+    color: #4e4e4e;
+    margin: 0 auto ;
+}
+
+/*작성완료 버튼*/
+.complet-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.completBtn{
+    background-color:#3AF26E;
+    border: 2px solid #3AF26E;
+    color: #3AF26E;
+    padding: 5px 20px;
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: black;
+}
+
+.completBtn:hover{
+    background-color: #3AF26E;
+    transform: scale(1.1);
+}
+
+
+/*왼쪽 오른쪽 영역*/
+.left-section {
+    width: 80%; /* 기존 900px에서 10% 증가 */
+    padding: 20px;
+}
+
+.right-sidebar {
+    width: 20%; /* 기존 280px에서 10% 증가 */
+    padding: 20px;
+    text-align: center;
+}
+
+.right-sidebar h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.progress-bar-container {
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-inner {
+    width: 25%; /* 이 값은 동적으로 변경 가능 */
+    height: 100%;
+    background-color: #3af26e;
+    position: absolute;
+}
+
