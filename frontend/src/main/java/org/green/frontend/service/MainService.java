@@ -2,19 +2,17 @@ package org.green.frontend.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.green.frontend.dto.hws.ApplicationDTO;
-import org.green.frontend.dto.hws.NonLoginMainDTO;
-import org.green.frontend.dto.hws.PopularApplicationDTO;
-import org.green.frontend.dto.hws.TopRatedCompanyDTO;
+import org.green.frontend.dto.hws.*;
 import org.green.frontend.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * 메인 서비스
- *
+ * <p>
  * 비회원 메인 화면 데이터를 처리,  데이터를 DTO로 매핑하여 반환
  */
 @Service
@@ -27,45 +25,77 @@ public class MainService {
     /**
      * 비회원 메인 데이터 처리
      */
-    public NonLoginMainDTO nonLoginMain() {
+    public NonLoginMainDto nonLoginMain() {
         Map<String, Object> mainData = (Map<String, Object>) apiRequestService.fetchData("/api/main").getBody();
 
-        return NonLoginMainDTO.builder()
+        return NonLoginMainDto.builder()
                 .topRatedCompanies(mapList(mainData.get("topRatedCompanies"), this::mapToTopRatedCompanyDTO))
                 .popularApplications(mapList(mainData.get("popularApplications"), this::mapToPopularApplicationDTO))
+                .likeApplications(mapList(mainData.get("likeApplications"), this::mapToLikeApplicationDTO))
+                .bookmarkApplications(mapList(mainData.get("bookmarkApplications"), this::mapToBookmarkApplicationDTO))
+                .build();
+    }
+
+    /**
+     * 북마크 데이터를 BookmarkApplicationDTO로 매핑
+     */
+    private BookmarkApplicationDto mapToBookmarkApplicationDTO(Map<String, Object> bookmarkApplication) {
+
+        List<FileDto> fileDtos = mapFiles(bookmarkApplication.get("files"));
+        return BookmarkApplicationDto.builder()
+                .applicationData(mapToApplicationDTO((Map<String, Object>) bookmarkApplication.get("application")))
+                .files(fileDtos)
+                .build();
+    }
+
+    /**
+     * 좋아요 데이터를 LikeApplicationDTO로 매핑
+     */
+    private LikeApplicationDto mapToLikeApplicationDTO(Map<String, Object> likeData) {
+        List<FileDto> fileDtos = mapFiles(likeData.get("files"));
+        return LikeApplicationDto.builder()
+                .applicationData(mapToApplicationDTO((Map<String, Object>) likeData.get("application")))
+                .files(fileDtos)
+                .likeId(((Number) likeData.get("likeId")).longValue())
+                .likeCode((String) likeData.get("likeCode"))
                 .build();
     }
 
     /**
      * 회사 데이터를 TopRatedCompanyDTO로 매핑
      */
-    private TopRatedCompanyDTO mapToTopRatedCompanyDTO(Map<String, Object> companyData) {
-        return TopRatedCompanyDTO.builder()
+    private TopRatedCompanyDto mapToTopRatedCompanyDTO(Map<String, Object> companyData) {
+        List<FileDto> fileDtos = mapFiles(companyData.get("files"));
+        return TopRatedCompanyDto.builder()
                 .username((String) companyData.get("username"))
                 .name((String) companyData.get("name"))
                 .applicationData(mapToApplicationDTO((Map<String, Object>) companyData.get("application")))
                 .averageStar((Double) companyData.get("averageStar"))
+                .files(fileDtos)
+
                 .build();
     }
 
     /**
      * 공고 데이터를 PopularApplicationDTO로 매핑
      */
-    private PopularApplicationDTO mapToPopularApplicationDTO(Map<String, Object> applicationData) {
-        return PopularApplicationDTO.builder()
+    private PopularApplicationDto mapToPopularApplicationDTO(Map<String, Object> applicationData) {
+        List<FileDto> fileDtos = mapFiles(applicationData.get("files"));
+        return PopularApplicationDto.builder()
                 .applicationData(mapToApplicationDTO(applicationData))
                 .companyName((String) applicationData.get("name"))
+                .files(fileDtos)
                 .build();
     }
 
     /**
      * 공고 데이터를 ApplicationDTO로 매핑
      */
-    private ApplicationDTO mapToApplicationDTO(Map<String, Object> applicationData) {
+    private ApplicationDto mapToApplicationDTO(Map<String, Object> applicationData) {
         if (applicationData == null) return null;
 
-        return ApplicationDTO.builder()
-                .applicationNo((int) applicationData.get("applicationNo"))
+        return ApplicationDto.builder()
+                .applicationNo((Integer) applicationData.get("applicationNo"))
                 .username((String) applicationData.get("username"))
                 .applicationTitle((String) applicationData.get("applicationTitle"))
                 .startDate((String) applicationData.get("startDate"))
@@ -91,9 +121,26 @@ public class MainService {
     /**
      * 데이터를 리스트 형태로 매핑
      *
-     * @param data   매핑할 데이터 (List<Map<String, Object>> 형태)
+     * @param data 매핑할 데이터 (List<Map<String, Object>> 형태)
      */
-    private <T, R> List<R> mapList(Object data, java.util.function.Function<Map<String, Object>, R> mapper) {
+    private <T, R> List<R> mapList(Object data, Function<Map<String, Object>, R> mapper) {
+        if (data == null) {
+            return List.of();
+        }
         return ((List<Map<String, Object>>) data).stream().map(mapper).toList();
+    }
+
+
+    /**
+     * 파일 데이터를 FileDto 리스트로 매핑
+     */
+    private List<FileDto> mapFiles(Object filesData) {
+        if (filesData == null) return List.of();
+
+        return ((List<Map<String, Object>>) filesData).stream()
+                .map(fileData -> FileDto.builder()
+                        .fileUrl((String) fileData.get("fileUrl"))
+                        .build())
+                .toList();
     }
 }

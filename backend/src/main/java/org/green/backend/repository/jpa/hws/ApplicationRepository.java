@@ -7,14 +7,22 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ApplicationRepository extends JpaRepository<Application,Integer> {
+public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
     @Query(value = """
-    SELECT * 
-    FROM tbl_applications 
-    WHERE username = :username AND delete_yn = 'N' 
-    ORDER BY regist_dt DESC 
-    LIMIT 1
-    """, nativeQuery = true)
+            SELECT * 
+            FROM tbl_applications 
+            WHERE username = :username AND delete_yn = 'N' 
+            ORDER BY regist_dt DESC 
+            LIMIT 1
+            """, nativeQuery = true)
     Application findLatestApplicationByCompany(@Param("username") String username);
+
+    @Query("""
+                SELECT a
+                FROM Application a
+                WHERE a.username IN :companyUsernames
+                ORDER BY a.registDt DESC
+            """)
+    List<Application> findBookmarkedApplications(@Param("companyUsernames") List<String> companyUsernames) ;
 }

@@ -35,6 +35,7 @@ public class FileService {
             File fileEntity = modelMapper.map(fileDto,File.class);
             System.out.println(fileEntity.toString() + "aaaaaaaaaaaaaaaa");
             fileRepository.save(fileEntity);
+            System.out.println("내이름은 황승현 눈이 작지");
         } catch (Exception e) {
             fileUploadUtil.deleteFile(fileDto.getFileUrl());
             throw new RuntimeException("파일 데이터 저장 실패: " + e.getMessage(), e);
