@@ -1,4 +1,4 @@
-package org.green.frontend.controller.ahp;
+package org.green.frontend.controller.hyepin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +28,11 @@ public class TestControllerAhp {
     @GetMapping("/test4")
     public String test4() {
         return "/layout-test/layout-test2";
+    }
+
+    @GetMapping("/resume")
+    public String resume() {
+        return "/hyepin/resume-regist";
     }
 
 }
