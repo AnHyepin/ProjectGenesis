@@ -25,7 +25,7 @@ a {
     width: 130px;
 }
 
-.menu {
+.header-menu {
     position: absolute;
     top: 60px;
     left: 15%;
@@ -34,7 +34,7 @@ a {
     gap: 40px;
 }
 
-.menu p {
+.header-menu p {
     font-size: 17px;
     font-weight: bolder;
     text-align: center;
@@ -42,12 +42,12 @@ a {
     margin-top: 10px;
 }
 
-.menu p:hover {
+.header-menu p:hover {
     color: #3af26e;
     cursor: pointer;
 }
 
-.menu p.active {
+.header-menu p.active {
     color: #3af26e;
 }
 
@@ -60,7 +60,7 @@ a {
     background-color: #d3d3d3;
 }
 
-.right-menu {
+.header-right-menu {
     position: absolute;
     top: 20px;
     right: 15%;
@@ -69,17 +69,17 @@ a {
     gap: 20px;
 }
 
-.right-menu p {
+.header-right-menu p {
     font-size: 17px;
     font-weight: 500;
     color: #5e5e5e;
     cursor: pointer;
 }
 
-.right-menu p .username{
+.header-right-menu p .header-username{
     color: black;
 }
-.service-button {
+.header-service-button {
     cursor: default;
     display: flex;
     align-items: center;
@@ -94,7 +94,7 @@ a {
     gap: 5px;
 }
 
-.arrow {
+.header-arrow {
     display: inline-block;
     font-size: 14px;
     color: #5e5e5e;
@@ -104,7 +104,7 @@ a {
     margin-left: 5px;
 }
 
-.service-dropdown {
+.header-service-dropdown {
     display: none;
     position: absolute;
     top: 42px;
@@ -115,11 +115,11 @@ a {
     z-index: 9999;
 }
 
-.service-button:hover .service-dropdown {
+.header-service-button:hover .header-service-dropdown {
     display: block;
 }
 
-.service-dropdown p {
+.header-service-dropdown p {
     font-size: 14px;
     margin: 0;
     padding: 10px;
@@ -128,19 +128,19 @@ a {
     text-align: center;
 }
 
-.service-dropdown p:hover {
+.header-service-dropdown p:hover {
     background-color: #3af26e;
     color: black;
 }
 
-.resumeManagement:hover .resume-dropdown {
+.header-resumeManagement:hover .header-resume-dropdown {
     display: block;
 }
 
-.resume-dropdown {
+.header-resume-dropdown {
     display: none;
     position: absolute;
-    top: 40px; /* "이력서 관리" 메뉴 바로 아래 */
+    top: 35px; /* "이력서 관리" 메뉴 바로 아래 */
     left: 17%;
     background-color: white;
     border: 1px solid #ddd;
@@ -150,7 +150,7 @@ a {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.resume-dropdown p {
+.header-resume-dropdown p {
     margin: 0;
     padding: 10px;
     font-size: 14px;
@@ -160,18 +160,18 @@ a {
     transition: background-color 0.2s ease;
 }
 
-.resume-dropdown p:hover {
+.header-resume-dropdown p:hover {
     background-color: #3af26e;
     color: black;
 }
 
-.login-user {
+.header-login-user {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.login-user p {
+.header-login-user p {
     margin: 0;
 }
 

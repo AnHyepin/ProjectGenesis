@@ -25,7 +25,7 @@ a {
     width: 130px;
 }
 
-.menu {
+.header-menu {
     position: absolute;
     top: 60px;
     left: 15%;
@@ -34,7 +34,7 @@ a {
     gap: 40px;
 }
 
-.menu p {
+.header-menu p {
     font-size: 17px;
     font-weight: bolder;
     text-align: center;
@@ -42,12 +42,12 @@ a {
     margin-top: 10px;
 }
 
-.menu p:hover {
+.header-menu p:hover {
     color: #3af26e;
     cursor: pointer;
 }
 
-.menu p.active {
+.header-menu p.active {
     color: #3af26e;
 }
 
@@ -60,7 +60,7 @@ a {
     background-color: #d3d3d3;
 }
 
-.right-menu {
+.header-right-menu {
     position: absolute;
     top: 20px;
     right: 15%;
@@ -69,14 +69,14 @@ a {
     gap: 20px;
 }
 
-.right-menu p {
+.header-right-menu p {
     font-size: 14px;
     font-weight: 500;
     color: #5e5e5e;
     cursor: pointer;
 }
 
-.service-button {
+.header-service-button {
     cursor: default;
     display: flex;
     align-items: center;
@@ -91,7 +91,7 @@ a {
     gap: 5px;
 }
 
-.arrow {
+.header-arrow {
     display: inline-block;
     font-size: 14px;
     color: #5e5e5e;
@@ -101,7 +101,7 @@ a {
     margin-left: 5px;
 }
 
-.service-dropdown {
+.header-service-dropdown {
     display: none;
     position: absolute;
     top: 32px;
@@ -112,11 +112,11 @@ a {
     z-index: 9999;
 }
 
-.service-button:hover .service-dropdown {
+.header-service-button:hover .header-service-dropdown {
     display: block;
 }
 
-.service-dropdown p {
+.header-service-dropdown p {
     font-size: 14px;
     margin: 0;
     padding: 10px;
@@ -125,18 +125,18 @@ a {
     text-align: center;
 }
 
-.service-dropdown p:hover {
+.header-service-dropdown p:hover {
     background-color: #3af26e;
     color: black;
 }
 
-.login-signup {
+.header-login-signup {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.login-signup p {
+.header-login-signup p {
     margin: 0;
 }
 
