@@ -5,6 +5,7 @@ import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.entity.ApplicationStack;
 import org.green.backend.entity.File;
 import org.green.backend.repository.dao.jeyeon.ApplicationDao;
+import org.green.backend.service.common.FileService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +43,7 @@ public class ApplicationService {
         }
 
         if(file != null) {
-            fileService.saveFile(file,"application_no",lastApplicationNo);
+            fileService.saveFile(file,"application_no",String.valueOf(lastApplicationNo) ,"test1");
         }
 
     }
