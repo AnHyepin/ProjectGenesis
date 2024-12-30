@@ -11,7 +11,7 @@ body {
     overflow: visible;
 }
 
-a {
+.header-container a {
     text-decoration: none;
     color: inherit;
 }

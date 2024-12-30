@@ -77,6 +77,23 @@ function certificateDelete(){
     alert("자격증 삭제");
 }
 
+function portfolioSave(){
+    alert("포트폴리오 저장");
+}
+
+function portfolioDelete(){
+    alert("포트폴리오 삭제");
+}
+
+function resumeMyinfoSave(){
+    alert("자기소개서 저장");
+}
+
+function resumeMyinfoDelete(){
+    alert("자기소개서 삭제");
+}
+
+
 function toggleSkill(checkbox) {
     const skillListContainer = document.querySelector('.skill-list'); // 전체 스킬 리스트 컨테이너
     const skillValue = checkbox.value;

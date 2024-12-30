@@ -42,21 +42,21 @@
                                 <option value="8,000~9,000만원">8,000~9,000만원</option>
                             </select>
                         </div>
-
                     </div>
                     <div class="information_box2">
                         <div>[[${gender}]]성별, [[${birth}]]생년월일</div>
                     </div>
                     <div class="information_box3">
-                        <span>[[${email}]]이메일</span> <span>[[${phone}]]전화번호</span>
+                        <div><i class="bi bi-envelope"></i>  [[${email}]]이메일   </div>
+                        <div>   <i class="bi bi-telephone"></i>  [[${phone}]]전화번호</div>
                     </div>
                     <div class="information_box4">
-                        <div>[[${address}]]주소</div>
+                        <div><i class="bi bi-house"></i>  [[${address}]]주소</div>
                     </div>
                 </div>
                 <div class="information_right_box">
-                    <div class="right_img">사진</div>
-                    <div>편집</div>
+                    <div class="right_img"><img src="/static/img/증명사진2.jpg"></div>
+                    <div><i class="bi bi-pencil"></i> </div>
                 </div>
             </div>
 
@@ -119,8 +119,10 @@
                             <div>[[${resumeEducationIndt}]]입학년월 ~ [[${resumeEducationOutdt}]]졸업년월 (편입여부) [[${resumeEducationTransferYn}]]</div>
                         </div>
                         <div class="section_box2_detail_modi">
-                            <div>수정</div>
-                            <input type="button" onclick="educationDelete()" value="삭제">
+                            <div><i class="bi bi-pencil"></i> </div>
+                            <button class="deleteBtn" onclick="educationDelete()">
+                                <i class="bi bi-x-square"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="section_box2_detail2">
@@ -196,8 +198,10 @@
                             <div>[[${resumeCareerJoinDt}]]2016.03 ~ [[${resumeCareerOutDt}]]2018.02</div>
                         </div>
                         <div class="section_box2_detail_modi">
-                            <div>수정</div>
-                            <input type="button" onclick="careerDelete()" value="삭제">
+                            <div><i class="bi bi-pencil"></i> </div>
+                            <button class="deleteBtn" onclick="careerDelete()">
+                                <i class="bi bi-x-square"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="section_box2_detail2">
@@ -221,11 +225,11 @@
                     <input type="text" id="skills" placeholder="스킬을 입력해주세요" style="width: 100%;">
                     <button id="skill-clear-btn"
                             style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%); border: none; background: transparent; cursor: pointer;">
-                        ❌
+                        <i class="bi bi-x-circle"></i>
                     </button>
                     <button id="skill-search-btn"
                             style="position: absolute; top: 50%; right: 0px; transform: translateY(-50%); border: none; background: transparent; cursor: pointer;">
-                        🔍
+                        <i class="bi bi-search"></i>
                     </button>
                 </div>
 
@@ -308,7 +312,10 @@
                             </div>
                         </div>
                         <div class="section_box2_detail_modi">
-                            <input type="button" onclick="certificateDelete()" value="삭제">
+                            <div><i class="bi bi-pencil"></i> </div>
+                            <button class="deleteBtn" onclick="certificateDelete()">
+                                <i class="bi bi-x-square"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="section_box2_detail2">
@@ -337,10 +344,10 @@
                     </div>
                 </div>
                 <div class="section_plus_box_detail2">
-                    <input type="file" name="myFiles" id="fileInput" multiple>
+                    <input type="file" name="files" id="fileInput" multiple>
                 </div>
                 <div class="section_plus_box_detail2">
-                    <input type="text" placeholder="URL 경로를 입력하세요." class="file-section_plus_box_detail2">
+                    <input type="text" name="resumePortfolioUrl" placeholder="URL 경로를 입력하세요." class="file-section_plus_box_detail2">
                 </div>
                 <div class="section_plus_box_detail2">
                     <div>작업기간 *</div>
@@ -348,12 +355,12 @@
                 <div class="section_plus_box_detail2">
                     <div style="position: relative;">
                         <label class="month-label">시작일</label>
-                        <input type="date" id="start-date">
+                        <input type="date" name="resumePortfolioStartDate" id="start-date">
                     </div>
                     ~
                     <div style="position: relative;">
                         <label class="month-label">종료일</label>
-                        <input type="date" id="end-date">
+                        <input type="date" name="resumePortfolioEndDate" id="end-date">
                     </div>
                 </div>
 
@@ -361,33 +368,36 @@
                     <div>작업인원</div>
                 </div>
                 <div class="section_plus_box_detail3">
-                    <input type="number" style="width: 80px;">
+                    <input type="number" name="resumePortfolioCnt" style="width: 80px;">
                     <div>명</div>
                 </div>
                 <div class="section_plus_box_detail4">
                     <div>작품소개</div>
                 </div>
                 <div class="section_plus_box_detail4">
-                    <textarea placeholder="상세내용을 입력하세요."></textarea>
+                    <textarea placeholder="상세내용을 입력하세요." name="resumePortfolioContent"></textarea>
                 </div>
                 <div class="section_plus_box_save_btn">
                     <input type="button" class="cancelBtn" value="취소">
-                    <input type="button" class="saveBtn" value="저장">
+                    <input type="button" class="saveBtn" onclick="portfolioSave()" value="저장">
                 </div>
             </div>
 
             <!-- 여기서부터 th:each -->
             <div class="file-section_box2">
                 <div class="section_box2_detail">
-                    <div class="file-name">파일이름.hwp</div>
+                    <div class="file-name">[[${fileOldName}]][[${fileExt}]] 파일이름.hwp</div>
                     <div class="section_box2_detail_modi">
-                        <div>삭제</div>
+                        <div><i class="bi bi-pencil"></i> </div>
+                        <button class="deleteBtn" onclick="portfolioDelete()">
+                            <i class="bi bi-x-square"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="section_box2_detail2">
-                    <div>작업기간:</div>
-                    <div>작업인원:</div>
-                    <div>작품소개:</div>
+                    <div>작업기간: [[${resumePortfolioStartDate}]] ~ [[${resumePortfolioEndDate}]]</div>
+                    <div>작업인원: [[${resumePortfolioCnt}]]</div>
+                    <div>작품소개: [[${resumePortfolioContent}]]</div>
                 </div>
             </div>
 
@@ -404,14 +414,14 @@
             <!-- plus 박스 -->
             <div class="section_plus_box">
                 <div class="section_plus_box_detail1">
-                    <input type="text" placeholder="자기소개서 제목을입력하세요" style="width: 100%;">
+                    <input type="text" name="resumeTitle" placeholder="자기소개서 제목을입력하세요" style="width: 100%;">
                 </div>
                 <div class="section_plus_box_detail2">
-                    <textarea placeholder="내용을입력하고 자기소개서를 완성하세요!"></textarea>
+                    <textarea name="resumeMyTitle" placeholder="내용을입력하고 자기소개서를 완성하세요!"></textarea>
                 </div>
                 <div class="section_plus_box_save_btn">
                     <input type="button" class="cancelBtn" value="취소">
-                    <input type="button" class="saveBtn" value="저장">
+                    <input type="button" class="saveBtn" onclick="resumeMyinfoSave()" value="저장">
                 </div>
             </div>
 
@@ -419,14 +429,17 @@
             <div class="section_box2">
                 <div class="section_box2_detail">
                     <div class="section_box2_detail_info">
-                        <div>안녕하세요.</div>
+                        <div>[[${resumeMyTitle}]]안녕하세요.</div>
                     </div>
                     <div class="section_box2_detail_modi">
-                        <div>삭제</div>
+                        <div><i class="bi bi-pencil"></i> </div>
+                        <button class="deleteBtn" onclick="resumeMyinfoDelete()">
+                            <i class="bi bi-x-square"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="section_box2_detail2">
-                    <div>저는 매사에 열정적이고 착합니다. 뽑아주세요.</div>
+                    <div>[[${resumeMyContent}]]저는 매사에 열정적이고 착합니다. 뽑아주세요.</div>
                 </div>
             </div>
         </div>
@@ -442,8 +455,8 @@
                 </div>
                 <div class="position-section_box2_detail2">
                     <div class="position-radio">
-                        <div class="position-radio-detail"><input type="radio" name="position">공개하고 포지션 제안 받을래요</div>
-                        <div class="position-radio-detail"><input type="radio" name="position" checked>제안받지 않을래요</div>
+                        <div class="position-radio-detail"><input type="radio" name="resumePubilceYn">공개하고 포지션 제안 받을래요</div>
+                        <div class="position-radio-detail"><input type="radio" name="resumePubilceYn" checked>제안받지 않을래요</div>
                     </div>
                 </div>
             </div>
@@ -466,6 +479,7 @@
         <p>완성도: 25%</p>
     </div>
 </div>
+
 <script src="/static/js/api.js"></script>
 <script src="/static/js/hyepin/resume-regist.js"></script>
 </body>
