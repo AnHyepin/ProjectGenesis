@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FileRepository extends JpaRepository<File, Long> {
-    @Query("SELECT f FROM File f WHERE f.fileRefNo = :applicationNo AND f.fileGubnCode = 'application_no'")
-    List<File> findFilesByApplicationNo(int applicationNo);
+    @Query("SELECT f FROM File f WHERE f.fileRefNo = :applicationNo AND f.fileGubnCode = :applicationGubnCode ")
+    List<File> findFilesByApplicationNo(int applicationNo,String applicationGubnCode);
 }

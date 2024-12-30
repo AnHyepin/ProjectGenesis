@@ -3,14 +3,15 @@ package org.green.backend.service.hws;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.green.backend.dto.hws.MainPageDataDto;
-import org.green.backend.dto.hws.PopularApplicationDto;
-import org.green.backend.dto.hws.RatingApplicationDTO;
+import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.hws.*;
 import org.green.backend.entity.Application;
+import org.green.backend.entity.Company;
 import org.green.backend.entity.File;
 import org.green.backend.repository.jpa.common.FileRepository;
 import org.green.backend.repository.jpa.hws.ApplicationRepository;
 import org.green.backend.repository.jpa.hws.ApplyStatusRepository;
+import org.green.backend.repository.jpa.hws.LikeRepository;
 import org.green.backend.repository.jpa.hws.RatingRepository;
 import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
@@ -31,6 +32,7 @@ public class MainService {
     private final ApplyStatusRepository applyStatusRepository;
     private final RatingRepository ratingRepository;
     private final ApplicationRepository applicationRepository;
+    private final LikeRepository likeRepository;
     private final FileRepository fileRepository;
     private final ModelMapper modelMapper;
 
@@ -41,8 +43,36 @@ public class MainService {
     public MainPageDataDto getNonLoginPageData() {
         List<RatingApplicationDTO> topRatedCompanies = getTopRatingApplication(3);
         List<PopularApplicationDto> popularApplications = getPopularApplications();
+        List<LikeApplicationDto> likeApplications = getLikedApplications("yiok79");
+        List<BookmarkApplicationDto> bookmarkedApplications = getBookmarkedApplications("yiok79");
 
-        return new MainPageDataDto(topRatedCompanies, popularApplications);
+        return new MainPageDataDto(topRatedCompanies, popularApplications, likeApplications, bookmarkedApplications);
+    }
+
+
+    /**
+     * 구독한 기업의 최신 공고 3개를 가져오는 메서드
+     */
+    private List<BookmarkApplicationDto> getBookmarkedApplications(String username) {
+        List<Company> subscribedCompanies = likeRepository.findSubscribedCompanies(username);
+
+        List<String> companyUsernames = subscribedCompanies.stream()
+                .map(Company::getUsername)
+                .collect(Collectors.toList());
+
+        List<Application> applications = applicationRepository.findBookmarkedApplications(companyUsernames)
+                .stream()
+                .limit(3)
+                .collect(Collectors.toList());
+
+        return applications.stream().map(application -> {
+            List<File> files = fileRepository.findFilesByApplicationNo(application.getApplicationNo(), "application_no");
+            List<FileDto> fileDtos = files.stream()
+                    .map(file -> modelMapper.map(file, FileDto.class))
+                    .collect(Collectors.toList());
+
+            return new BookmarkApplicationDto(application, fileDtos);
+        }).collect(Collectors.toList());
     }
 
 
@@ -51,11 +81,10 @@ public class MainService {
      */
     public List<RatingApplicationDTO> getTopRatingApplication(int limit) {
         List<RatingApplicationDTO> topCompanies = ratingRepository.findTopRatedCompanies();
-        log.info("asdadasfa111111111s{}", topCompanies);
         topCompanies.forEach(dto -> {
             Application latestApplication = applicationRepository.findLatestApplicationByCompany(dto.getUsername());
             if (latestApplication != null) {
-                List<File> files = fileRepository.findFilesByApplicationNo(latestApplication.getApplicationNo());
+                List<File> files = fileRepository.findFilesByApplicationNo(latestApplication.getApplicationNo(), "application_no");
                 dto.setApplication(latestApplication);
                 dto.setFiles(files);
             }
@@ -77,6 +106,9 @@ public class MainService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 인기 공고 데이터 처리
+     */
     private PopularApplicationDto mapToDto(Application application) {
         PopularApplicationDto dto = modelMapper.map(application, PopularApplicationDto.class);
         try {
@@ -84,14 +116,24 @@ public class MainService {
                 Hibernate.initialize(application.getCompany());
                 dto.setName(application.getCompany().getName());
             }
-            List<File> files = fileRepository.findFilesByApplicationNo(application.getApplicationNo());
+            List<File> files = fileRepository.findFilesByApplicationNo(application.getApplicationNo(), "application_no");
             dto.setFiles(files);
         } catch (Exception e) {
             log.error("@@@@@@아 뭔가 테스트 데이터가 잘못 들어가있다@@@@@@ {}: {}", application.getApplicationNo(), e.getMessage());
         }
-
         return dto;
     }
 
-
+    /**
+     * 좋아요한 공고 조회
+     */
+    private List<LikeApplicationDto> getLikedApplications(String username) {
+        return likeRepository.findLikeApplications(username).stream().map(likeApplicationDto -> {
+            List<File> files = fileRepository.findFilesByApplicationNo(likeApplicationDto.getApplication().getApplicationNo(), "application_no");
+            likeApplicationDto.setFile(files.stream()
+                    .map(file -> modelMapper.map(file, FileDto.class))
+                    .collect(Collectors.toList()));
+            return likeApplicationDto;
+        }).collect(Collectors.toList());
+    }
 }

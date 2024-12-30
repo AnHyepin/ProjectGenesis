@@ -13,4 +13,6 @@ import java.util.List;
 public class MainPageDataDto {
     private List<RatingApplicationDTO> topRatedCompanies;
     private List<PopularApplicationDto> popularApplications;
+    private List<LikeApplicationDto> likeApplications;
+    private List<BookmarkApplicationDto> bookmarkApplications;
 }
