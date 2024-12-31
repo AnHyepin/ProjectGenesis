@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.BoardDao">
+    <insert id="regBoard">
+        INSERT INTO tbl_board (title, content, regist_id)
+        VALUES (#{board.title}, #{board.content}, #{board.registId})
+    </insert>
+
+    <select id="getBoard" resultType="org.green.backend.dto.kwanhyun.BoardDto">
+        SELECT * FROM tbl_board WHERE board_no = #{boardNo}
+    </select>
+
+    <select id="getMyBoardList" resultType="org.green.backend.dto.kwanhyun.BoardDto">
+        SELECT * FROM tbl_board WHERE regist_id = #{username} AND delete_yn = 'N'
+    </select>
+
+    <select id="getNoticeList" resultType="org.green.backend.dto.kwanhyun.BoardDto">
+        SELECT * FROM tbl_board WHERE board_gbn_code = 'N' AND delete_yn = 'N'
+    </select>
+
+    <update id="updateBoard">
+        UPDATE tbl_board SET
+            title = #{board.title},
+            content = #{board.content},
+            modi_dt = NOW()
+        WHERE board_no = #{board.boardNo};
+    </update>
+
+    <update id="deleteBoard">
+        UPDATE tbl_board SET
+            delete_yn = 'Y'
+        WHERE board_no = #{boardNo};
+    </update>
+</mapper>
