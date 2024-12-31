@@ -20,6 +20,10 @@ public class FileUploadUtil {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+
+    @Value("${front.file-dir}")
+    private String fileDir;
+
     @PostConstruct
     public void init() {
         Path uploadPath = Paths.get(uploadDir);
@@ -66,7 +70,7 @@ public class FileUploadUtil {
         fileDto.setFileOldName(originalFilename);
         fileDto.setFileExt(fileExt);
         fileDto.setFileSize(fileSize);
-        fileDto.setFileUrl("/static/upload/" + newFileName + fileExt);
+        fileDto.setFileUrl(fileDir + newFileName + fileExt);
         fileDto.setInstId(userId);
 
         return fileDto;
