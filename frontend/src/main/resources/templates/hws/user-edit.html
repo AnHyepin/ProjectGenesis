@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout-test/layout}">
+    <head>
+        <title>Title</title>
+        <link rel="stylesheet" href="/static/css/hws/join.css">
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    </head>
+    <body layout:fragment="content">
+        <div class="genesis-join-container">
+
+            <h1 class="title"> 구직자 </h1>
+            <div class="profile-box"
+                 th:data-file-id="${file != null ? file.fileNo : 'null'}"
+                 th:data-file-url="${file != null ? file.fileUrl : ''}">
+                <h1>+</h1>
+                <input type="file" name="profilePicture" accept="image/*" onchange="previewImage(event)">
+                <input type="hidden" id="hidden-profile-url" th:value="${file != null ? file.fileUrl : ''}">
+            </div>
+
+
+            <div class="input-group">
+                <div class="input-title">
+                    <span>*</span>
+                    <div>이름</div>
+                </div>
+                <div class="detail">
+                    <input name="name" type="text" th:value="${user.name}" placeholder="이름을 입력하세요...">
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="gender" value="M" th:checked="${user.gender == 'M'}">
+                            <span>남</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="F" th:checked="${user.gender == 'F'}">
+                            <span>여</span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-title">
+                    <span>*</span>
+                    <div>생년월일</div>
+                </div>
+                <div class="detail">
+                    <input name="birth" type="date" th:value="${user.birth}" placeholder="생년월일 (예시 : 20000131)">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-title">
+                    <span>*</span>
+                    <div>이메일</div>
+                </div>
+                <div class="detail">
+                    <input name="email" th:value="${user.email}" type="email" placeholder="이메일을 입력하세요...">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-title">
+                    <span>*</span>
+                    <div>휴대폰번호</div>
+                </div>
+                <div class="detail">
+                    <input maxlength="11" th:value="${user.phone}" name="phone" type="text" placeholder="휴대폰 번호 (-) 제외">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-title">
+                    <span>*</span>
+                    <div>주소검색</div>
+                </div>
+                <div class="detail">
+                    <input name="zipcode" th:value="${user.address.zipCode}" type="text" placeholder="우편번호" readonly>
+                    <button type="button" onclick="openDaumPostcode()">검색</button>
+                </div>
+                <div class="detail">
+                    <input name="roadAddress" th:value="${user.address.address}" type="text" placeholder="주소를 입력하세요"
+                           readonly>
+                </div>
+                <div class="detail">
+                    <input name="detailAddress" th:value="${user.address.addressDetail}" type="text"
+                           placeholder="상세 주소를 입력하세요">
+                </div>
+            </div>
+
+            <input type="hidden" name="username" id="username" th:value="${user.username}">
+
+
+            <div class="input-group">
+                <button onclick="submitForm()" class="join-btn">회원수정</button>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="/static/js/hws/user-edit.js"></script>

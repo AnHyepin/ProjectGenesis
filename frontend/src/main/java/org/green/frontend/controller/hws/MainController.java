@@ -30,10 +30,9 @@ public class MainController {
     private final ApiRequestService apiRequestService;
 
     @GetMapping("/")
-    public String nonLoginMain(Model model, @RequestParam(required = false) UserDto userDto, HttpServletRequest request, HttpSession session) {
-        NonLoginMainDto mainData = mainService.nonLoginMain();
-
+    public String nonLoginMain(Model model, HttpServletRequest request, HttpSession session) {
         String token = TokenUtil.getTokenFromCookies(request);
+        NonLoginMainDto mainData = mainService.nonLoginMain(token);
 
         if (token != null) {
             var response = apiRequestService.postDataWithToken("/api/verify-token", null, token);

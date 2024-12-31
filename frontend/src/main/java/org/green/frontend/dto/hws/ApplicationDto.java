@@ -26,4 +26,5 @@ public class ApplicationDto {
     private String modiDt;
     private String companyName;
     private String daysLeft;
+    private Boolean isScrap;
 }

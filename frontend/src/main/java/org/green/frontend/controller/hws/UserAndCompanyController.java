@@ -1,12 +1,25 @@
 package org.green.frontend.controller.hws;
 
 
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.green.frontend.dto.hws.UserDto;
+import org.green.frontend.global.ApiResponse;
+import org.green.frontend.service.ApiRequestService;
+import org.green.frontend.utils.SessionUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Map;
+
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class UserAndCompanyController {
 
+    private final ApiRequestService apiRequestService;
 
     @GetMapping("/login")
     public String login() {
@@ -21,5 +34,23 @@ public class UserAndCompanyController {
     @GetMapping("/join/company")
     public String companyJoin() {
         return "hws/join-company";
+    }
+
+    @GetMapping("/user-edit")
+    public String userEdit(HttpSession session, Model model) {
+        UserDto user = SessionUtil.getUser(session);
+
+        if (user == null) {
+            log.warn("세션에 유저 정보가 없습니다.");
+            return "redirect:/login";
+        }
+        var apiResponse = apiRequestService.fetchData("/api/user/" + user.getUsername());
+        log.info("apiResponse: {}", apiResponse.getBody());
+
+        Map<String, Object> responseData = (Map<String, Object>) apiResponse.getBody();
+
+        model.addAttribute("user", responseData.get("user"));
+        model.addAttribute("file", responseData.get("file"));
+        return "hws/user-edit";
     }
 }

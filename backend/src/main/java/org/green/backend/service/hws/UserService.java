@@ -1,9 +1,11 @@
 package org.green.backend.service.hws;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.UserDto;
+import org.green.backend.dto.hws.UserWithFileDto;
 import org.green.backend.entity.User;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
@@ -99,4 +101,51 @@ public class UserService {
         return userRepository.findByUsername(username) != null ? "중복됨" : "사용 가능";
     }
 
+    /**
+     * 사용자 정보를 가져오고 UserDto로 반환.
+     */
+    public UserWithFileDto getUserByUsername(String username) {
+        UserWithFileDto userEntity = userRepository.findUserWithFileByUsername(username, "profile_user");
+        log.info("조회된 사용자 엔티티: {}", userEntity);
+
+        if (userEntity != null) {
+            return modelMapper.map(userEntity, UserWithFileDto.class);
+        }
+        return null;
+    }
+
+    /**
+     * 사용자 정보 업데이트
+     * 유저 정보 업뎃
+     */
+    @Transactional
+    public String updateUser(UserDto userDto, MultipartFile profilePicture, Long fileNo) throws IOException {
+
+        User user = userRepository.findByUsername(userDto.getUsername());
+
+        try {
+            if (user != null) {
+                user.setName(userDto.getName());
+                user.setBirth(userDto.getBirth());
+                user.setEmail(userDto.getEmail());
+                user.setGender(userDto.getGender());
+                user.setPhone(userDto.getPhone());
+                user.setAddress(userDto.toAddress());
+                userRepository.save(user);
+            }
+
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                // 파일 저장 후 경로 저장
+                fileService.saveFile(profilePicture, "profile_user", userDto.getUsername(), userDto.getUsername());
+            }
+
+            if (fileNo != null) {
+                fileService.deleteFileById(fileNo);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return "성공";
+    }
 }
+

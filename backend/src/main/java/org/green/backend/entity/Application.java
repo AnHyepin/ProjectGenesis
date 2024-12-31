@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * 12-27 (작성자: 안제연)
  * 이 클래스는 채용공고 Entity입니다.
@@ -77,5 +79,8 @@ public class Application {
     @JoinColumn(name = "username", insertable = false, updatable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Company company;
+
+    @Transient
+    private Boolean isScrapped;
 
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -22,4 +24,5 @@ public class Like {
 
     @Column(name = "like_id", nullable = false)
     private String likeId;
+
 }

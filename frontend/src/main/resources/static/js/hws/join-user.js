@@ -57,7 +57,7 @@ function idCheck() {
         return;
     }
 
-    api.get(`/api/user/${username.value.trim()}`)
+    api.get(`/api/user/check/${username.value.trim()}`)
         .then(data => {
             if (data.body === '중복됨') {
 

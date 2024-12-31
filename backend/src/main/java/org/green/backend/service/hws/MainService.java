@@ -40,15 +40,28 @@ public class MainService {
     /**
      * 비회원 메인 화면 데이터
      */
-    public MainPageDataDto getNonLoginPageData() {
+    public MainPageDataDto getNonLoginPageData(String username) {
         List<RatingApplicationDTO> topRatedCompanies = getTopRatingApplication(3);
         List<PopularApplicationDto> popularApplications = getPopularApplications();
-        List<LikeApplicationDto> likeApplications = getLikedApplications("yiok79");
-        List<BookmarkApplicationDto> bookmarkedApplications = getBookmarkedApplications("yiok79");
-
-        return new MainPageDataDto(topRatedCompanies, popularApplications, likeApplications, bookmarkedApplications);
+        if (username != null) {
+            log.info("username is " + username);
+            List<LikeApplicationDto> likeApplications = getLikedApplications(username);
+            List<BookmarkApplicationDto> bookmarkedApplications = getBookmarkedApplications(username);
+            List<Integer> scrappedApplicationIds = getScrappedApplicationIds(username);
+            return new MainPageDataDto(topRatedCompanies, popularApplications, likeApplications, bookmarkedApplications, scrappedApplicationIds);
+        }
+        return new MainPageDataDto(topRatedCompanies, popularApplications);
     }
 
+    /**
+     * 스크랩한 공고 ID 조회
+     */
+    private List<Integer> getScrappedApplicationIds(String username) {
+        if (username == null) {
+            return List.of();
+        }
+        return likeRepository.findScrappedApplicationIds(username);
+    }
 
     /**
      * 구독한 기업의 최신 공고 3개를 가져오는 메서드
@@ -71,7 +84,7 @@ public class MainService {
                     .map(file -> modelMapper.map(file, FileDto.class))
                     .collect(Collectors.toList());
 
-            return new BookmarkApplicationDto(application.getCompany().getName(),application, fileDtos);
+            return new BookmarkApplicationDto(application.getCompany().getName(), application, fileDtos);
         }).collect(Collectors.toList());
     }
 
@@ -125,7 +138,7 @@ public class MainService {
     }
 
     /**
-     * 좋아요한 공고 조회
+     * 스크랩한 공고 조회
      */
     private List<LikeApplicationDto> getLikedApplications(String username) {
         return likeRepository.findLikeApplications(username).stream().map(likeApplicationDto -> {

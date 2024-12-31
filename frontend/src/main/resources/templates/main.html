@@ -32,9 +32,15 @@
                     <div th:each="like : ${mainData.likeApplications}" class="genesis-main-card">
                         <img th:src="${#lists.isEmpty(like.files) ? '/static/img/img_default_gonggo.png' : like.files[0].fileUrl}"
                              alt="topCompany Application">
-                        <div class="genesis-card-heart" onclick="toggleHeart(this)" data-id="${like.applicationData.applicationNo}">
-                            <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
+
+                        <div class="genesis-card-heart"
+                             th:data-id="${like.applicationData.applicationNo}"
+                             th:data-is-scrapped="${like.applicationData.isScrap}"
+                             onclick="toggleHeart(this)">
+                            <i th:classappend="${like.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                               style="color: #3AF26E;"></i>
                         </div>
+
                         <div class="genesis-card-label"
                              th:text="${like.applicationData.daysLeft != null && like.applicationData.daysLeft != 'D-0'
                            ? like.applicationData.daysLeft
@@ -60,8 +66,12 @@
                     <div th:each="bookmark : ${mainData.bookmarkApplications}" class="genesis-main-card">
                         <img th:src="${#lists.isEmpty(bookmark.files) ? '/static/img/img_default_gonggo.png' : bookmark.files[0].fileUrl}"
                              alt="topCompany Application">
-                        <div class="genesis-card-heart" onclick="toggleHeart(this)" data-id="${bookmark.applicationData.applicationNo}">
-                            <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
+                        <div class="genesis-card-heart"
+                             th:data-id="${bookmark.applicationData.applicationNo}"
+                             th:data-is-scrapped="${bookmark.applicationData.isScrap}"
+                             onclick="toggleHeart(this)">
+                            <i th:classappend="${bookmark.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                               style="color: #3AF26E;"></i>
                         </div>
                         <div class="genesis-card-label"
                              th:text="${bookmark.applicationData.daysLeft != null && bookmark.applicationData.daysLeft != 'D-0'
@@ -89,8 +99,13 @@
                     <div th:each="popularApp : ${mainData.popularApplications}" class="genesis-main-card two">
                         <img th:src="${#lists.isEmpty(popularApp.files) ? '/static/img/img_default_gonggo.png' : popularApp.files[0].fileUrl}"
                              alt="Popular Application">
-                        <div class="genesis-card-heart" onclick="toggleHeart(this)" data-id="${popularApp.applicationData.applicationNo}">
-                            <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
+
+                        <div class="genesis-card-heart"
+                             th:data-id="${popularApp.applicationData.applicationNo}"
+                             th:data-is-scrapped="${popularApp.applicationData.isScrap}"
+                             onclick="toggleHeart(this)">
+                            <i th:classappend="${popularApp.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                               style="color: #3AF26E;"></i>
                         </div>
 
                         <div class="genesis-card-label"
@@ -136,9 +151,16 @@
                     <div th:each="topCompany : ${mainData.topRatedCompanies}" class="genesis-main-card">
                         <img th:src="${#lists.isEmpty(topCompany.files) ? '/static/img/img_default_gonggo.png' : topCompany.files[0].fileUrl}"
                              alt="topCompany Application">
-                        <div class="genesis-card-heart">
-                            <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
+
+
+                        <div class="genesis-card-heart"
+                             th:data-id="${topCompany.applicationData.applicationNo}"
+                             th:data-is-scrapped="${topCompany.applicationData.isScrap}"
+                             onclick="toggleHeart(this)">
+                            <i th:classappend="${topCompany.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                               style="color: #3AF26E;"></i>
                         </div>
+
                         <div class="genesis-card-label"
                              th:text="${topCompany.applicationData.daysLeft != null && topCompany.applicationData.daysLeft != 'D-0'
                                        ? topCompany.applicationData.daysLeft
@@ -185,7 +207,7 @@
                 }
 
                 const id = element.getAttribute('data-id');
-                console.log(`토글된 공고 ID: ${id}`);
+                console.log(`클릭 ID: ${id}`);
             }
         </script>
 

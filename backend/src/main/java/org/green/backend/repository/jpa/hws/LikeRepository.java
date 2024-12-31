@@ -34,5 +34,11 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
             """)
     List<Company> findSubscribedCompanies(@Param("currentUsername") String currentUsername);
 
+    @Query("""
+                SELECT CAST(l.likeId AS int)
+                FROM Like l
+                WHERE l.username = :username AND l.likeCode = 'S'
+            """)
+    List<Integer> findScrappedApplicationIds(@Param("username") String username);
 
 }
