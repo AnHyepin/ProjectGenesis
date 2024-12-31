@@ -32,6 +32,11 @@ public class TestController {
         return "success";
     }
 
+    @GetMapping("/test5")
+    public String test5(@RequestParam String id) {
+        System.out.println("ㅁㄴㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" +id);
+        return "success";
+    }
 
 
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookmarkApplicationDto {
+    private String name;
     private Application application;
     private List<FileDto> files;
 }

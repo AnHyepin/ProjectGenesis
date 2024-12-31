@@ -12,7 +12,7 @@ import java.util.List;
 public interface LikeRepository extends JpaRepository<Like, Long> {
     @Query("""
                 SELECT new org.green.backend.dto.hws.LikeApplicationDto(
-                    l.id, l.username, l.likeCode, a
+                    l.id, l.username, l.likeCode, a , a.company.name
                 )
                 FROM Like l
                 JOIN Application a ON CAST(l.likeId AS int) = a.applicationNo

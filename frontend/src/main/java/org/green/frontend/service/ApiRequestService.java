@@ -37,26 +37,51 @@ public class ApiRequestService {
      * ApiResponse response = apiRequestService.fetchData("/login", params);
      * <p>
      */
-    public ApiResponse fetchData(String uri, Map<String, String> params, String token) {
+    public ApiResponse fetchData(String uri, Map<String, String> params, String token, boolean disableEncoding) {
         try {
-            return webClient
-                    .get()
-                    .uri(uriBuilder -> {
-                        uriBuilder.path(uri);
-                        if (params != null && !params.isEmpty()) {
-                            params.forEach(uriBuilder::queryParam);
-                        }
-                        return uriBuilder.build();
-                    })
-                    .headers(headers -> {
-                        if (token != null && !token.isEmpty()) {
-                            headers.setBearerAuth(token);
-                        }
-                    })
-                    .exchangeToMono(this::handleResponseWithAuthCheck)
-                    .block();
+            if (disableEncoding) {
+                StringBuilder urlBuilder = new StringBuilder(uri);
+                if (params != null && !params.isEmpty()) {
+                    urlBuilder.append("?");
+                    params.forEach((key, value) -> urlBuilder.append(key).append("=").append(value).append("&"));
+                    urlBuilder.setLength(urlBuilder.length() - 1);
+                }
+                String fullUrl = urlBuilder.toString();
+                log.info("인코딩되지 않은 URL: {}", fullUrl);
+
+                return webClient
+                        .get()
+                        .uri(fullUrl)
+                        .headers(headers -> {
+                            if (token != null && !token.isEmpty()) {
+                                headers.setBearerAuth(token);
+                            }
+                        })
+                        .exchangeToMono(this::handleResponseWithAuthCheck)
+                        .block();
+            } else {
+                return webClient
+                        .get()
+                        .uri(uriBuilder -> {
+                            uriBuilder.path(uri);
+                            if (params != null && !params.isEmpty()) {
+                                params.forEach(uriBuilder::queryParam);
+                            }
+                            return uriBuilder.build();
+                        })
+                        .headers(headers -> {
+                            if (token != null && !token.isEmpty()) {
+                                headers.setBearerAuth(token);
+                            }
+                        })
+                        .exchangeToMono(this::handleResponseWithAuthCheck)
+                        .block();
+            }
         } catch (UnauthorizedAccessException e) {
             throw e;
+        } catch (Exception e) {
+            log.error("GET 요청 중 오류 발생: {}", e.getMessage(), e);
+            return new ApiResponse<>(ApiResponse.ApiStatus.ERROR, "GET 요청 실패", HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 
@@ -64,14 +89,21 @@ public class ApiRequestService {
      * GET 요청으로 데이터 조회(파라미터 없이).
      */
     public ApiResponse fetchData(String uri) {
-        return fetchData(uri, null, null);
+        return fetchData(uri, null, null,false);
     }
 
     /**
      * GET 요청으로 데이터 조회(파라미터 포함, 토큰 제외).
      */
-    public ApiResponse fetchData(String uri, Map<String, String> params) {
-        return fetchData(uri, params, null);
+    public ApiResponse fetchData(String uri, Map<String, String> params,Boolean disableEncoding) {
+        return fetchData(uri, params,null, disableEncoding);
+    }
+
+    /**
+     * GET 요청으로 데이터 조회(파라미터 제외, 토큰 포함).
+     */
+    public ApiResponse fetchDataToken(String uri, String token) {
+        return fetchData(uri, null, token,false);
     }
 
 
@@ -109,4 +141,29 @@ public class ApiRequestService {
                     }
                 });
     }
+
+    /**
+     * POST 요청으로 데이터 전송 (파라미터 및 토큰 포함).
+     */
+    public ApiResponse postDataWithToken(String uri, Map<String, Object> body, String token) {
+        try {
+            return webClient
+                    .post()
+                    .uri(uri)
+                    .headers(headers -> {
+                        if (token != null && !token.isEmpty()) {
+                            headers.setBearerAuth(token);
+                        }
+                    })
+                    .bodyValue(body != null ? body : Map.of())
+                    .exchangeToMono(this::handleResponseWithAuthCheck)
+                    .block();
+        } catch (UnauthorizedAccessException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("POST 요청 중 오류 발생: {}", e.getMessage(), e);
+            return new ApiResponse<>(ApiResponse.ApiStatus.ERROR, "POST 요청 실패", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
 }

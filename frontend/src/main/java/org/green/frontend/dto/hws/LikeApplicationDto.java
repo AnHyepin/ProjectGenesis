@@ -15,6 +15,7 @@ public class LikeApplicationDto {
     private Long likeId;
     private String username;
     private String likeCode;
+    private String companyName;
     private ApplicationDto applicationData;
     private List<FileDto> files;
 }

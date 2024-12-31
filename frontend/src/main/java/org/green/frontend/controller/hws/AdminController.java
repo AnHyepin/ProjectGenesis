@@ -41,8 +41,8 @@ public class AdminController {
     @GetMapping("/company")
     public String adminCompany(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            HttpServletRequest request,
+            @RequestParam(defaultValue = "10") int size,            HttpServletRequest request,
+
             Model model
     ) {
         String token = TokenUtil.getTokenFromCookies(request);
