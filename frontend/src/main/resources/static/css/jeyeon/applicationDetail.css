@@ -7,6 +7,16 @@
     padding: 20px;
 }
 
+.applicationDetail button {
+    all: unset; /* 모든 기본 스타일을 제거 */
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    font: inherit; /* 폰트 스타일 상속 */
+    color: inherit; /* 텍스트 색상 상속 */
+    cursor: pointer; /* 클릭 가능하게 표시 */
+}
+
 .applicationDetail .container {
     max-width: 800px;
     margin: 0 auto;
@@ -26,7 +36,7 @@
 }
 
 .applicationDetail .company-name{
-    margin-top: 5px;
+    margin-top: 3px;
 }
 
 .applicationDetail .flex-box {
@@ -35,14 +45,26 @@
     width: 100%;
 }
 
+.applicationDetail .flex-box i{
+    color: #3AF26E;
+}
+
+.applicationDetail .check i{
+    font-size: 1.8rem;
+}
+
 .applicationDetail .flex-box .subscribeBtn {
-    padding: 5px 16px;                   /* 버튼 안쪽 여백 */
+    padding: 3px 10px;                   /* 버튼 안쪽 여백 */
     font-size: 0.9rem;                   /* 버튼 글씨 크기 */
     cursor: pointer;                     /* 클릭 가능 커서 표시 */
     border: 1px solid #ccc;              /* 테두리 스타일 */
     background-color: #fff;              /* 배경색 */
-    border-radius: 4px;                  /* 테두리 둥글게 */
+    border-radius: 5px;                  /* 테두리 둥글게 */
     color: #000;
+}
+
+.applicationDetail .subscribeBtn i {
+    margin-right: 5px; /* 아이콘과 텍스트 사이에 8px 여백 추가 */
 }
 
 .applicationDetail .job-title {
@@ -54,6 +76,137 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
+}
+
+.applicationDetail .company-management-btn{
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.applicationDetail .jobBtn{
+    padding: 5px 16px;  /* 텍스트 주위 여백 */
+    margin: 5px;         /* 요소들 간 여백 */
+    border-radius: 5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    display: inline-flex;  /* 텍스트 길이에 맞게 크기 조정 */
+    align-items: center;
+    white-space: nowrap;   /* 텍스트가 한 줄로 표시되도록 설정 */
+    flex-shrink: 0;        /* 텍스트 크기에 맞게 크기 고정 */
+    min-width: 30px;       /* 최소 너비 설정 (필요시 조정) */
+
+}
+
+.applicationDetail .resume-listBtn, .applicationDetail .updateBtn {
+    color: #000;
+    border: 1px solid #F2BB16;
+}
+
+.applicationDetail .resume-listBtn:hover, .applicationDetail .updateBtn:hover {
+    color: #000;
+    background-color: #F2BB16;
+}
+
+.applicationDetail .deleteBtn{
+    color: #000;
+    border: 1px solid #F20F38;
+}
+
+.applicationDetail .deleteBtn:hover{
+    color: white;
+    background-color: #F20F38;
+}
+
+/*공고 요약*/
+.applicationDetail .job-detail{
+    border-bottom: 2px solid #eee
+}
+.applicationDetail .job-summary {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr; /* 레이블과 값 */
+    gap: 10px 15px; /* 열과 행 사이의 간격 */
+    padding: 20px;
+    font-size: 16px;
+}
+.applicationDetail .label {
+    color: #6c757d;
+    font-weight: normal;
+}
+.applicationDetail .value {
+    font-weight: 500;
+    color: #000;
+}
+.applicationDetail .full-width {
+    grid-column: span 4; /* 한 줄 전체를 차지 */
+}
+
+/*유저가 사용하는 버튼*/
+.applicationDetail .user-management-btn{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.applicationDetail .applyBtn{
+    background-color: #3AF26E;
+    display: flex;
+    justify-content: center;
+    min-width: 100px;       /* 최소 너비 설정 (필요시 조정) */
+}
+
+.applicationDetail .likeBtn{
+    border: 1px solid #3AF26E;
+    font-weight: bold;
+}
+
+.applicationDetail .likeBtn i{
+    margin-right: 5px; /* 아이콘과 텍스트 사이에 8px 여백 추가 */
+    color: #3AF26E;
+    font-size: 1.2rem; /* 크기를 키워 강조 */
+}
+
+/*모집부문 및 상세*/
+.applicationDetail h2, h3{
+    font-weight: bold;
+}
+
+.applicationDetail .job-content{
+    padding-top: 10px;
+    margin-left: 50px;
+}
+
+.applicationDetail .job-content > ul > li {
+    margin-left: 5px;
+}
+
+/* Add spacing between lines inside each section */
+.applicationDetail .section {
+    margin-bottom: 30px; /* Add space at the bottom of each section */
+
+}
+
+/* Add spacing between each <li> element within a section */
+.applicationDetail .section-content li {
+    margin-bottom: 5px; /* Adjust the spacing between list items */
+}
+
+/* Add spacing between paragraphs or other elements within each section */
+.applicationDetail .section-title {
+    font-size: 20px;
+    font-weight: bold; /* Make the title bold for clarity */
+}
+
+/* Optional: Add some spacing between sections' content and the title */
+.applicationDetail .section-content {
+    margin-top: 10px;
+}
+
+
+.applicationDetail .section-content > li{
+    margin-left: 20px;
 }
 
 .applicationDetail .status-badges {
@@ -69,11 +222,8 @@
     background-color: #4caf50; /* green */
 }
 
-.applicationDetail .status-badge.closed {
-    background-color: #f44336; /* red */
-}
-
-.applicationDetail .slider {
+/* 슬라이더 컨테이너 스타일 */
+.applicationDetail .job-slider {
     position: relative;
     width: 100%;
     margin: 30px auto;
@@ -82,54 +232,49 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.applicationDetail .slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
+.applicationDetail .swiper-container {
+    width: 100%;  /* 슬라이더 너비를 100%로 설정 */
+    height: 300px;  /* 슬라이더 높이를 지정 */
+    position: relative;  /* 내비게이션 버튼이 컨테이너에 상대적으로 위치하도록 설정 */
 }
 
-.applicationDetail .slide {
-    min-width: 100%;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: bold;
+.applicationDetail .swiper-slide {
+    width: 100%;  /* 슬라이드 너비를 100%로 설정 */
+    height: 100%;  /* 슬라이드 높이를 100%로 설정 */
 }
 
 .applicationDetail .prevBtn,
 .applicationDetail .nextBtn {
-    position: absolute;               /* 절대 위치 지정 */
-    top: 50%;                          /* 세로로 중앙 배치 */
-    transform: translateY(-50%);       /* 정확한 중앙 배치 */
-    background-color: transparent;     /* 배경 투명 */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
     color: white;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     border-radius: 50%;
+    z-index: 10;
+}
+
+/* :after pseudo-element 스타일 초기화 */
+.applicationDetail #prevBtn:after, .applicationDetail #nextBtn:after {
+    content: '';   /* 내용 없애기 */
+    display: none;  /* 의도하지 않게 표시되지 않도록 */
+    visibility: hidden;  /* 완전히 숨기기 */
 }
 
 .applicationDetail .prevBtn {
-    left: 20px;                       /* 왼쪽에 배치 */
+    left: 20px;
 }
 
 .applicationDetail .nextBtn {
-    right: 20px;                      /* 오른쪽에 배치 */
+    right: 20px;
 }
 
 .applicationDetail .prevBtn:hover svg path,
 .applicationDetail .nextBtn:hover svg path {
     fill: rgba(0, 0, 0, 0.3);          /* 호버 시 fill 색상 변경 */
-}
-
-/* Job Details */
-.applicationDetail .job-details {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid #ddd;
 }
 
 .applicationDetail .detail-item {

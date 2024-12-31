@@ -3,7 +3,10 @@ package org.green.backend.service.jeyeon;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
+import org.green.backend.dto.jeyeon.ApplicationResponseDto;
+import org.green.backend.entity.Application;
 import org.green.backend.entity.ApplicationStack;
+import org.green.backend.entity.Company;
 import org.green.backend.entity.File;
 import org.green.backend.repository.dao.jeyeon.ApplicationDao;
 import org.green.backend.service.common.FileService;
@@ -58,5 +61,15 @@ public class ApplicationService {
         System.out.println(lastApplicationNo);
 
         return lastApplicationNo;
+    }
+
+    public ApplicationResponseDto getApplication(int applicationNo) {
+        ApplicationResponseDto application = applicationDao.selectApplication(applicationNo);
+        System.out.println(application);
+        return application;
+    }
+
+    public Company getApplicationCompany(String username) {
+        return applicationDao.selectApplicatinCompany(username);
     }
 }
