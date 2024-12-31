@@ -13,13 +13,15 @@ import java.util.List;
 @AllArgsConstructor
 public class LikeApplicationDto {
     private Long likeId;
+    private String name;
     private String username;
     private Character likeCode;
     private Application application;
     private List<FileDto> file;
 
-    public LikeApplicationDto(Long likeId, String username, Character likeCode, Application application) {
+    public LikeApplicationDto(Long likeId, String username, Character likeCode, Application application,String name) {
         this.likeId = likeId;
+        this.name = name;
         this.username = username;
         this.likeCode = likeCode;
         this.application = application;

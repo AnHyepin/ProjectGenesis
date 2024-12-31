@@ -12,5 +12,6 @@ import java.util.List;
 @Builder
 public class BookmarkApplicationDto {
     private ApplicationDto applicationData;
+    private String companyName;
     private List<FileDto> files;
 }

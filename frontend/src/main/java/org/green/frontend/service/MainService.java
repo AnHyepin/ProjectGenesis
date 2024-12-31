@@ -45,6 +45,7 @@ public class MainService {
         return BookmarkApplicationDto.builder()
                 .applicationData(mapToApplicationDTO((Map<String, Object>) bookmarkApplication.get("application")))
                 .files(fileDtos)
+                .companyName((String) bookmarkApplication.get("name"))
                 .build();
     }
 
@@ -58,6 +59,7 @@ public class MainService {
                 .files(fileDtos)
                 .likeId(((Number) likeData.get("likeId")).longValue())
                 .likeCode((String) likeData.get("likeCode"))
+                .companyName((String) likeData.get("name"))
                 .build();
     }
 
@@ -72,7 +74,6 @@ public class MainService {
                 .applicationData(mapToApplicationDTO((Map<String, Object>) companyData.get("application")))
                 .averageStar((Double) companyData.get("averageStar"))
                 .files(fileDtos)
-
                 .build();
     }
 

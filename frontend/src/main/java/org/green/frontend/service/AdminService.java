@@ -38,7 +38,7 @@ public class AdminService {
 
     private Map<String, Object> fetchAndProcessData(String endpoint, int page, int size,String token) {
 
-        var response = apiRequestService.fetchData(endpoint, Map.of("page", String.valueOf(page), "size", String.valueOf(size)), token);
+        var response = apiRequestService.fetchData(endpoint, Map.of("page", String.valueOf(page), "size", String.valueOf(size)), token,false);
 
         log.info(String.valueOf(response));
 

@@ -1,4 +1,4 @@
-package org.green.backend.dto.jeyeon;
+package org.green.backend.dto.common;
 
 import lombok.Data;
 

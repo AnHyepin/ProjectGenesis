@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="org.green.backend.repository.dao.common.GubnDao">
+    <select id="getGubnList" parameterType="String" resultType="org.green.backend.dto.common.GubnDto">
+        SELECT group_code, gubn_code, gubn_name
+        FROM tbl_gubn
+        WHERE group_code = #{gubnCode};
+    </select>
+
+    <select id="getSkillList" resultType="org.green.backend.dto.common.GubnDto">
+        SELECT group_code, gubn_code, gubn_name
+        FROM tbl_gubn
+        WHERE group_code
+            in(SELECT gubn_code
+            FROM tbl_gubn
+            WHERE group_code = 'stack_code');
+    </select>
+
+</mapper>
