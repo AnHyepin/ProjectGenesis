@@ -31,6 +31,4 @@ public class ApplicationRequestDto {
     private String registDt;               // 생성일
     private String modiDt;                 // 수정일
     private List<String> skillList;        // 스킬리스트
-    private String fileNewName;            // 파일명
-    private MultipartFile file;            // 파일
 }

@@ -1,4 +1,4 @@
-.application {
+.applicationRegist {
 
     background-color: #ffffff;
     margin: 0;
@@ -6,12 +6,12 @@
 
 }
 
-.application span{
+.applicationRegist span{
     color:red;
     padding-right: 5px;
 }
 
-.application button {
+.applicationRegist button {
     all: unset; /* 모든 기본 스타일을 제거 */
     background: none; /* 배경 제거 */
     border: none; /* 테두리 제거 */
@@ -21,7 +21,7 @@
     cursor: pointer; /* 클릭 가능하게 표시 */
 }
 
-.application .form-container {
+.applicationRegist .form-container {
     max-width: 800px;
     margin: 0 auto;
     background: none;
@@ -30,29 +30,29 @@
     padding: 0;
 }
 
-.application .form-container h1 {
+.applicationRegist .form-container h1 {
     font-size: 1.8rem;
     margin-bottom: 20px;
     text-align: left;
     color: #333;
 }
 
-.application .form-group {
+.applicationRegist .form-group {
     margin-bottom: 15px;
 }
 
-.application .form-group label {
+.applicationRegist .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #555;
 }
 
-.application .form-group input[type="text"],
-.application .form-group input[type="date"],
-.application .form-group input[type="number"],
-.application .form-group textarea,
-.application .form-group select {
+.applicationRegist .form-group input[type="text"],
+.applicationRegist .form-group input[type="date"],
+.applicationRegist .form-group input[type="number"],
+.applicationRegist .form-group textarea,
+.applicationRegist .form-group select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -62,27 +62,27 @@
     background-color: #ffffff;
 }
 
-.application .form-group input[type="text"]:focus,
-.application .form-group input[type="date"]:focus,
-.application .form-group input[type="number"]:focus,
-.application .form-group textarea:focus,
-.application .form-group select:focus {
+.applicationRegist .form-group input[type="text"]:focus,
+.applicationRegist .form-group input[type="date"]:focus,
+.applicationRegist .form-group input[type="number"]:focus,
+.applicationRegist .form-group textarea:focus,
+.applicationRegist .form-group select:focus {
     border-color: #F2BB16; /* 테두리 색상을 변경 */
     box-shadow: 0 0 8px rgba(242, 187, 22, 0.6); /* 테두리 주변에 황금색 그림자 추가 */
     outline: none; /* 기본 outline 제거 */
 }
 
-.application .form-group textarea {
+.applicationRegist .form-group textarea {
     height: 100px;
 }
 
-.application .form-group .skills {
+.applicationRegist .form-group .skills {
     display: flex;
     flex-wrap: wrap;
     /*gap: 10px;*/
 }
 
-.application .skill-btn {
+.applicationRegist .skill-btn {
     padding: 8px 15px;  /* 텍스트 주위 여백 */
     margin: 5px;         /* 요소들 간 여백 */
     border: 1px solid #ddd;
@@ -98,17 +98,17 @@
     min-width: 50px;       /* 최소 너비 설정 (필요시 조정) */
 }
 
-.application .skill-btn i {
+.applicationRegist .skill-btn i {
     margin-right: 5px; /* 아이콘 오른쪽에 여유 공간 추가 */
 }
 
-.application .skill-btn.active {
+.applicationRegist .skill-btn.active {
     background-color: #ffc107;
     border-color: #ffc107;
     color: #000000;
 }
 
-/*.application .btn {
+/*.applicationRegist .btn {
     display: block;
     width: 30%;
     padding: 10px;
@@ -120,36 +120,36 @@
     cursor: pointer;
 }*/
 
-.application .btn:hover {
+.applicationRegist .btn:hover {
     background-color: #e0a800;
 }
 
-.application .row {
+.applicationRegist .row {
     display: flex;
     gap: 10px;
 }
 
-.application .row .form-group {
+.applicationRegist .row .form-group {
     flex: 1;
 }
 
-.application .file-upload {
+.applicationRegist .file-upload {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.application .file-upload input {
+.applicationRegist .file-upload input {
     flex: 1;
 }
 
-.application .file-upload {
+.applicationRegist .file-upload {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.application .file-upload input[type="text"] {
+.applicationRegist .file-upload input[type="text"] {
     flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
@@ -161,8 +161,8 @@
     pointer-events: none; /* 텍스트 박스를 클릭할 수 없게 설정 */
 }
 
-.application .file-upload label,
-.application .btn {
+.applicationRegist .file-upload label,
+.applicationRegist .btn {
     margin-top: 3px;
     display: block;
     width: 30%;
@@ -180,11 +180,11 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.application .file-upload label:hover,
-.application .btn:hover {
+.applicationRegist .file-upload label:hover,
+.applicationRegist .btn:hover {
     background-color: #e0a800; /* 호버 시 동일한 색상 변경 */
 }
 
-.application .file-upload input[type="file"] {
+.applicationRegist .file-upload input[type="file"] {
     display: none; /* 실제 파일 선택 버튼 숨기기 */
 }

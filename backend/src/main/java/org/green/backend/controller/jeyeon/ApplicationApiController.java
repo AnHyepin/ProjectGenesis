@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,9 +24,10 @@ public class ApplicationApiController {
 
     @PostMapping
     public void register(@ModelAttribute ApplicationRequestDto applicationRequestDto,
-                         @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+                         @RequestParam(value = "files", required = false) List<MultipartFile> files) throws IOException {
+
         System.out.println("폼 데이터: " + applicationRequestDto);
 
-        applicationService.registApplication(applicationRequestDto, file);
+        applicationService.registApplication(applicationRequestDto, files);
     }
 }
