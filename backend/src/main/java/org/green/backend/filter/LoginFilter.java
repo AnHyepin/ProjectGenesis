@@ -74,7 +74,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String role = userDetails.getAuthorities().iterator().next().getAuthority();
         String name = userDetails.getName();
 
-        String token = jwtUtil.createJwt(username, role, 60 * 60 * 24 * 1000L);
+        String token = jwtUtil.createJwt(username, role, name, 60 * 60 * 24 * 1000L);
 
 
         Cookie cookie = new Cookie("Authorization", token);
@@ -84,7 +84,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 
         log.info("JWT 쿠키 설정 완료: {}", token);
-        Map<String, String> userInfo = Map.of("username", username, "role", role ,"name",name);
+        Map<String, String> userInfo = Map.of("username", username, "role", role, "name", name);
         ApiResponse<Map<String, String>> apiResponse = new ApiResponse<>(
                 ApiResponse.ApiStatus.SUCCESS,
                 userInfo,

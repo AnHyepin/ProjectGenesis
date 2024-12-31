@@ -71,7 +71,7 @@ public class MainService {
                     .map(file -> modelMapper.map(file, FileDto.class))
                     .collect(Collectors.toList());
 
-            return new BookmarkApplicationDto(application, fileDtos);
+            return new BookmarkApplicationDto(application.getCompany().getName(),application, fileDtos);
         }).collect(Collectors.toList());
     }
 
