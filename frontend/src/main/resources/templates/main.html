@@ -5,7 +5,7 @@
     <head>
         <title>Main Page</title>
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="/static/css/hws/main.css"/>
+        <link rel="stylesheet" href="/static/css/hws/main.css" />
     </head>
     <body layout:fragment="content">
 
@@ -24,7 +24,7 @@
 
 
             <!-- 스크랩 한 공고 섹션 -->
-            <div class="genesis-main-section">
+            <div th:if="${session.user != null}" class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>스크랩한 공고</h2>
                 </div>
@@ -32,27 +32,27 @@
                     <div th:each="like : ${mainData.likeApplications}" class="genesis-main-card">
                         <img th:src="${#lists.isEmpty(like.files) ? '/static/img/img_default_gonggo.png' : like.files[0].fileUrl}"
                              alt="topCompany Application">
-                        <div class="genesis-card-heart">
+                        <div class="genesis-card-heart" onclick="toggleHeart(this)" data-id="${like.applicationData.applicationNo}">
                             <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
                         </div>
                         <div class="genesis-card-label"
                              th:text="${like.applicationData.daysLeft != null && like.applicationData.daysLeft != 'D-0'
-                                       ? like.applicationData.daysLeft
-                                       : '상시'}"></div>
+                           ? like.applicationData.daysLeft
+                           : '상시'}"></div>
 
                         <div class="genesis-main-card-content">
                             <h3 th:text="${like.applicationData.applicationTitle}"></h3>
                             <p th:text="${like.companyName}"></p>
                             <p th:text="${like.applicationData.workingArea} + ' · ' +
-                                          (like.applicationData.careerCode == 'G' ? '경력' :
-                                          (like.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
+                              (like.applicationData.careerCode == 'G' ? '경력' :
+                              (like.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 구독한 기업공고  섹션 -->
-            <div class="genesis-main-section">
+            <!-- 구독한 기업공고 섹션 -->
+            <div th:if="${session.user != null}" class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>구독 기업공고</h2>
                 </div>
@@ -60,20 +60,20 @@
                     <div th:each="bookmark : ${mainData.bookmarkApplications}" class="genesis-main-card">
                         <img th:src="${#lists.isEmpty(bookmark.files) ? '/static/img/img_default_gonggo.png' : bookmark.files[0].fileUrl}"
                              alt="topCompany Application">
-                        <div class="genesis-card-heart">
+                        <div class="genesis-card-heart" onclick="toggleHeart(this)" data-id="${bookmark.applicationData.applicationNo}">
                             <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
                         </div>
                         <div class="genesis-card-label"
                              th:text="${bookmark.applicationData.daysLeft != null && bookmark.applicationData.daysLeft != 'D-0'
-                                       ? bookmark.applicationData.daysLeft
-                                       : '상시'}"></div>
+                           ? bookmark.applicationData.daysLeft
+                           : '상시'}"></div>
 
                         <div class="genesis-main-card-content">
                             <h3 th:text="${bookmark.applicationData.applicationTitle}"></h3>
                             <p th:text="${bookmark.companyName}"></p>
                             <p th:text="${bookmark.applicationData.workingArea} + ' · ' +
-                                          (bookmark.applicationData.careerCode == 'G' ? '경력' :
-                                          (bookmark.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
+                              (bookmark.applicationData.careerCode == 'G' ? '경력' :
+                              (bookmark.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <div th:each="popularApp : ${mainData.popularApplications}" class="genesis-main-card two">
                         <img th:src="${#lists.isEmpty(popularApp.files) ? '/static/img/img_default_gonggo.png' : popularApp.files[0].fileUrl}"
                              alt="Popular Application">
-                        <div class="genesis-card-heart">
+                        <div class="genesis-card-heart" onclick="toggleHeart(this)" data-id="${popularApp.applicationData.applicationNo}">
                             <i class="far fa-heart fa-2x" style="color: #3AF26E;"></i>
                         </div>
 
@@ -112,9 +112,9 @@
             <div class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>추천 서비스</h2>
-<!--
-                    <a href="#" class="genesis-more-link">더보기 +</a>
--->
+                    <!--
+                                        <a href="#" class="genesis-more-link">더보기 +</a>
+                    -->
                 </div>
                 <div class="genesis-main-cards">
                     <div class="genesis-main-service-card">
@@ -160,6 +160,7 @@
 
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <script>
+
             const swiper = new Swiper('.swiper', {
                 loop: true,
                 autoplay: {
@@ -168,7 +169,26 @@
                 },
                 speed: 600,
             });
+
         </script>
+
+        <script>
+            function toggleHeart(element) {
+                const heartIcon = element.querySelector('i');
+
+                if (heartIcon.classList.contains('far')) {
+                    heartIcon.classList.remove('far');
+                    heartIcon.classList.add('fas');
+                } else {
+                    heartIcon.classList.remove('fas');
+                    heartIcon.classList.add('far');
+                }
+
+                const id = element.getAttribute('data-id');
+                console.log(`토글된 공고 ID: ${id}`);
+            }
+        </script>
+
 
     </body>
 </html>
