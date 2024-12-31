@@ -1,9 +1,9 @@
 package org.green.frontend.controller.hws;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.Request;
 import org.green.frontend.dto.hws.NonLoginMainDto;
 import org.green.frontend.dto.hws.UserDto;
 import org.green.frontend.global.ApiResponse;
@@ -19,6 +19,7 @@ import java.util.Map;
 
 /**
  * 메인 페이지 컨트롤러
+ * TODO : 추후 리펙토링 필요
  */
 @Controller
 @RequiredArgsConstructor
@@ -29,30 +30,31 @@ public class MainController {
     private final ApiRequestService apiRequestService;
 
     @GetMapping("/")
-    public String nonLoginMain(Model model, @RequestParam(required = false) UserDto userDto, HttpServletRequest request) {
+    public String nonLoginMain(Model model, @RequestParam(required = false) UserDto userDto, HttpServletRequest request, HttpSession session) {
         NonLoginMainDto mainData = mainService.nonLoginMain();
-
-
-        Map<String, String> params = Map.of("id", "테스트용");
-        
-        ApiResponse apiResponse = apiRequestService.fetchData("/test5",params,true);
-
-        log.info(apiResponse.toString() +" aaaaa");
 
         String token = TokenUtil.getTokenFromCookies(request);
 
-        ApiResponse response = apiRequestService.postDataWithToken("/api/verify-token", null, token);
-        log.info(response.toString());
+        if (token != null) {
+            var response = apiRequestService.postDataWithToken("/api/verify-token", null, token);
+            if (response.getStatus() == ApiResponse.ApiStatus.SUCCESS && response.getBody() instanceof Map) {
 
-        //log.info("유저 체크 {} ", userDto);
+                Map<String, Object> userData = (Map<String, Object>) response.getBody();
+                UserDto user = new UserDto();
+                user.setUsername((String) userData.get("username"));
+                user.setName((String) userData.get("name"));
+                user.setRole((String) userData.get("role"));
+                session.setAttribute("user", user);
+
+                log.info("세션에 유저 정보 저장: {}", user);
+            } else {
+                log.warn("유효하지 않은 응답입니다: {}", response);
+            }
+        } else {
+            log.warn("토큰이 존재하지 않습니다.");
+        }
 
         model.addAttribute("mainData", mainData);
-
-/*        log.info("메인 데이터 모델에 추가 완료: {}", mainData);
-        log.info("메인 데이터 모델에 추가 완료1: {}", mainData.getPopularApplications());
-        log.info("메인 데이터 모델에 추가 완료2: {}", mainData.getTopRatedCompanies());
-        log.info("메인 데이터 모델에 추가 완료3: {}", mainData.getLikeApplications());
-        log.info("메인 데이터 모델에 추가 완료4: {}", mainData.getBookmarkApplications());*/
 
         return "main";
     }

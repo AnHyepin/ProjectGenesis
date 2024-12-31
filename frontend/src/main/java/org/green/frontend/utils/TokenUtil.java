@@ -13,17 +13,17 @@ public class TokenUtil {
      * 따로 예외처리 필요없음
      * TODO : 추후 상세한 예외 필요하다면 추가될 수 있음
      */
+
     public static String getTokenFromCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
 
-
-        for (Cookie cookie : cookies) {
-            if (TOKEN_COOKIE_NAME.equals(cookie.getName())) {
-                String token = cookie.getValue();
-
-                return token;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("Authorization".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
             }
         }
-        return "토큰없음";
+        return null;
     }
 }

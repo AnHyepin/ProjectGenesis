@@ -18,6 +18,6 @@ public class GlobalExceptionHandler {
         } else {
             redirectAttributes.addFlashAttribute("message", "권한 없지롱 ㅋㅋㅋ");
         }
-        return "redirect:/";
+        return "redirect:/login";
     }
 }
