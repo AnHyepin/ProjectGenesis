@@ -73,7 +73,7 @@ function idCheck() {
         return;
     }
 
-    api.get(`/api/company/${companyId.value.trim()}`)
+    api.get(`/api/company/check/${companyId.value.trim()}`)
         .then(data => {
             if (data.body === '중복됨') {
                 alert("중복된 사업자 번호입니다.");

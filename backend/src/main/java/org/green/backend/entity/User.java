@@ -20,6 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class User extends Auditable {
 
     @Id
@@ -55,4 +56,6 @@ public class User extends Auditable {
     @ColumnDefault("'N'")
     @Column(name = "delete_yn", nullable = false)
     private Character deleteYn = 'N';
+
+
 }

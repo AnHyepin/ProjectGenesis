@@ -57,6 +57,7 @@ public class FileUploadUtil {
         String originalFilename = file.getOriginalFilename();
         String fileExt = getFileExtension(originalFilename);
         Long fileSize = file.getSize();
+        String fileNameWithoutExt = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
         String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
 
         Path targetPath = Paths.get(uploadDir, newFileName + fileExt);
@@ -67,7 +68,7 @@ public class FileUploadUtil {
         fileDto.setFileGubnCode(fileGbnCd);
         fileDto.setFileRefNo(fileRefId);
         fileDto.setFileNewName(newFileName);
-        fileDto.setFileOldName(originalFilename);
+        fileDto.setFileOldName(fileNameWithoutExt);
         fileDto.setFileExt(fileExt);
         fileDto.setFileSize(fileSize);
         fileDto.setFileUrl(fileDir + newFileName + fileExt);
@@ -95,8 +96,29 @@ public class FileUploadUtil {
      * @param filePath 삭제할 파일 경로
      */
 
-    public boolean deleteFile(String filePath) {
-        File file = new File(filePath);
-        return file.exists() && file.delete();
+    public boolean deleteFile(String fileUrl) {
+        try {
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+
+            Path filePath = Paths.get(uploadDir, fileName);
+
+            File file = filePath.toFile();
+            if (file.exists()) {
+                boolean isDeleted = file.delete();
+                if (isDeleted) {
+                    System.out.println("파일 삭제 성공: " + filePath);
+                } else {
+                    System.err.println("파일 삭제 실패: " + filePath);
+                }
+                return isDeleted;
+            } else {
+                System.err.println("파일이 존재하지 않습니다: " + filePath);
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
 }

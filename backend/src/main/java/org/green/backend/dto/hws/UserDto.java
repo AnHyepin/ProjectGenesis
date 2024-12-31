@@ -3,6 +3,8 @@ package org.green.backend.dto.hws;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.green.backend.dto.common.FileDto;
+import org.green.backend.entity.File;
 import org.green.backend.entity.common.Address;
 
 import java.time.LocalDate;

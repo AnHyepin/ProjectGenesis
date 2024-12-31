@@ -15,4 +15,10 @@ public class MainPageDataDto {
     private List<PopularApplicationDto> popularApplications;
     private List<LikeApplicationDto> likeApplications;
     private List<BookmarkApplicationDto> bookmarkApplications;
+    private List<Integer> scrappedApplicationIds;
+
+    public MainPageDataDto(List<RatingApplicationDTO> topRatedCompanies, List<PopularApplicationDto> popularApplications) {
+        this.topRatedCompanies = topRatedCompanies;
+        this.popularApplications = popularApplications;
+    }
 }
