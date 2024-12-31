@@ -49,16 +49,141 @@ function submitForm() {
         });
 }
 
+/* 학력 데이터 보내기 */
 function educationSave(){
-    alert("학력 저장");
+
+    const username = document.getElementById('username').textContent;
+
+    // 폼 데이터 가져오기
+    const educationForm = document.getElementById('education-regist');
+    const formData = new FormData(educationForm);
+
+    // 디버깅: formData 확인 (브라우저 콘솔에서 데이터 확인)
+    for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+    }
+
+    //이름 추가
+    formData.append('username', username);
+
+    //폼데이터 보내기
+    api.post('/api/resume/education', formData, {
+    })
+        .then(res => {
+            if (res.body == '학력 저장 성공') {  // 응답의 본문은 res.data에 담김
+                educationInsert();
+                alert("저장 성공");
+            } else {
+                alert("저장 실패");
+            }
+        })
+        .catch(error => {
+            console.error("오류:", error);
+            alert("저장 오류");
+        });
+}
+
+function educationInsert(){
+    const resumeEducationName = document.getElementById('resumeEducationName').value;
+    const resumeEducationMajor = document.getElementById('resumeEducationMajor').value;
+    const resumeEducationIndt = document.getElementById('resumeEducationIndt').value;
+    const resumeEducationOutdt = document.getElementById('resumeEducationOutdt').value;
+
+    // 부모 요소 찾기
+    const educationListForm = document.getElementById('education-list-form');
+
+    const sectionBox = document.createElement('div');
+    sectionBox.classList.add('section_box2');
+
+    // 내부 HTML 생성
+    sectionBox.innerHTML = `
+        <div class="section_box2_detail">
+            <div class="section_box2_detail_info">
+                <div id="education-name">${resumeEducationName}</div>
+                <div id="education-dates">${resumeEducationIndt} ~ ${resumeEducationOutdt} </div>
+            </div>
+            <div class="section_box2_detail_modi">
+                <div><i class="bi bi-pencil"></i></div>
+                <button class="deleteBtn" onclick="educationDelete()">
+                    <i class="bi bi-x-square"></i>
+                </button>
+            </div>
+        </div>
+        <div class="section_box2_detail2">
+            <div id="education-major">${resumeEducationMajor} 전공</div>
+        </div>
+    `;
+    // 부모 요소에 추가
+    educationListForm.appendChild(sectionBox);
 }
 
 function educationDelete(){
     alert("학력 삭제");
 }
 
+/* 경력 데이터 보내기 */
 function careerSave(){
-    alert("경력 저장");
+
+    // 폼 데이터 가져오기
+    const careerForm = document.getElementById('career-regist');
+    const formData = new FormData(careerForm);
+    //이름 추가
+    const username = document.getElementById('username').textContent;
+    formData.append('username', username);
+
+    //폼데이터 보내기
+    api.post('/api/resume/career', formData, {
+    })
+        .then(res => {
+            if (res.body == '경력 저장 성공') {  // 응답의 본문은 res.data에 담김
+                careerInsert();
+                alert("저장 성공");
+            } else {
+                alert("저장 실패");
+            }
+        })
+        .catch(error => {
+            console.error("오류:", error);
+            alert("저장 오류");
+        });
+}
+
+function careerInsert(){
+    const resumeCareerCompanyName = document.getElementById('resumeCareerCompanyName').value;
+    const resumeCareerJoinDt = document.getElementById('resumeCareerJoinDt').value;
+    const resumeCareerOutDt = document.getElementById('resumeCareerOutDt').value;
+    const resumeCareerDepartmentName = document.getElementById('resumeCareerDepartmentName').value;
+    const resumeCareerPosition = document.getElementById('resumeCareerPosition').value;
+    const resumeCareerDuties = document.getElementById('resumeCareerDuties').value;
+
+    // 부모 요소 찾기
+    const careerListForm = document.getElementById('career-list-form');
+
+    const sectionBox = document.createElement('div');
+    sectionBox.classList.add('section_box2');
+
+    // 내부 HTML 생성
+    sectionBox.innerHTML = `
+    <div class="section_box2_detail">
+        <div class="section_box2_detail_info">
+            <div>${resumeCareerCompanyName}</div>
+            <div>${resumeCareerJoinDt} ~ ${resumeCareerOutDt}</div>
+        </div>
+        <div class="section_box2_detail_modi">
+            <div><i class="bi bi-pencil"></i> </div>
+            <button class="deleteBtn" onclick="careerDelete()">
+                <i class="bi bi-x-square"></i>
+            </button>
+        </div>
+    </div>
+    <div class="section_box2_detail2">
+        <div>${resumeCareerDuties}</div>
+    </div>
+            
+`;
+    // 부모 요소에 추가
+    careerListForm.appendChild(sectionBox);
+
 }
 
 function careerDelete(){
@@ -129,38 +254,99 @@ function removeSkill(skillValue) {
     }
 }
 
-function handleInput() {
-    const certificateName = document.getElementById('certificateName').value;
+/* 기술 스택 불러오기 */
+let StackList = [];
+let certificateList = [];
 
-    // 값이 비어있지 않다면 AJAX 요청을 보냄
-    if (certificateName.trim() !== "") {
-        fetchCertificates(certificateName); // 자격증명 검색을 위해 AJAX 요청을 보내
-    } else {
-        // 입력값이 비었을 경우, 결과를 초기화
-        document.getElementById('certificate-result-list').innerHTML = '';
-    }
+window.onload = getList;
+
+function getList() {
+    api.get('/api/gubn/stack2nd')
+        .then(data => {
+            // 'body' 속성에서 배열을 추출하여 StackList에 할당
+            StackList = data.body;  // body 속성의 배열을 할당
+            console.log('StackList loaded:', StackList);  // 배열 확인
+        })
+        .catch(error => {
+            console.error(error);
+            alert("오류가 발생했습니다.");
+        });
+
+    api.get('/api/gubn/certificate')
+        .then(data => {
+            certificateList = data.body;  // body 속성의 배열을 할당
+            console.log('certificateList loaded:', certificateList);  // 배열 확인
+        })
+        .catch(error => {
+            console.error(error);
+            alert("오류가 발생했습니다.");
+        });
 }
 
-function fetchCertificates(certificateName) {
-    // AJAX로 서버에 요청
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', "");
-    xhr.onload = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const certificates = JSON.parse(xhr.responseText); // 서버에서 받은 응답을 JSON으로 파싱
-            displayCertificates(certificates); // 자격증명 목록을 화면에 표시
-        }
-    };
-    xhr.send();
-}
+// 스택 검색 기능
+document.getElementById('skills').addEventListener('input', function() {
+    let searchTerm = this.value.trim().toLowerCase();  // 입력된 검색어
 
-function displayCertificates(certificates) {
-    const resultList = document.getElementById('certificate-result-list');
-    resultList.innerHTML = ''; // 기존 리스트 초기화
+    let filteredStacks = StackList.filter(stack =>
+        stack.gubnName.toLowerCase().includes(searchTerm)
+    );  // 입력된 검색어가 기술 스택 이름에 포함되는지 확인
+    displaySearchResults(filteredStacks);  // 결과 표시 함수 호출
+});
 
-    certificates.forEach(certificate => {
-        const li = document.createElement('li');
-        li.textContent = certificate.certificateName;
-        resultList.appendChild(li);
+// 스택 검색 결과 표시
+function displaySearchResults(stacks) {
+
+    document.getElementById('search-results').style.display = "block";
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = '';  // 기존 검색 결과 초기화
+
+    stacks.forEach(stack => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <div class="checkbox">
+                <input type="checkbox" value="${stack.gubnCode}" id="${stack.gubnName}" onchange="toggleSkill(this)">
+                ${stack.gubnName}
+            </div>`;
+        resultList.appendChild(listItem);  // 새 항목을 추가
     });
+}
+
+
+// 자격증 검색 기능
+document.getElementById('certificateName').addEventListener('input', function() {
+    let searchTerm = this.value.trim().toLowerCase();  // 입력된 검색어
+
+    let filteredCertificate = certificateList.filter(certificate =>
+        certificate.gubnName.toLowerCase().includes(searchTerm)
+    );  // 입력된 검색어가 기술 스택 이름에 포함되는지 확인
+    displayCertificateResults(filteredCertificate);  // 결과 표시 함수 호출
+});
+
+// 자격증 검색 결과 표시
+function displayCertificateResults(certificate) {
+
+    document.getElementById('certificate-results').style.display = "block";
+    const resultList = document.getElementById('certificate-result-list');
+    let listContent = '';  // 새로운 리스트 항목을 저장할 변수
+
+    certificate.forEach(cert => {
+        listContent += `
+        <li data-certname="${cert.gubnName}" id="${cert.gubnName}" style="padding-bottom: 5px;" class="certificate">${cert.gubnName}</li>
+    `;
+    });
+    resultList.innerHTML = listContent;  // 모든 항목을 한 번에 추가
+
+    // 각 항목에 이벤트 리스너 추가
+    const certificates = document.querySelectorAll('.certificate');
+    certificates.forEach(cert => {
+        cert.addEventListener('click', certificateAdd);  // 이벤트 리스너 등록
+    });
+
+}
+
+function certificateAdd(event) {
+    console.log(event.target);
+    const certName = event.target.getAttribute('data-certname');  // data-certname 속성으로 값 가져오기
+    console.log(certName);
+    document.getElementById('certificateName').value = certName;  // 'certificateName'에 값 넣기
 }

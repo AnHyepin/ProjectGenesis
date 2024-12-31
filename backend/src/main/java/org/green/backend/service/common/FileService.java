@@ -60,4 +60,10 @@ public class FileService {
         }
 
     }
+
+    public File findFileByFileRefNoAndFileGubnCode(String fileRefNo, String fileGubnCode) {
+        File file = fileRepository.findFileByFileRefNoAndFileGubnCode(fileRefNo, fileGubnCode);
+        return file;
+    }
+
 }

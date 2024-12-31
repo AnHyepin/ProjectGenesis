@@ -364,7 +364,7 @@ input[type="date"] {
 }
 
 #certificate-result-list{
-    padding-left: 10px;
+    padding: 10px;
 }
 
 #certificate-result-list li{
@@ -378,6 +378,10 @@ input[type="date"] {
     margin-left: 5px;
     font-weight: normal;
     color: #4e4e4e;
+}
+
+.certificate:hover{
+    background-color: rgba(58, 242, 110, 0.5);
 }
 
 

@@ -1,5 +1,6 @@
 package org.green.backend.dto.hyepin;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 public class ResumeDto {
 
     private int resumeNo;   //이력서 번호

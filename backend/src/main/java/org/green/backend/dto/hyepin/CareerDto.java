@@ -6,7 +6,8 @@ import lombok.Data;
 public class CareerDto {
 
     private String resumeCareerNo;
-    private String resumeNo;
+    private int resumeNo;
+    private String username;
     private String resumeCareerCompanyName;
     private String resumeCareerJoinDt; //입사일
     private String resumeCareerOutDt; //퇴사일

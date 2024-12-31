@@ -10,7 +10,7 @@
 <div class="resume-container">
     <!-- 왼쪽 섹션 -->
     <div class="left-section">
-        <form action="/api/resume" method="post">
+
         <h2>이력서 등록</h2>
 
         <!-- 기본정보 -->
@@ -19,7 +19,7 @@
                 <div class="information_left_box">
                     <div class="information_box1">
                         <div class="information_box1_detail1">
-                            <span>[[${username}]]이름</span>
+                            <span id="username">[[${user.username}]]</span>
                             <select name="career">
                                 <option value="S">신입</option>
                                 <option value="G">경력</option>
@@ -44,18 +44,22 @@
                         </div>
                     </div>
                     <div class="information_box2">
-                        <div>[[${gender}]]성별, [[${birth}]]생년월일</div>
+                        <div> <th:block th:if="${user.gender == 'F'}" >여 </th:block>
+                            <th:block th:if="${user.gender == 'M'}" > 남 </th:block>
+                                [[${user.birth}]]</div>
                     </div>
                     <div class="information_box3">
-                        <div><i class="bi bi-envelope"></i>  [[${email}]]이메일   </div>
-                        <div>   <i class="bi bi-telephone"></i>  [[${phone}]]전화번호</div>
+                        <div><i class="bi bi-envelope"></i>  [[${user.email}]]   </div>
+                        <div>   <i class="bi bi-telephone"></i>  [[${user.phone}]]</div>
                     </div>
-                    <div class="information_box4">
-                        <div><i class="bi bi-house"></i>  [[${address}]]주소</div>
+                    <div class="information_box4" style="display: flex; gap: 20px;">
+                        <div><i class="bi bi-house"></i>  [[${user.address.address}]]
+                            [[${user.address.addressDetail}]] </div>
+                        <div > <i class="bi bi-mailbox"></i> [[${user.address.zipCode}]]</div>
                     </div>
                 </div>
                 <div class="information_right_box">
-                    <div class="right_img"><img src="/static/img/증명사진2.jpg"></div>
+                    <div class="right_img"><img th:src="${user.fileUrl}"></div>
                     <div><i class="bi bi-pencil"></i> </div>
                 </div>
             </div>
@@ -76,31 +80,31 @@
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
-            <form name="education-regist">
+            <form id="education-regist">
                 <div class="section_plus_box">
                     <div class="section_plus_box_detail1">
-                        <select name="resumeEucationGbnCode">
-                            <option value="">학력 구분 선택</option>
+                        <select name="resumeEducationGbnCode">
+                            <option value="학력 구분 선택">학력 구분 선택</option>
                             <option value="H">고등학교 졸업</option>
                             <option value="U3">대학(2,3년)</option>
                             <option value="U4">대학교(4년)</option>
                             <option value="S">대학원(석사)</option>
                             <option value="B">대학원(박사)</option>
                         </select>
-                        <input type="text" placeholder="학교명" name="resumeEducationName" style="width: 30%;">
+                        <input type="text" placeholder="학교명" name="resumeEducationName" id="resumeEducationName" style="width: 30%;">
                         <div class="checkbox">
-                            <input type="checkbox" name="resumeEducationTransferYn" value="Y">편입
+                            <input type="checkbox" name="resumeEducationTransferYn" value="Y" id="resumeEducationTransferYn">편입
                         </div>
                     </div>
                     <div class="section_plus_box_detail2">
-                        <input type="text" name="resumeEducationMajor" placeholder="전공">
+                        <input type="text" name="resumeEducationMajor" id="resumeEducationMajor" placeholder="전공">
                         <div style="position: relative;">
                             <label class="month-label">입학년월 *</label>
-                            <input type="month" name="resumeEducationIndt" id="admission-date">
+                            <input type="month" name="resumeEducationIndt" id="resumeEducationIndt">
                         </div>
                         <div style="position: relative;">
                             <label class="month-label">졸업년월 *</label>
-                            <input type="month" name="resumeEducationOutdt" id="graduation-date">
+                            <input type="month" name="resumeEducationOutdt" id="resumeEducationOutdt">
                         </div>
                     </div>
                     <div class="section_plus_box_save_btn">
@@ -110,36 +114,9 @@
                 </div>
             </form>
 
-            <!-- 여기서부터 th:each -->
-            <form name="education-list">
-                <div class="section_box2">
-                    <div class="section_box2_detail">
-                        <div class="section_box2_detail_info">
-                            <div>[[${resumeEducationName}]]학교 [[${resumeEducationGbnCode}]](n년제)</div>
-                            <div>[[${resumeEducationIndt}]]입학년월 ~ [[${resumeEducationOutdt}]]졸업년월 (편입여부) [[${resumeEducationTransferYn}]]</div>
-                        </div>
-                        <div class="section_box2_detail_modi">
-                            <div><i class="bi bi-pencil"></i> </div>
-                            <button class="deleteBtn" onclick="educationDelete()">
-                                <i class="bi bi-x-square"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="section_box2_detail2">
-                        <div>[[${resumeEducationMajor}]]전공</div>
-                        <div>
-                            <div>
-                                <div>학점</div>
-                                <div>| 3.8/4.5</div>
-                            </div>
-                            <div>
-                                <div>지역</div>
-                                <div>| 부산</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <!-- 값 생성 -->
+            <div name="education-list" id="education-list-form">
+            </div>
         </div>
 
 
@@ -152,17 +129,17 @@
             <hr class="divider">
 
             <!-- plus 박스 -->
-            <form name="career-regist">
+            <form id="career-regist">
                 <div class="section_plus_box">
                     <div class="section_plus_box_detail1">
-                        <input type="text" name="resumeCareerCompanyName" placeholder="회사명 *">
+                        <input type="text" name="resumeCareerCompanyName" id="resumeCareerCompanyName" placeholder="회사명 *">
                         <div style="position: relative;">
                             <label class="month-label">입사년월 * </label>
-                            <input type="month" name="resumeCareerJoinDt" id="admission-date">
+                            <input type="month" name="resumeCareerJoinDt" id="resumeCareerJoinDt">
                         </div>
                         <div style="position: relative;">
                             <label class="month-label">퇴사년월 *</label>
-                            <input type="month" name="resumeCareerOutDt" id="graduation-date">
+                            <input type="month" name="resumeCareerOutDt" id="resumeCareerOutDt">
                         </div>
 
                     </div>
@@ -170,16 +147,18 @@
                         <select name="resumeCareerJob">
                             <option value="">직무 *</option>
                             <!-- 여기 직무 th:each -->
-                            <option value="${gubnCode}">[[${gubnName}]]개발PM</option>
+                            <th:block  th:each="job : ${jobList}">
+                                <option value="${job.gubnCode}">[[${job.gubnName}]]</option>
+                            </th:block>
                         </select>
-                        <input type="text" name="resumeCareerDepartmentName" placeholder="근무부서">
-                        <input type="text" name="resumeCareerPosition" placeholder="직급/직책">
+                        <input type="text" name="resumeCareerDepartmentName" id="resumeCareerDepartmentName" placeholder="근무부서">
+                        <input type="text" name="resumeCareerPosition" id="resumeCareerPosition" placeholder="직급/직책">
                     </div>
                     <div class="section_plus_box_detail3">
                         <div>담당업무</div>
                     </div>
                     <div class="section_plus_box_detail4">
-                        <textarea name="resumeCareerDuties" placeholder="담당업무를 입력해주세요.&#10 - 담당한 업무 내용을 요약해서 작성해 보세요!"></textarea>
+                        <textarea name="resumeCareerDuties" id="resumeCareerDuties" placeholder="담당업무를 입력해주세요.&#10 - 담당한 업무 내용을 요약해서 작성해 보세요!"></textarea>
                     </div>
 
                     <div class="section_plus_box_save_btn">
@@ -190,26 +169,9 @@
             </form>
 
             <!-- 여기서부터 th:each -->
-            <form name="career-list">
-                <div class="section_box2">
-                    <div class="section_box2_detail">
-                        <div class="section_box2_detail_info">
-                            <div>[[${resumeCareerCompanyName}]]행복유치원</div>
-                            <div>[[${resumeCareerJoinDt}]]2016.03 ~ [[${resumeCareerOutDt}]]2018.02</div>
-                        </div>
-                        <div class="section_box2_detail_modi">
-                            <div><i class="bi bi-pencil"></i> </div>
-                            <button class="deleteBtn" onclick="careerDelete()">
-                                <i class="bi bi-x-square"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="section_box2_detail2">
-                        <div>[[${resume_careerJob}]]유치원교사 [[${resumeCareerPosition}]]3년차</div>
-                        <div>[[${resumeCareerDuties}]]담임교사</div>
-                    </div>
-                </div>
-            </form>
+            <div name="career-list" id="career-list-form">
+
+            </div>
         </div>
 
         <!-- 보유 기술 -->
@@ -235,14 +197,9 @@
 
                 <!-- 검색 결과 박스 -->
                 <div id="search-results"
-                     style="border: 1px solid #ccc; width: 52%; border-radius: 10px; border: 1px solid #929292;">
+                     style="display: none; border: 1px solid #ccc; width: 52%; border-radius: 10px; border: 1px solid #929292;">
                     <ul id="result-list">
-                        <!-- 검색 결과 목록 띄우기 th:each -->
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" th:value="${gubnCode}" th:id="${gubnName}" onchange="toggleSkill(this)">[[${gubnName}]]Java
-                            </div>
-                        </li>
+                        <!-- 검색 결과 목록 띄우기 JS -->
                     </ul>
                 </div>
             </div>
@@ -252,7 +209,6 @@
                    <!-- 스킬 리스트 들어감 -->
                 </div>
             </div>
-
 
             <div class="section_plus_box_save_btn">
                 <input type="button" class="cancelBtn" value="취소">
@@ -271,16 +227,14 @@
             <form name="certificate-regist">
                 <div class="section_plus_box">
                     <div class="certificate-section_plus_box_detail1">
-                        <input type="text" name="certificateName" placeholder="자격중명 *" oninput="handleInput()" style="width: 40%;">
+                        <input type="text" name="certificateName" id="certificateName" placeholder="자격중명 *" style="width: 40%;">
                         <input type="text" name="certificatePlace" placeholder="발행처/기관 *" style="width: 40%;">
                     </div>
                     <div id="certificate-results-wrapper">
                         <div id="certificate-results"
-                             style="border: 1px solid #ccc; border-radius: 10px; border: 1px solid #929292;">
+                             style="border-radius: 10px; display: none; border: 1px solid #929292;">
                             <ul id="certificate-result-list">
-                                <li>정보처리기사</li>
-                                <li>정보처리기능사</li>
-                                <li>정보처리산업기사</li>
+                                    <!-- 검색 리스트 생성 !-->
                             </ul>
                         </div>
                     </div>
@@ -465,7 +419,7 @@
         <div class="complet-section">
             <input type="button" onclick="submitForm()" class="completBtn" value="작성완료">
         </div>
-        </form>
+
     </div>
 
     <!-- 오른쪽 사이드바 -->
