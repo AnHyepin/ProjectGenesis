@@ -1,5 +1,6 @@
 package org.green.backend.service.common;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.FileDto;
 import org.green.backend.entity.File;
@@ -23,6 +24,7 @@ public class FileService {
     private final FileUploadUtil fileUploadUtil;
     private final ModelMapper modelMapper;
 
+    @Transactional
     public void saveFile(MultipartFile file,
                          String fileGbnCd,
                          String fileRefId,
@@ -31,14 +33,31 @@ public class FileService {
         FileDto fileDto = fileUploadUtil.saveFile(file, fileGbnCd, fileRefId, userId);
 
         try {
-            System.out.println(fileDto.toString() +" asdasdasdasd");
-            File fileEntity = modelMapper.map(fileDto,File.class);
-            System.out.println(fileEntity.toString() + "aaaaaaaaaaaaaaaa");
+            File fileEntity = modelMapper.map(fileDto, File.class);
             fileRepository.save(fileEntity);
-            System.out.println("내이름은 황승현 눈이 작지");
         } catch (Exception e) {
             fileUploadUtil.deleteFile(fileDto.getFileUrl());
             throw new RuntimeException("파일 데이터 저장 실패: " + e.getMessage(), e);
         }
+
+    }
+
+    /**
+     * 파일 ID로 파일 삭제
+     * @param fileId 파일 ID
+     */
+    @Transactional
+    public void deleteFileById(Long fileId) {
+
+        File file = fileRepository.findById(fileId)
+                .orElseThrow(() -> new IllegalArgumentException("파일을 찾을 수 없습니다. ID: " + fileId));
+
+        try {
+            fileUploadUtil.deleteFile(file.getFileUrl());
+            fileRepository.deleteById(fileId);
+        } catch (Exception e) {
+            throw new RuntimeException("파일 삭제 실패: " + e.getMessage(), e);
+        }
+
     }
 }

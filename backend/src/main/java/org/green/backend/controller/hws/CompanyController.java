@@ -32,7 +32,7 @@ public class CompanyController {
         return "회원가입 성공";
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/check/{username}")
     public String duplicateCheck(@PathVariable String username) {
         return companyService.duplicateCheck(username);
     }

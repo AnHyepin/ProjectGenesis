@@ -25,25 +25,27 @@ public class MainService {
     /**
      * 비회원 메인 데이터 처리
      */
-    public NonLoginMainDto nonLoginMain() {
-        Map<String, Object> mainData = (Map<String, Object>) apiRequestService.fetchData("/api/main").getBody();
+    public NonLoginMainDto nonLoginMain(String token) {
+        Map<String, Object> mainData = (Map<String, Object>) apiRequestService.fetchDataToken("/api/main", token).getBody();
+
+        List<Integer> scrappedApplicationIds = (List<Integer>) mainData.get("scrappedApplicationIds");
 
         return NonLoginMainDto.builder()
-                .topRatedCompanies(mapList(mainData.get("topRatedCompanies"), this::mapToTopRatedCompanyDTO))
-                .popularApplications(mapList(mainData.get("popularApplications"), this::mapToPopularApplicationDTO))
-                .likeApplications(mapList(mainData.get("likeApplications"), this::mapToLikeApplicationDTO))
-                .bookmarkApplications(mapList(mainData.get("bookmarkApplications"), this::mapToBookmarkApplicationDTO))
+                .topRatedCompanies(mapList(mainData.get("topRatedCompanies"), company -> mapToTopRatedCompanyDTO(company, scrappedApplicationIds)))
+                .popularApplications(mapList(mainData.get("popularApplications"), app -> mapToPopularApplicationDTO(app, scrappedApplicationIds)))
+                .likeApplications(mapList(mainData.get("likeApplications"), app -> mapToLikeApplicationDTO(app, scrappedApplicationIds)))
+                .bookmarkApplications(mapList(mainData.get("bookmarkApplications"), app -> mapToBookmarkApplicationDTO(app, scrappedApplicationIds)))
                 .build();
     }
+
 
     /**
      * 북마크 데이터를 BookmarkApplicationDTO로 매핑
      */
-    private BookmarkApplicationDto mapToBookmarkApplicationDTO(Map<String, Object> bookmarkApplication) {
-
+    private BookmarkApplicationDto mapToBookmarkApplicationDTO(Map<String, Object> bookmarkApplication, List<Integer> scrappedApplicationIds) {
         List<FileDto> fileDtos = mapFiles(bookmarkApplication.get("files"));
         return BookmarkApplicationDto.builder()
-                .applicationData(mapToApplicationDTO((Map<String, Object>) bookmarkApplication.get("application")))
+                .applicationData(mapToApplicationDTO((Map<String, Object>) bookmarkApplication.get("application"), scrappedApplicationIds))
                 .files(fileDtos)
                 .companyName((String) bookmarkApplication.get("name"))
                 .build();
@@ -52,10 +54,10 @@ public class MainService {
     /**
      * 좋아요 데이터를 LikeApplicationDTO로 매핑
      */
-    private LikeApplicationDto mapToLikeApplicationDTO(Map<String, Object> likeData) {
+    private LikeApplicationDto mapToLikeApplicationDTO(Map<String, Object> likeData, List<Integer> scrappedApplicationIds) {
         List<FileDto> fileDtos = mapFiles(likeData.get("files"));
         return LikeApplicationDto.builder()
-                .applicationData(mapToApplicationDTO((Map<String, Object>) likeData.get("application")))
+                .applicationData(mapToApplicationDTO((Map<String, Object>) likeData.get("application"), scrappedApplicationIds))
                 .files(fileDtos)
                 .likeId(((Number) likeData.get("likeId")).longValue())
                 .likeCode((String) likeData.get("likeCode"))
@@ -66,12 +68,12 @@ public class MainService {
     /**
      * 회사 데이터를 TopRatedCompanyDTO로 매핑
      */
-    private TopRatedCompanyDto mapToTopRatedCompanyDTO(Map<String, Object> companyData) {
+    private TopRatedCompanyDto mapToTopRatedCompanyDTO(Map<String, Object> companyData, List<Integer> scrappedApplicationIds) {
         List<FileDto> fileDtos = mapFiles(companyData.get("files"));
         return TopRatedCompanyDto.builder()
                 .username((String) companyData.get("username"))
                 .name((String) companyData.get("name"))
-                .applicationData(mapToApplicationDTO((Map<String, Object>) companyData.get("application")))
+                .applicationData(mapToApplicationDTO((Map<String, Object>) companyData.get("application"), scrappedApplicationIds))
                 .averageStar((Double) companyData.get("averageStar"))
                 .files(fileDtos)
                 .build();
@@ -80,20 +82,23 @@ public class MainService {
     /**
      * 공고 데이터를 PopularApplicationDTO로 매핑
      */
-    private PopularApplicationDto mapToPopularApplicationDTO(Map<String, Object> applicationData) {
+    private PopularApplicationDto mapToPopularApplicationDTO(Map<String, Object> applicationData, List<Integer> scrappedApplicationIds) {
         List<FileDto> fileDtos = mapFiles(applicationData.get("files"));
         return PopularApplicationDto.builder()
-                .applicationData(mapToApplicationDTO(applicationData))
+                .applicationData(mapToApplicationDTO(applicationData, scrappedApplicationIds))
                 .companyName((String) applicationData.get("name"))
                 .files(fileDtos)
                 .build();
     }
 
+
     /**
      * 공고 데이터를 ApplicationDTO로 매핑
      */
-    private ApplicationDto mapToApplicationDTO(Map<String, Object> applicationData) {
+    private ApplicationDto mapToApplicationDTO(Map<String, Object> applicationData, List<Integer> scrappedApplicationIds) {
         if (applicationData == null) return null;
+
+        Integer applicationNo = (Integer) applicationData.get("applicationNo");
 
         return ApplicationDto.builder()
                 .applicationNo((Integer) applicationData.get("applicationNo"))
@@ -116,6 +121,7 @@ public class MainService {
                 .modiDt((String) applicationData.get("modiDt"))
                 .companyName((String) applicationData.get("name"))
                 .daysLeft(DateUtil.calculateDaysLeft((String) applicationData.get("deadlineDate")))
+                .isScrap(scrappedApplicationIds != null && scrappedApplicationIds.contains(applicationNo))
                 .build();
     }
 
