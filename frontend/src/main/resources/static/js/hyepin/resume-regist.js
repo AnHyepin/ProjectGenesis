@@ -1,35 +1,45 @@
 /* 학력 데이터 보내기 */
 function educationSave(){
 
-    const username = document.getElementById('username').textContent;
+    const resumeEducationGbnCode = document.getElementById("resumeEducationGbnCode").value;
+    const resumeEducationName = document.getElementById("resumeEducationName").value;
+    const resumeEducationIndt = document.getElementById("resumeEducationIndt").value;
+    const resumeEducationOutdt = document.getElementById("resumeEducationOutdt").value;
+    if(resumeEducationGbnCode === "" || resumeEducationGbnCode === '학력 구분 선택' ||
+        resumeEducationGbnCode === '학력 구분 선택' || resumeEducationName.trim() === "" ||
+        resumeEducationIndt.trim() === "" || resumeEducationOutdt.trim() === ""){
+        alert("필수 항목을 입력하세요.")
+    }else{
+        const username = document.getElementById('username').textContent;
 
-    // 폼 데이터 가져오기
-    const educationForm = document.getElementById('education-regist');
-    const formData = new FormData(educationForm);
+        // 폼 데이터 가져오기
+        const educationForm = document.getElementById('education-regist');
+        const formData = new FormData(educationForm);
 
-    // 디버깅: formData 확인 (브라우저 콘솔에서 데이터 확인)
-    for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-    }
+        // 디버깅: formData 확인 (브라우저 콘솔에서 데이터 확인)
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
 
-    //이름 추가
-    formData.append('username', username);
+        //이름 추가
+        formData.append('username', username);
 
-    //폼데이터 보내기
-    api.post('/api/resume/education', formData, {
-    })
-        .then(res => {
-            if (res.body == '학력 저장 성공') {  // 응답의 본문은 res.data에 담김
-                educationInsert();
-                alert("저장 성공");
-            } else {
-                alert("저장 실패");
-            }
+        //폼데이터 보내기
+        api.post('/api/resume/education', formData, {
         })
-        .catch(error => {
-            console.error("오류:", error);
-            alert("저장 오류");
-        });
+            .then(res => {
+                if (res.body == '학력 저장 성공') {  // 응답의 본문은 res.data에 담김
+                    educationInsert();
+                    alert("저장 성공");
+                } else {
+                    alert("저장 실패");
+                }
+            })
+            .catch(error => {
+                console.error("오류:", error);
+                alert("저장 오류");
+            });
+    }
 }
 
 function educationInsert(){
@@ -73,28 +83,38 @@ function educationDelete(){
 /* 경력 데이터 보내기 */
 function careerSave(){
 
-    // 폼 데이터 가져오기
-    const careerForm = document.getElementById('career-regist');
-    const formData = new FormData(careerForm);
-    //이름 추가
-    const username = document.getElementById('username').textContent;
-    formData.append('username', username);
+    const resumeCareerCompanyName = document.getElementById('resumeCareerCompanyName').value;
+    const resumeCareerJoinDt = document.getElementById('resumeCareerJoinDt').value;
+    const resumeCareerOutDt = document.getElementById('resumeCareerOutDt').value;
+    const resumeCareerJob = document.getElementById('resumeCareerJob').value;
 
-    //폼데이터 보내기
-    api.post('/api/resume/career', formData, {
-    })
-        .then(res => {
-            if (res.body == '경력 저장 성공') {  // 응답의 본문은 res.data에 담김
-                careerInsert();
-                alert("저장 성공");
-            } else {
-                alert("저장 실패");
-            }
+    if(resumeCareerCompanyName.trim() === "" || resumeCareerJoinDt.trim() === "" ||
+        resumeCareerOutDt.trim() === "" ||  resumeCareerJob.trim() === ""){
+        alert("필수 항목을 입력하세요.");
+    }else{
+        // 폼 데이터 가져오기
+        const careerForm = document.getElementById('career-regist');
+        const formData = new FormData(careerForm);
+        //이름 추가
+        const username = document.getElementById('username').textContent;
+        formData.append('username', username);
+
+        //폼데이터 보내기
+        api.post('/api/resume/career', formData, {
         })
-        .catch(error => {
-            console.error("오류:", error);
-            alert("저장 오류");
-        });
+            .then(res => {
+                if (res.body == '경력 저장 성공') {  // 응답의 본문은 res.data에 담김
+                    careerInsert();
+                    alert("저장 성공");
+                } else {
+                    alert("저장 실패");
+                }
+            })
+            .catch(error => {
+                console.error("오류:", error);
+                alert("저장 오류");
+            });
+    }
 }
 
 function careerInsert(){
@@ -167,29 +187,39 @@ function stackSave(){
 
 //자격증 저장
 function certificateSave(){
-    // 폼 데이터 가져오기
-    const certificateForm = document.getElementById('certificate-regist');
-    const formData = new FormData(certificateForm);
-    //이름 추가
-    const username = document.getElementById('username').textContent;
-    formData.append('username', username);
 
-    //폼데이터 보내기
-    api.post('/api/resume/certificate', formData, {
-    })
-        .then(res => {
-            if (res.body == '자격증 저장 성공') {  // 응답의 본문은 res.data에 담김
-                certificateInsert();
-                alert("저장 성공");
-            } else {
-                alert("저장 실패");
-            }
+    const certificateName = document.getElementById('certificateName').value;
+    const certificatePlace = document.getElementById('certificatePlace').value;
+    const certificateGbnCd = document.getElementById('certificateGbnCd').value;
+    const certificateDt = document.getElementById('certificateDt').value;
+
+    if(certificateName.trim() === "" || certificatePlace.trim() === "" ||
+        certificateGbnCd.trim() === "" || certificateDt.trim() === "") {
+        alert("필수 항목을 입력하세요.");
+    }else{
+        // 폼 데이터 가져오기
+        const certificateForm = document.getElementById('certificate-regist');
+        const formData = new FormData(certificateForm);
+        //이름 추가
+        const username = document.getElementById('username').textContent;
+        formData.append('username', username);
+
+        //폼데이터 보내기
+        api.post('/api/resume/certificate', formData, {
         })
-        .catch(error => {
-            console.error("오류:", error);
-            alert("저장 오류");
-        });
-
+            .then(res => {
+                if (res.body == '자격증 저장 성공') {  // 응답의 본문은 res.data에 담김
+                    certificateInsert();
+                    alert("저장 성공");
+                } else {
+                    alert("저장 실패");
+                }
+            })
+            .catch(error => {
+                console.error("오류:", error);
+                alert("저장 오류");
+            });
+    }
 }
 
 //자격증 추가
@@ -265,37 +295,44 @@ function toggleInputFields() {
     }
 }
 
+
+//포트폴리오 저장
 function portfolioSave(){
-    // 폼 데이터 가져오기
-    const portfolioForm = document.getElementById('portfolio-regist');
-    const formData = new FormData(portfolioForm);
-    //이름 추가
-    const username = document.getElementById('username').textContent;
-    formData.append('username', username);
 
-    const portfolioFile = document.querySelector("input[name='portfolioFile']").files[0];
-    if (portfolioFile) {
-        formData.append("portfolioFile", portfolioFile);
-    }
+    const resumePortfolioStartDate = document.getElementById('resumePortfolioStartDate').value;
+    const resumePortfolioEndDate = document.getElementById('resumePortfolioEndDate').value;
 
-    
-    //폼데이터 보내기
-    api.post('/api/resume/portfolio', formData, {
-    })
-        .then(res => {
-            if (res.body == '포트폴리오 저장 성공') {  // 응답의 본문은 res.data에 담김
-                portfolioInsert();
-                alert("저장 성공");
-            } else {
-                alert("저장 실패");
-            }
+    if(resumePortfolioStartDate.trim() === "" || resumePortfolioEndDate.trim()) {
+        alert("필수 항목을 입력하세요.");
+    }else{
+        // 폼 데이터 가져오기
+        const portfolioForm = document.getElementById('portfolio-regist');
+        const formData = new FormData(portfolioForm);
+        //이름 추가
+        const username = document.getElementById('username').textContent;
+        formData.append('username', username);
+
+        console.log([...formData.entries()]);
+
+        //폼데이터 보내기
+        api.post('/api/resume/portfolio', formData, {
         })
-        .catch(error => {
-            console.error("오류:", error);
-            alert("저장 오류");
-        });
-    alert("포트폴리오 저장");
+            .then(res => {
+                if (res.body == '포트폴리오 저장 성공') {  // 응답의 본문은 res.data에 담김
+                    portfolioInsert();
+                    alert("저장 성공");
+                } else {
+                    alert("저장 실패");
+                }
+            })
+            .catch(error => {
+                console.error("오류:", error);
+                alert("저장 오류");
+            });
+    }
 }
+
+
 
 //포트폴리오 박스 띄우기
 function portfolioInsert(){
@@ -346,11 +383,16 @@ function resumeMyinfoSave(){
     const inputResumeMyTitle = document.getElementById('inputResumeMyTitle').value;
     const inputResumeMyContent = document.getElementById('inputResumeMyContent').value;
 
-    document.getElementById('resumeMyTitle').innerHTML = inputResumeMyTitle;
-    document.getElementById('resumeMyContent').innerHTML = inputResumeMyContent;
-
-    document.getElementById('resumeMyinfo-form').style.display = 'block';
+    if(inputResumeMyTitle.trim() === "" || inputResumeMyContent.trim()) {
+        alert("필수 항목을 입력하세요.");
+    }else{
+        document.getElementById('resumeMyTitle').innerHTML = inputResumeMyTitle;
+        document.getElementById('resumeMyContent').innerHTML = inputResumeMyContent;
+        document.getElementById('resumeMyinfo-form').style.display = 'block';
+    }
 }
+
+
 
 function resumeMyinfoDelete(){
     alert("자기소개서 삭제");
@@ -494,39 +536,47 @@ function certificateAdd(event) {
 
 //이력서 저장
 function submitForm(){
-    const formData = new FormData();
 
     const resumeTitle = document.getElementById('resumeTitle').value;
-    const resumeMyTitle = document.getElementById('resumeMyTitle').innerHTML;
-    const resumeMyContent = document.getElementById('resumeMyContent').innerHTML;
-    const resumePubilceYn = document.getElementById('resumePubilceYn').value;
-    const career = document.getElementById('career').value;
-    const salary = document.getElementById('salary').value;
-    const username = document.getElementById('username').textContent;
+    if(resumeTitle.trim() === ""){
+        alert("이력서 제목을 입력하세요.");
+        document.getElementById("resumeTitle").focus();
+    }else if(document.getElementById('education-list-form').childElementCount === 0){
+        alert("학력을 입력하세요.");
+        document.getElementById("resumeEducationName").focus();
+    }else{
 
-    formData.append('username', username);
-    formData.append('resumeTitle', resumeTitle);
-    formData.append('resumeMyTitle', resumeMyTitle);
-    formData.append('resumeMyContent', resumeMyContent);
-    formData.append('resumePubilceYn', resumePubilceYn);
-    formData.append('career', career);
-    formData.append('salary', salary);
+        const formData = new FormData();
 
-    //폼데이터 보내기
-    api.post('/api/resume/resumeSubmit', formData, {
-    })
-        .then(res => {
-            if (res.body == '이력서 저장 성공') {  // 응답의 본문은 res.data에 담김
-                alert("저장 성공");
-            } else {
-                alert("저장 실패");
-            }
+        const resumeMyTitle = document.getElementById('resumeMyTitle').innerHTML;
+        const resumeMyContent = document.getElementById('resumeMyContent').innerHTML;
+        const resumePubilceYn = document.getElementById('resumePubilceYn').value;
+        const career = document.getElementById('career').value;
+        const salary = document.getElementById('salary').value;
+        const username = document.getElementById('username').textContent;
+
+        formData.append('username', username);
+        formData.append('resumeTitle', resumeTitle);
+        formData.append('resumeMyTitle', resumeMyTitle);
+        formData.append('resumeMyContent', resumeMyContent);
+        formData.append('resumePubilceYn', resumePubilceYn);
+        formData.append('career', career);
+        formData.append('salary', salary);
+
+        //폼데이터 보내기
+        api.post('/api/resume/resumeSubmit', formData, {
         })
-        .catch(error => {
-            console.error("오류:", error);
-            alert("저장 오류");
-        });
-
-
+            .then(res => {
+                if (res.body == '이력서 저장 성공') {  // 응답의 본문은 res.data에 담김
+                    alert("저장 성공");
+                } else {
+                    alert("저장 실패");
+                }
+            })
+            .catch(error => {
+                console.error("오류:", error);
+                alert("저장 오류");
+            });
+    }
 }
 

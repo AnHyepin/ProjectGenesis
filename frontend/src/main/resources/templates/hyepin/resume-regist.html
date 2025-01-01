@@ -75,22 +75,22 @@
         <div class="section">
             <div class="section_box">
                 <h2><span>* </span>학력</h2>
-                <p class="plus_btn">+ 추가</p>
+
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
             <form id="education-regist">
                 <div class="section_plus_box">
                     <div class="section_plus_box_detail1">
-                        <select name="resumeEducationGbnCode">
-                            <option value="학력 구분 선택">학력 구분 선택</option>
+                        <select name="resumeEducationGbnCode" id="resumeEducationGbnCode" style="width: 150px;" >
+                            <option value="학력 구분 선택">학력 구분 선택 *</option>
                             <option value="H">고등학교 졸업</option>
                             <option value="U3">대학(2,3년)</option>
                             <option value="U4">대학교(4년)</option>
                             <option value="S">대학원(석사)</option>
                             <option value="B">대학원(박사)</option>
                         </select>
-                        <input type="text" placeholder="학교명" name="resumeEducationName" id="resumeEducationName" style="width: 30%;">
+                        <input type="text" placeholder="학교명 *" name="resumeEducationName" id="resumeEducationName" style="width: 30%;">
                         <div class="checkbox">
                             <input type="checkbox" name="resumeEducationTransferYn" value="Y" id="resumeEducationTransferYn">편입
                         </div>
@@ -123,7 +123,6 @@
         <div class="section">
             <div class="section_box">
                 <h2>보유 기술 스택</h2>
-                <p class="plus_btn">+ 추가</p>
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
@@ -167,7 +166,6 @@
         <div class="section">
             <div class="section_box">
                 <h2>경력</h2>
-                <p class="plus_btn">+ 추가</p>
             </div>
             <hr class="divider">
 
@@ -187,7 +185,7 @@
 
                     </div>
                     <div class="section_plus_box_detail2">
-                        <select name="resumeCareerJob">
+                        <select name="resumeCareerJob" id="resumeCareerJob">
                             <option value="">직무 *</option>
                             <!-- 여기 직무 th:each -->
                             <th:block  th:each="job : ${jobList}">
@@ -220,7 +218,6 @@
         <div class="section">
             <div class="section_box">
                 <h2>자격증</h2>
-                <p class="plus_btn">+ 추가</p>
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
@@ -239,13 +236,13 @@
                         </div>
                     </div>
                     <div class="section_plus_box_detail2">
-                        <select name="certificateGbnCd">
+                        <select name="certificateGbnCd" id="certificateGbnCd">
                             <option value="">합격구분 *</option>
                             <option value="P">필기합격</option>
                             <option value="S">실기합격</option>
                         </select>
                         <div style="position: relative;">
-                            <label class="month-label" >합격년월</label>
+                            <label class="month-label" >합격년월 *</label>
                             <input type="month" name="certificateDt" id="certificateDt">
                         </div>
                     </div>
@@ -265,7 +262,6 @@
         <div class="section">
             <div class="section_box">
                 <h2>포트폴리오</h2>
-                <p class="plus_btn">+ 추가</p>
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
@@ -285,7 +281,7 @@
                         </div>
                     </div>
                     <div class="section_plus_box_detail2" id="fileInputBox">
-                        <input type="file" name="portfolioFile" id="fileInput" multiple>
+                        <input type="file" name="portfolioFile" id="fileInput">
                     </div>
                     <div class="section_plus_box_detail2" id="urlInputBox">
                         <input type="text" name="resumePortfolioUrl" id="resumePortfolioUrl" placeholder="URL 경로를 입력하세요." class="file-section_plus_box_detail2">
@@ -337,7 +333,6 @@
         <div class="section">
             <div class="section_box">
                 <h2>자기소개서</h2>
-                <p class="plus_btn">+ 추가</p>
             </div>
             <hr class="divider">
             <!-- plus 박스 -->

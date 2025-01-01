@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -126,11 +128,18 @@ public class ResumeController {
 
 
 
-    @PostMapping("/portpolio")
-    public String createPortpolio(@ModelAttribute PortfolioDto portfolioDto, @RequestParam(value = "portfolioFile", required = false)
+    @PostMapping("/portfolio")
+    public String createPortfolio(@ModelAttribute PortfolioDto portfolioDto, @RequestParam(value = "portfolioFile", required = false)
                                     MultipartFile portfolioFile) throws IOException {
         System.out.println("여기는 createPortpolio / portfolioDto 값:" + portfolioDto);
         System.out.println("여기는 createPortpolio / portfolioFile 값:" + portfolioFile);
+
+        // 날짜 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(portfolioDto.getResumePortfolioStartDate(), formatter);
+        LocalDate endDate = LocalDate.parse(portfolioDto.getResumePortfolioEndDate(), formatter);
+
+
         //구직자의 가장 마지막 이력서 번호 꺼내기
         int maxNum = userService.getResumeMaxNumByUsername(portfolioDto.getUsername());
         //portfolioDto에 번호 넣기
