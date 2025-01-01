@@ -41,7 +41,7 @@ public class MainService {
      * 비회원 메인 화면 데이터
      */
     public MainPageDataDto getNonLoginPageData(String username) {
-        List<RatingApplicationDTO> topRatedCompanies = getTopRatingApplication(3);
+        List<RatingApplicationDto> topRatedCompanies = getTopRatingApplication(3);
         List<PopularApplicationDto> popularApplications = getPopularApplications();
         if (username != null) {
             log.info("username is " + username);
@@ -92,8 +92,8 @@ public class MainService {
     /**
      * 별점 높은 기업 의 공고 한개씩 들고오는거
      */
-    public List<RatingApplicationDTO> getTopRatingApplication(int limit) {
-        List<RatingApplicationDTO> topCompanies = ratingRepository.findTopRatedCompanies();
+    public List<RatingApplicationDto> getTopRatingApplication(int limit) {
+        List<RatingApplicationDto> topCompanies = ratingRepository.findTopRatedCompanies();
         topCompanies.forEach(dto -> {
             Application latestApplication = applicationRepository.findLatestApplicationByCompany(dto.getUsername());
             if (latestApplication != null) {

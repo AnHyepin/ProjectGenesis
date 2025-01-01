@@ -1,7 +1,7 @@
 package org.green.backend.repository.jpa.hws;
 
 
-import org.green.backend.dto.hws.RatingApplicationDTO;
+import org.green.backend.dto.hws.RatingApplicationDto;
 import org.green.backend.entity.Rating;
 import org.green.backend.entity.RatingId;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface RatingRepository extends JpaRepository<Rating, RatingId> {
 
     @Query("""
-    SELECT new org.green.backend.dto.hws.RatingApplicationDTO(
+    SELECT new org.green.backend.dto.hws.RatingApplicationDto(
         c.username,
         c.name,       
         AVG(r.jrStar) 
@@ -23,5 +23,5 @@ public interface RatingRepository extends JpaRepository<Rating, RatingId> {
     GROUP BY c.username
     ORDER BY AVG(r.jrStar) DESC
     """)
-    List<RatingApplicationDTO> findTopRatedCompanies();
+    List<RatingApplicationDto> findTopRatedCompanies();
 }

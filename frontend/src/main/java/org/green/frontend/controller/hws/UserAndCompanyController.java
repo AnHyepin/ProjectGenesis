@@ -5,12 +5,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.frontend.dto.hws.UserDto;
-import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.green.frontend.utils.SessionUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Map;
 
@@ -52,5 +52,14 @@ public class UserAndCompanyController {
         model.addAttribute("user", responseData.get("user"));
         model.addAttribute("file", responseData.get("file"));
         return "hws/user-edit";
+    }
+
+    @GetMapping("/company-detail/{company}")
+    public String companyDetail(@PathVariable String company) {
+        var apiResponse = apiRequestService.fetchData("/api/company/" + company);
+
+        log.info(apiResponse.toString() + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+        return "hws/company-detail";
     }
 }

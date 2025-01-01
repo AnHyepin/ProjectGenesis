@@ -1,6 +1,7 @@
 package org.green.backend.controller.hws;
 
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.service.hws.CompanyService;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,12 @@ public class CompanyController {
     @GetMapping("/check/{username}")
     public String duplicateCheck(@PathVariable String username) {
         return companyService.duplicateCheck(username);
+    }
+
+    @GetMapping("/{companyName}")
+    public CompanyDetailsDto companyDetail(@PathVariable String companyName){
+        companyService.companyDetails(companyName,"yiok79");
+        return companyService.companyDetails(companyName,"yiok79");
     }
 
 }
