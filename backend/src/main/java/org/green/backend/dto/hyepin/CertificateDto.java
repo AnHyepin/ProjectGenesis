@@ -6,6 +6,7 @@ import lombok.Data;
 public class CertificateDto {
     private int certificateNo;
     private int resumeNo;
+    private String username;
     private String certificateDt; //자격증 취득일
     private String certificateName; //자격증명
     private String certificatePlace;    //발급기관

@@ -2,10 +2,7 @@ package org.green.backend.controller.hyepin;
 
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.hws.UserDto;
-import org.green.backend.dto.hyepin.CareerDto;
-import org.green.backend.dto.hyepin.EducationDto;
-import org.green.backend.dto.hyepin.ResumeDto;
-import org.green.backend.dto.hyepin.ResumeUserDto;
+import org.green.backend.dto.hyepin.*;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.entity.File;
 import org.green.backend.entity.User;
@@ -85,7 +82,37 @@ public class ResumeController {
         }
     }
 
+    @PostMapping("/certificate")
+    public String createCertificate(@ModelAttribute CertificateDto certificateDto) throws IOException {
 
+        System.out.println("여기는 createCareer / CareerDto 값:" + certificateDto);
+        //구직자의 가장 마지막 이력서 번호 꺼내기
+        int maxNum = userService.getResumeMaxNumByUsername(certificateDto.getUsername());
+        //careerDto에 번호 넣기
+        certificateDto.setResumeNo(maxNum);
+        int result =  resumeService.certificateResist(certificateDto);
+        if(result == 1) {
+            return "자격증 저장 성공";
+        }else{
+            return "자격증 저장 실패";
+        }
+    }
+
+    @PostMapping("/skill")
+    public String createSkill(@ModelAttribute StackDto stackDto) throws IOException {
+
+        System.out.println("여기는 createSkill / stackDto 값:" + stackDto);
+        //구직자의 가장 마지막 이력서 번호 꺼내기
+        int maxNum = userService.getResumeMaxNumByUsername(stackDto.getUsername());
+        //careerDto에 번호 넣기
+        stackDto.setResumeNo(maxNum);
+        int result =  resumeService.stackResist(stackDto);
+        if(result == 1) {
+            return "스택 저장 성공";
+        }else{
+            return "스택 저장 실패";
+        }
+    }
 
 
 /*

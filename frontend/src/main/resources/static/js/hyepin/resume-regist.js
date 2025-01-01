@@ -110,7 +110,7 @@ function educationInsert(){
             </div>
         </div>
         <div class="section_box2_detail2">
-            <div id="education-major">${resumeEducationMajor} 전공</div>
+            <div id="education-major">${resumeEducationMajor}</div>
         </div>
     `;
     // 부모 요소에 추가
@@ -190,12 +190,92 @@ function careerDelete(){
     alert("경력 삭제");
 }
 
+//스택 저장
 function stackSave(){
-    alert("스킬 저장");
-    //db에 저장하기
+    // 폼 데이터 가져오기
+    const skillListForm = document.getElementById('skill-list-form');
+    const formData = new FormData(skillListForm);
+    //이름 추가
+    const username = document.getElementById('username').textContent;
+    formData.append('username', username);
+
+    //폼데이터 보내기
+    api.post('/api/resume/skill', formData, {
+    })
+        .then(res => {
+            if (res.body == '스택 저장 성공') {  // 응답의 본문은 res.data에 담김
+                careerInsert();
+                alert("저장 성공");
+            } else {
+                alert("저장 실패");
+            }
+        })
+        .catch(error => {
+            console.error("오류:", error);
+            alert("저장 오류");
+        });
 }
+
+//자격증 저장
 function certificateSave(){
-    alert("자격증 저장");
+    // 폼 데이터 가져오기
+    const certificateForm = document.getElementById('certificate-regist');
+    const formData = new FormData(certificateForm);
+    //이름 추가
+    const username = document.getElementById('username').textContent;
+    formData.append('username', username);
+
+    //폼데이터 보내기
+    api.post('/api/resume/certificate', formData, {
+    })
+        .then(res => {
+            if (res.body == '자격증 저장 성공') {  // 응답의 본문은 res.data에 담김
+                certificateInsert();
+                alert("저장 성공");
+            } else {
+                alert("저장 실패");
+            }
+        })
+        .catch(error => {
+            console.error("오류:", error);
+            alert("저장 오류");
+        });
+
+}
+
+function certificateInsert(){
+
+    const certificateName = document.getElementById('certificateName').value;
+    const certificatePlace = document.getElementById('certificatePlace').value;
+    const certificateDt = document.getElementById('certificateDt').value;
+
+    // 부모 요소 찾기
+    const certificateListForm = document.getElementById('certificate-list-form');
+
+    const sectionBox = document.createElement('div');
+    sectionBox.classList.add('section_box2');
+
+    // 내부 HTML 생성
+    sectionBox.innerHTML = `
+            <div class="section_box2_detail">
+            <div class="section_box2_detail_info">
+                <div class="certificate-detail">
+                    <div>${certificateName} <span>| ${certificateDt}</span></div>
+                </div>
+            </div>
+            <div class="section_box2_detail_modi">
+                <div><i class="bi bi-pencil"></i> </div>
+                <button class="deleteBtn" onclick="certificateDelete()">
+                    <i class="bi bi-x-square"></i>
+                </button>
+            </div>
+        </div>
+        <div class="section_box2_detail2">
+            <div>${certificatePlace}</div>
+        </div>
+`;
+    // 부모 요소에 추가
+    certificateListForm.appendChild(sectionBox);
 }
 
 function certificateDelete(){
@@ -219,40 +299,6 @@ function resumeMyinfoDelete(){
 }
 
 
-function toggleSkill(checkbox) {
-    const skillListContainer = document.querySelector('.skill-list'); // 전체 스킬 리스트 컨테이너
-    const skillValue = checkbox.value;
-    const skillName = checkbox.getAttribute('id');
-
-    if (checkbox.checked) {
-        // 체크박스가 선택되었을 때
-        const skillDiv = document.createElement('div');
-        skillDiv.className = 'input-skill-list'; // 클래스 이름 추가
-        skillDiv.id = `skill-${skillValue}`; // 고유 ID 설정
-        skillDiv.innerHTML = `
-            <div>${skillName}</div>
-            <div>| <button class="input-skill-cancle" name="${skillValue}" onclick="removeSkill('${skillValue}')">X</button></div>
-        `;
-        skillListContainer.appendChild(skillDiv); // 새로운 항목 추가
-    } else {
-        // 체크박스가 해제되었을 때
-        removeSkill(skillValue);
-    }
-}
-
-function removeSkill(skillValue) {
-    // 해당 스킬 항목 삭제
-    const skillDiv = document.getElementById(`skill-${skillValue}`);
-    if (skillDiv) {
-        skillDiv.remove();
-    }
-
-    // 체크박스도 해제
-    const checkbox = document.querySelector(`input[type="checkbox"][value="${skillValue}"]`);
-    if (checkbox) {
-        checkbox.checked = false;
-    }
-}
 
 /* 기술 스택 불러오기 */
 let StackList = [];
@@ -310,6 +356,43 @@ function displaySearchResults(stacks) {
         resultList.appendChild(listItem);  // 새 항목을 추가
     });
 }
+
+//체크박스를 누르면
+function toggleSkill(checkbox) {
+    const skillListContainer = document.querySelector('.skill-list'); // 전체 스킬 리스트 컨테이너
+    const skillValue = checkbox.value;
+    const skillName = checkbox.getAttribute('id');
+
+    if (checkbox.checked) {
+        const skillDiv = document.createElement('div');
+        skillDiv.className = 'input-skill-list'; // 클래스 이름 추가
+        skillDiv.id = `skill-${skillValue}`; // 고유 ID 설정
+        skillDiv.innerHTML = `
+            <input type="hidden" name="stackCode" value="${skillValue}">
+            <div style="color: #171717;">${skillName}</div>
+            <div style="margin-left: 20px;" >| <button class="input-skill-cancle" onclick="removeSkill('${skillValue}')">X</button></div>
+        `;
+        skillListContainer.appendChild(skillDiv); // 새로운 항목 추가
+    } else {
+        // 체크박스가 해제되었을 때
+        removeSkill(skillValue);
+    }
+}
+
+function removeSkill(skillValue) {
+    // 해당 스킬 항목 삭제
+    const skillDiv = document.getElementById(`skill-${skillValue}`);
+    if (skillDiv) {
+        skillDiv.remove();
+    }
+
+    // 체크박스도 해제
+    const checkbox = document.querySelector(`input[type="checkbox"][value="${skillValue}"]`);
+    if (checkbox) {
+        checkbox.checked = false;
+    }
+}
+
 
 
 // 자격증 검색 기능

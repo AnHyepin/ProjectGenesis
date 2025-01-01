@@ -120,6 +120,50 @@
         </div>
 
 
+        <!-- 보유 기술 -->
+        <div class="section">
+            <div class="section_box">
+                <h2>보유 기술 스택</h2>
+                <p class="plus_btn">+ 추가</p>
+            </div>
+            <hr class="divider">
+            <!-- plus 박스 -->
+            <div class="section_plus_box_detail1-skill">
+                <div style="position: relative; width: 50%;">
+                    <input type="text" id="skills" placeholder="스킬을 입력해주세요" style="width: 100%;">
+                    <button id="skill-clear-btn"
+                            style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%); border: none; background: transparent; cursor: pointer;">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+                    <button id="skill-search-btn"
+                            style="position: absolute; top: 50%; right: 0px; transform: translateY(-50%); border: none; background: transparent; cursor: pointer;">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+
+                <!-- 검색 결과 박스 -->
+                <div id="search-results"
+                     style="display: none; border: 1px solid #ccc; width: 52%; border-radius: 10px; border: 1px solid #929292;">
+                    <ul id="result-list">
+                        <!-- 검색 결과 목록 띄우기 JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section_plus_box_detail2">
+                <form id="skill-list-form">
+                    <div class="skill-list">
+                       <!-- 스킬 리스트 들어감 -->
+                    </div>
+                </form>
+            </div>
+
+            <div class="section_plus_box_save_btn">
+                <input type="button" class="cancelBtn" value="취소">
+                <input type="button" class="saveBtn" onclick="stackSave()" value="저장">
+            </div>
+        </div>
+
         <!-- 경력 -->
         <div class="section">
             <div class="section_box">
@@ -168,51 +212,8 @@
                 </div>
             </form>
 
-            <!-- 여기서부터 th:each -->
             <div name="career-list" id="career-list-form">
-
-            </div>
-        </div>
-
-        <!-- 보유 기술 -->
-        <div class="section">
-            <div class="section_box">
-                <h2>보유 기술 스택</h2>
-                <p class="plus_btn">+ 추가</p>
-            </div>
-            <hr class="divider">
-            <!-- plus 박스 -->
-            <div class="section_plus_box_detail1-skill">
-                <div style="position: relative; width: 50%;">
-                    <input type="text" id="skills" placeholder="스킬을 입력해주세요" style="width: 100%;">
-                    <button id="skill-clear-btn"
-                            style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%); border: none; background: transparent; cursor: pointer;">
-                        <i class="bi bi-x-circle"></i>
-                    </button>
-                    <button id="skill-search-btn"
-                            style="position: absolute; top: 50%; right: 0px; transform: translateY(-50%); border: none; background: transparent; cursor: pointer;">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-
-                <!-- 검색 결과 박스 -->
-                <div id="search-results"
-                     style="display: none; border: 1px solid #ccc; width: 52%; border-radius: 10px; border: 1px solid #929292;">
-                    <ul id="result-list">
-                        <!-- 검색 결과 목록 띄우기 JS -->
-                    </ul>
-                </div>
-            </div>
-
-            <div class="section_plus_box_detail2">
-                <div class="skill-list">
-                   <!-- 스킬 리스트 들어감 -->
-                </div>
-            </div>
-
-            <div class="section_plus_box_save_btn">
-                <input type="button" class="cancelBtn" value="취소">
-                <input type="button" class="saveBtn" onclick="stackSave()" value="저장">
+                <!-- 경력 리스트.. -->
             </div>
         </div>
 
@@ -224,17 +225,17 @@
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
-            <form name="certificate-regist">
+            <form id="certificate-regist">
                 <div class="section_plus_box">
                     <div class="certificate-section_plus_box_detail1">
                         <input type="text" name="certificateName" id="certificateName" placeholder="자격중명 *" style="width: 40%;">
-                        <input type="text" name="certificatePlace" placeholder="발행처/기관 *" style="width: 40%;">
+                        <input type="text" name="certificatePlace" id="certificatePlace" placeholder="발행처/기관 *" style="width: 40%;">
                     </div>
                     <div id="certificate-results-wrapper">
                         <div id="certificate-results"
                              style="border-radius: 10px; display: none; border: 1px solid #929292;">
                             <ul id="certificate-result-list">
-                                    <!-- 검색 리스트 생성 !-->
+                                <!-- 검색 리스트 생성 !-->
                             </ul>
                         </div>
                     </div>
@@ -245,8 +246,8 @@
                             <option value="S">실기합격</option>
                         </select>
                         <div style="position: relative;">
-                            <label class="month-label" name="certificateDt">합격년월</label>
-                            <input type="month" id="pass-date">
+                            <label class="month-label" >합격년월</label>
+                            <input type="month" name="certificateDt" id="certificateDt">
                         </div>
                     </div>
                     <div class="section_plus_box_save_btn">
@@ -256,27 +257,9 @@
                 </div>
             </form>
 
-            <!-- 여기서부터 th:each -->
-            <form name="certificate-list"?>
-                <div class="section_box2">
-                    <div class="section_box2_detail">
-                        <div class="section_box2_detail_info">
-                            <div class="certificate-detail">
-                                <div>[[${certificateName}]]정보처리기사 <span>[[${certificateGbnCd}]](실기합격) | [[${certificateDt}]]2016.03</span></div>
-                            </div>
-                        </div>
-                        <div class="section_box2_detail_modi">
-                            <div><i class="bi bi-pencil"></i> </div>
-                            <button class="deleteBtn" onclick="certificateDelete()">
-                                <i class="bi bi-x-square"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="section_box2_detail2">
-                        <div>[[${certificatePlace}]]한국산업인력공단</div>
-                    </div>
-                </div>
-            </form>
+            <div id="certificate-list-form">
+                <!-- 리스트 출력 -->
+            </div>
         </div>
 
         <!-- 포트폴리오 -->
@@ -398,7 +381,6 @@
             </div>
         </div>
 
-
         <div class="section">
             <div class="file-section_box2">
                 <div class="section_box2_detail">
@@ -415,6 +397,9 @@
                 </div>
             </div>
         </div>
+
+
+
 
         <div class="complet-section">
             <input type="button" onclick="submitForm()" class="completBtn" value="작성완료">
@@ -433,6 +418,7 @@
         <p>완성도: 25%</p>
     </div>
 </div>
+
 
 <script src="/static/js/api.js"></script>
 <script src="/static/js/hyepin/resume-regist.js"></script>

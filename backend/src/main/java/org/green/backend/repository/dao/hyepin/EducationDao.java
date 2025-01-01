@@ -6,7 +6,7 @@ import org.green.backend.dto.hyepin.EducationDto;
 
 /**
  * 12-31 (작성자: 안혜빈)
- * 이 클래스는 학력테이블 dao입니다.
+ * 이 클래스는 이력서의 학력테이블 dao입니다.
  */
 @Mapper
 public interface EducationDao {

@@ -35,7 +35,17 @@
     <!-- 오른쪽 메뉴 -->
     <div class="header-right-menu">
         <div class="header-login-user">
-            <p><img src="/static/img/bell.png" width="30px"></p>
+            <!-- 기본 종 모양 -->
+            <div id="header-bell-block" style="display: none;">
+                <i class="bi bi-bell" style="font-size: 24px;"></i>
+            </div>
+
+            <!-- 알림 종 모양 -->
+            <div id="header-redbell-block" style="position: relative; display: inline-block; margin-left: 20px;" onclick="bellClick()">
+                <i class="bi bi-bell-fill" style="font-size: 24px;"></i>
+                <span class="header-redbell"></span>
+            </div>
+
             <p><img src="/static/img/증명사진.jpg" width="50px" style="border-radius: 50%;"></p>
             <p><span class="header-username">[[${username}]]</span><span > 님</span></p>
         </div>
