@@ -30,9 +30,4 @@ public class TestControllerAhp {
         return "/layout-test/layout-test2";
     }
 
-    @GetMapping("/resume")
-    public String resume() {
-        return "/hyepin/resume-regist";
-    }
-
 }

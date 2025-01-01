@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hyepin.CareerDao">
+
+    <insert id="save">
+        INSERT INTO tbl_resume_career
+            (resume_no, resume_career_company_name, resume_career_join_dt,
+            resume_career_out_dt, resume_career_department_name,
+            resume_career_position, resume_career_duties, resume_career_job)
+        VALUES
+            (#{resumeNo}, #{resumeCareerCompanyName}, #{resumeCareerJoinDt},
+            #{resumeCareerOutDt}, #{resumeCareerDepartmentName}, #{resumeCareerPosition},
+            #{resumeCareerDuties}, #{resumeCareerJob})
+    </insert>
+</mapper>

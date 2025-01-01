@@ -1,8 +1,6 @@
-package org.green.frontend.dto.hyepin;
+package org.green.backend.dto.hyepin;
 
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 public class EducationDto {

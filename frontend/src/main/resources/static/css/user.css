@@ -11,7 +11,7 @@ body {
     overflow: visible;
 }
 
-a {
+.header-container a {
     text-decoration: none;
     color: inherit;
 }
@@ -33,6 +33,25 @@ a {
     align-items: center;
     gap: 40px;
 }
+
+.header-redbell{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+#header-bell-block:hover, #header-redbell-block:hover{
+    cursor: pointer;
+}
+
+
+
+
 
 .header-menu p {
     font-size: 17px;

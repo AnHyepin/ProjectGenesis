@@ -195,6 +195,11 @@ input[type="date"] {
     color: black;
 }
 
+.deleteBtn{
+    all: unset; /* 버튼의 기본 스타일을 초기화 */
+    cursor: pointer; /* 클릭 가능한 느낌 추가 */
+}
+
 /*divider 공통 영역*/
 .divider {
     border: 0;
@@ -240,6 +245,11 @@ input[type="date"] {
     margin: 15px 0; /* 위아래 마진 추가 */
 }
 
+.information_box3{
+    display: flex;
+    gap: 20px;
+}
+
 .information_right_box{
     display: flex;
     justify-content: space-between;
@@ -249,7 +259,13 @@ input[type="date"] {
 .information_right_box > .right_img{
     width: 100px;
     height: 130px;
-    border: 1px solid black;
+    border: none;
+}
+
+.information_right_box > .right_img img {
+    width: 100%; /* 부모의 너비에 맞춤 */
+    height: 100%; /* 부모의 높이에 맞춤 */
+    object-fit: cover; /* 이미지가 잘리지 않도록 비율 조정 */
 }
 
 .resume-container {
@@ -348,7 +364,7 @@ input[type="date"] {
 }
 
 #certificate-result-list{
-    padding-left: 10px;
+    padding: 10px;
 }
 
 #certificate-result-list li{
@@ -362,6 +378,10 @@ input[type="date"] {
     margin-left: 5px;
     font-weight: normal;
     color: #4e4e4e;
+}
+
+.certificate:hover{
+    background-color: rgba(58, 242, 110, 0.5);
 }
 
 
