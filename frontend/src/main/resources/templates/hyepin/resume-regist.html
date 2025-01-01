@@ -20,14 +20,14 @@
                     <div class="information_box1">
                         <div class="information_box1_detail1">
                             <span id="username">[[${user.username}]]</span>
-                            <select name="career">
+                            <select name="career" id="career">
                                 <option value="S">신입</option>
                                 <option value="G">경력</option>
                             </select>
                         </div>
                         <div class="information_box1_detail1">
                             <span>요구연봉</span>
-                            <select name="salary">
+                            <select name="salary" id="salary">
                                 <option value="회사내규에 따름">회사내규에 따름</option>
                                 <option value="1,800만원 이하">1,800만원 이하</option>
                                 <option value="1,800~2,200만원">1,800~2,200만원</option>
@@ -68,8 +68,7 @@
 
         <div class="section">
             <h2><span>* </span>제목</h2>
-            <input type="text" name="resumeTitle" class="resume_name" placeholder="이력서 제목을 입력하세요" style="width: 97%;">
-
+            <input type="text" name="resumeTitle" id="resumeTitle" class="resume_name" placeholder="이력서 제목을 입력하세요" style="width: 97%;">
         </div>
 
         <!-- 학력 -->
@@ -270,73 +269,66 @@
             </div>
             <hr class="divider">
             <!-- plus 박스 -->
-            <div class="section_plus_box">
-                <div class="section_plus_box_detail1">
-                    <div>파일찾기 *</div>
-                </div>
-                <div class="section_plus_box_detail1">
-                    <div class="file-section_plus_box_detail1">
-                        <div><label><input type="radio" name="file" checked>파일</label></div>
-                        <div><label><input type="radio" name="file">URL</label></div>
+            <form id="portfolio-regist">
+                <div class="section_plus_box">
+                    <div class="section_plus_box_detail1">
+                        <div>파일찾기 *</div>
                     </div>
-                </div>
-                <div class="section_plus_box_detail2">
-                    <input type="file" name="files" id="fileInput" multiple>
-                </div>
-                <div class="section_plus_box_detail2">
-                    <input type="text" name="resumePortfolioUrl" placeholder="URL 경로를 입력하세요." class="file-section_plus_box_detail2">
-                </div>
-                <div class="section_plus_box_detail2">
-                    <div>작업기간 *</div>
-                </div>
-                <div class="section_plus_box_detail2">
-                    <div style="position: relative;">
-                        <label class="month-label">시작일</label>
-                        <input type="date" name="resumePortfolioStartDate" id="start-date">
+                    <div class="section_plus_box_detail1">
+                        <div class="file-section_plus_box_detail1">
+                            <div>
+                                <label><input type="radio" name="file" id="fileRadio" checked>파일</label>
+                            </div>
+                            <div>
+                                <label><input type="radio" name="file" id="urlRadio">URL</label>
+                            </div>
+                        </div>
                     </div>
-                    ~
-                    <div style="position: relative;">
-                        <label class="month-label">종료일</label>
-                        <input type="date" name="resumePortfolioEndDate" id="end-date">
+                    <div class="section_plus_box_detail2" id="fileInputBox">
+                        <input type="file" name="portfolioFile" id="fileInput" multiple>
                     </div>
-                </div>
+                    <div class="section_plus_box_detail2" id="urlInputBox">
+                        <input type="text" name="resumePortfolioUrl" id="resumePortfolioUrl" placeholder="URL 경로를 입력하세요." class="file-section_plus_box_detail2">
+                    </div>
+                    <div class="section_plus_box_detail2">
+                        <div>작업기간 *</div>
+                    </div>
+                    <div class="section_plus_box_detail2">
+                        <div style="position: relative;">
+                            <label class="month-label">시작일</label>
+                            <input type="date" name="resumePortfolioStartDate" id="resumePortfolioStartDate">
+                        </div>
+                        ~
+                        <div style="position: relative;">
+                            <label class="month-label">종료일</label>
+                            <input type="date" name="resumePortfolioEndDate" id="resumePortfolioEndDate">
+                        </div>
+                    </div>
 
-                <div class="section_plus_box_detail3">
-                    <div>작업인원</div>
+                    <div class="section_plus_box_detail3">
+                        <div>작업인원</div>
+                    </div>
+                    <div class="section_plus_box_detail3">
+                        <input type="number" name="resumePortfolioCnt" id="resumePortfolioCnt" style="width: 80px;">
+                        <div>명</div>
+                    </div>
+                    <div class="section_plus_box_detail4">
+                        <div>작품소개</div>
+                    </div>
+                    <div class="section_plus_box_detail4">
+                        <textarea placeholder="상세내용을 입력하세요." name="resumePortfolioContent" id="resumePortfolioContent"></textarea>
+                    </div>
+                    <div class="section_plus_box_save_btn">
+                        <input type="button" class="cancelBtn" value="취소">
+                        <input type="button" class="saveBtn" onclick="portfolioSave()" value="저장">
+                    </div>
                 </div>
-                <div class="section_plus_box_detail3">
-                    <input type="number" name="resumePortfolioCnt" style="width: 80px;">
-                    <div>명</div>
-                </div>
-                <div class="section_plus_box_detail4">
-                    <div>작품소개</div>
-                </div>
-                <div class="section_plus_box_detail4">
-                    <textarea placeholder="상세내용을 입력하세요." name="resumePortfolioContent"></textarea>
-                </div>
-                <div class="section_plus_box_save_btn">
-                    <input type="button" class="cancelBtn" value="취소">
-                    <input type="button" class="saveBtn" onclick="portfolioSave()" value="저장">
-                </div>
+            </form>
+
+            <div id="portfolio-list-form">
+                <!-- 포트폴리오 리스트 출력 -->
             </div>
 
-            <!-- 여기서부터 th:each -->
-            <div class="file-section_box2">
-                <div class="section_box2_detail">
-                    <div class="file-name">[[${fileOldName}]][[${fileExt}]] 파일이름.hwp</div>
-                    <div class="section_box2_detail_modi">
-                        <div><i class="bi bi-pencil"></i> </div>
-                        <button class="deleteBtn" onclick="portfolioDelete()">
-                            <i class="bi bi-x-square"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="section_box2_detail2">
-                    <div>작업기간: [[${resumePortfolioStartDate}]] ~ [[${resumePortfolioEndDate}]]</div>
-                    <div>작업인원: [[${resumePortfolioCnt}]]</div>
-                    <div>작품소개: [[${resumePortfolioContent}]]</div>
-                </div>
-            </div>
 
 
         </div>
@@ -351,10 +343,10 @@
             <!-- plus 박스 -->
             <div class="section_plus_box">
                 <div class="section_plus_box_detail1">
-                    <input type="text" name="resumeTitle" placeholder="자기소개서 제목을입력하세요" style="width: 100%;">
+                    <input type="text" name="inputResumeMyTitle" id="inputResumeMyTitle" placeholder="자기소개서 제목을입력하세요" style="width: 100%;">
                 </div>
                 <div class="section_plus_box_detail2">
-                    <textarea name="resumeMyTitle" placeholder="내용을입력하고 자기소개서를 완성하세요!"></textarea>
+                    <textarea name="inputResumeMyContent" id="inputResumeMyContent" placeholder="내용을입력하고 자기소개서를 완성하세요!"></textarea>
                 </div>
                 <div class="section_plus_box_save_btn">
                     <input type="button" class="cancelBtn" value="취소">
@@ -362,24 +354,27 @@
                 </div>
             </div>
 
-            <!-- 여기서부터 th:each -->
-            <div class="section_box2">
-                <div class="section_box2_detail">
-                    <div class="section_box2_detail_info">
-                        <div>[[${resumeMyTitle}]]안녕하세요.</div>
+            <div name="resumeMyinfo-list" style="display: none" id="resumeMyinfo-form">
+                <div class="section_box2">
+                    <div class="section_box2_detail">
+                        <div class="section_box2_detail_info">
+                            <div id="resumeMyTitle"></div>
+                        </div>
+                        <div class="section_box2_detail_modi">
+                            <div><i class="bi bi-pencil"></i> </div>
+                            <button class="deleteBtn" onclick="resumeMyinfoDelete()">
+                                <i class="bi bi-x-square"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="section_box2_detail_modi">
-                        <div><i class="bi bi-pencil"></i> </div>
-                        <button class="deleteBtn" onclick="resumeMyinfoDelete()">
-                            <i class="bi bi-x-square"></i>
-                        </button>
+                    <div class="section_box2_detail2">
+                        <div id="resumeMyContent"></div>
                     </div>
-                </div>
-                <div class="section_box2_detail2">
-                    <div>[[${resumeMyContent}]]저는 매사에 열정적이고 착합니다. 뽑아주세요.</div>
                 </div>
             </div>
+
         </div>
+
 
         <div class="section">
             <div class="file-section_box2">
@@ -391,8 +386,8 @@
                 </div>
                 <div class="position-section_box2_detail2">
                     <div class="position-radio">
-                        <div class="position-radio-detail"><input type="radio" name="resumePubilceYn">공개하고 포지션 제안 받을래요</div>
-                        <div class="position-radio-detail"><input type="radio" name="resumePubilceYn" checked>제안받지 않을래요</div>
+                        <div class="position-radio-detail"><input type="radio" name="resumePubilceYn" id="resumePubilceYn" value="Y">공개하고 포지션 제안 받을래요</div>
+                        <div class="position-radio-detail"><input type="radio" name="resumePubilceYn" id="resumePubilceYn" value="N" checked>제안받지 않을래요</div>
                     </div>
                 </div>
             </div>

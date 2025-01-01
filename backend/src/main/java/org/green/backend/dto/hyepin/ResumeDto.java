@@ -1,6 +1,6 @@
 package org.green.backend.dto.hyepin;
 
-import lombok.Builder;
+
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,11 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder
 public class ResumeDto {
 
     private int resumeNo;   //이력서 번호
-    private String usename; //구직자 이름
+    private String username; //구직자 이름
     private String gender; // 성별
     private Date birth; //생일
     private String email; //이메일
@@ -27,6 +26,7 @@ public class ResumeDto {
     private LocalDateTime modiDt;
     private String salary;  //요구연봉
     private String career;  //지원할 때 경력(신입/경력)
+    private boolean savedraft; //임시저장 여부
     private List<String> gubnCode; //기술 스택 이름 리스트
 
 

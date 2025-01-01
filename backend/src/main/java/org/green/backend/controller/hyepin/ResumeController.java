@@ -3,14 +3,13 @@ package org.green.backend.controller.hyepin;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.hws.UserDto;
 import org.green.backend.dto.hyepin.*;
-import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.entity.File;
 import org.green.backend.entity.User;
-import org.green.backend.repository.dao.hyepin.EducationDao;
+import org.green.backend.entity.common.Address;
+import org.green.backend.exception.hws.UserAlreadyExistsException;
 import org.green.backend.service.common.FileService;
 import org.green.backend.service.hyepin.ResumeService;
 import org.green.backend.service.hyepin.UserServiceAhp;
-import org.green.backend.service.jeyeon.ApplicationService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,10 +29,13 @@ public class ResumeController {
     private final UserServiceAhp userService;
     private final FileService fileService;
 
-    //이력서 등록 페이지에 유저정보 가져오기
+
     @GetMapping
     public ResumeUserDto resumeRegist(@RequestParam String username) {
-        System.out.println("여기는 RestController.. 와져?");
+        //임시저장인 이력서가 있으면 삭제하고, 임시저장 이력서 생성
+        resumeService.savedraftResume(username);
+
+        //이력서 등록 페이지에 유저정보 가져오기
         User user = userService.getUser(username);
         File file = fileService.findFileByFileRefNoAndFileGubnCode(username, "profile_user");
 
@@ -84,11 +86,10 @@ public class ResumeController {
 
     @PostMapping("/certificate")
     public String createCertificate(@ModelAttribute CertificateDto certificateDto) throws IOException {
-
         System.out.println("여기는 createCareer / CareerDto 값:" + certificateDto);
         //구직자의 가장 마지막 이력서 번호 꺼내기
         int maxNum = userService.getResumeMaxNumByUsername(certificateDto.getUsername());
-        //careerDto에 번호 넣기
+        //certificateDto에 번호 넣기
         certificateDto.setResumeNo(maxNum);
         int result =  resumeService.certificateResist(certificateDto);
         if(result == 1) {
@@ -100,11 +101,10 @@ public class ResumeController {
 
     @PostMapping("/skill")
     public String createSkill(@ModelAttribute StackDto stackDto) throws IOException {
-
         System.out.println("여기는 createSkill / stackDto 값:" + stackDto);
         //구직자의 가장 마지막 이력서 번호 꺼내기
         int maxNum = userService.getResumeMaxNumByUsername(stackDto.getUsername());
-        //careerDto에 번호 넣기
+        //stackDto에 번호 넣기
         stackDto.setResumeNo(maxNum);
         int result =  resumeService.stackResist(stackDto);
         if(result == 1) {
@@ -114,16 +114,53 @@ public class ResumeController {
         }
     }
 
-
-/*
+    /*
     @PostMapping
-    public void register(@ModelAttribute ResumeDto resumeDto,
-                         @RequestParam(value = "files", required = false) List<MultipartFile> files) throws IOException {
+    public String createUser(@ModelAttribute UserDto userDto, @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture) throws IOException {
+        userService.saveUser(userDto, profilePicture);
+        return "회원가입 성공";
+    }
+    */
 
-        System.out.println("폼 데이터: " + resumeDto);
 
-        resumeService.registResume(resumeDto, files);
+
+
+
+    @PostMapping("/portpolio")
+    public String createPortpolio(@ModelAttribute PortfolioDto portfolioDto, @RequestParam(value = "portfolioFile", required = false)
+                                    MultipartFile portfolioFile) throws IOException {
+        System.out.println("여기는 createPortpolio / portfolioDto 값:" + portfolioDto);
+        System.out.println("여기는 createPortpolio / portfolioFile 값:" + portfolioFile);
+        //구직자의 가장 마지막 이력서 번호 꺼내기
+        int maxNum = userService.getResumeMaxNumByUsername(portfolioDto.getUsername());
+        //portfolioDto에 번호 넣기
+        portfolioDto.setResumeNo(maxNum);
+
+        int result = resumeService.savePortfolio(portfolioDto, portfolioFile);
+        if(result == 1) {
+            return "포트폴리오 저장 성공";
+        }else{
+            return "포트폴리오 저장 실패";
+        }
     }
 
-*/
+
+
+    //이력서 최종 저장
+    @PostMapping("/resumeSubmit")
+    public String resumeSubmit(@ModelAttribute ResumeDto resumeDto) throws IOException {
+        System.out.println("여기는 api 컨트롤러");
+        int maxNum = userService.getResumeMaxNumByUsername(resumeDto.getUsername());
+        //careerDto에 번호 넣기
+        resumeDto.setResumeNo(maxNum);
+        System.out.println(resumeDto);
+        //구직자의 가장 마지막 이력서 번호로 저장완료하기
+        int result =  resumeService.resumeSubmit(resumeDto);
+        if(result == 1) {
+            return "이력서 저장 성공";
+        }else{
+            return "이력서 저장 실패";
+        }
+    }
+
 }

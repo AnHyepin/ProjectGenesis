@@ -1,14 +1,17 @@
 package org.green.backend.service.hyepin;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.hyepin.*;
-import org.green.backend.repository.dao.hyepin.CareerDao;
-import org.green.backend.repository.dao.hyepin.CertificateDao;
-import org.green.backend.repository.dao.hyepin.EducationDao;
-import org.green.backend.repository.dao.hyepin.StackDao;
+import org.green.backend.entity.File;
+import org.green.backend.repository.dao.hyepin.*;
 import org.green.backend.service.common.FileService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,7 +31,22 @@ public class ResumeService {
     private final CareerDao careerDao;
     private final CertificateDao certificateDao;
     private final StackDao stackDao;
+    private final ResumeDao resumeDao;
+    private final PortfolioDao portfolioDao;
 
+
+    //처음 이력서 작성 생성할 때 임시저장 이력서 삭제
+    public int savedraftResume(String username) {
+        //임시저장 이력서 삭제
+        ResumeDto savedraftResume = resumeDao.getSavedraft(username);
+        if(savedraftResume != null){
+            resumeDao.savedraftDelete(username);
+        }
+        //임시저장으로 이력서 생성
+        int result = resumeDao.create(username);
+
+        return result;
+    }
 
     //학력저장
     public int educationResist(EducationDto education) {
@@ -73,29 +91,22 @@ public class ResumeService {
         return result;
     }
 
+    //포트폴리오 저장 / 파일 저장
+    public int savePortfolio(PortfolioDto portfolioDto, MultipartFile portfolioFile) throws IOException {
+        int result = portfolioDao.save(portfolioDto);
+        //방금 저장한 포트폴리오 번호 꺼내서 저장하기
+        portfolioDto.setResumePortfolioNo(portfolioDao.maxNumByResumeNo(portfolioDto.getResumeNo()));
 
-
-
-
-
-
-    public void registResume(ResumeDto resumeDto, List<MultipartFile> files) throws IOException {
-
-        /* 여기 */
-        //applicationDao.insertApplication(applicationRequestDto);
-
-        /* 여기 */
-        String username = null;
-
-        /* 여기 */
-        int lastresumeNo = 0;
-
-        log.error("파일 확인 {}",files.get(0).getOriginalFilename());
-        if (!files.get(0).getOriginalFilename().isEmpty()) {
-            for (MultipartFile file : files) {
-                fileService.saveFile(file, "resume_no", String.valueOf(lastresumeNo), username);
-            }
+        if (portfolioFile != null && !portfolioFile.isEmpty()) {
+            fileService.saveFile(portfolioFile, "portfolio_no", String.valueOf(portfolioDto.getResumePortfolioNo()), portfolioDto.getUsername());
         }
+        return result;
+    }
+
+    //이력서 최종 저장
+    public int resumeSubmit(ResumeDto resumeDto) {
+        int result = resumeDao.save(resumeDto);
+        return result;
     }
 
 }
