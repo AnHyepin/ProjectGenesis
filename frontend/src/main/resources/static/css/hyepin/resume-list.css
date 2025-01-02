@@ -11,6 +11,10 @@ button{
     border-radius: 15px;
 }
 
+button:hover{
+    transform: scale(1.1);
+}
+
 .modal {
     position: fixed;
     top: 0;
@@ -84,6 +88,11 @@ button{
 .applyStatus > a{
     padding: 5px 20px;
     display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+a{
     text-decoration: none;
     color: inherit;
 }

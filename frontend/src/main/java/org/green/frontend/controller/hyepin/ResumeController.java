@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,11 @@ public class ResumeController {
         return "/hyepin/resume-list";
     }
 
-
-
+    @GetMapping("/detail")
+    public String resumeDetail(@RequestParam("resumeNo") int resumeNo,
+                                Model model) {
+        System.out.println("resumeNo: " + resumeNo);
+        return "/hyepin/resume-detail";
+    }
 
 }

@@ -46,9 +46,14 @@ function modiBtn(resumeNo){
     alert(resumeNo + "번 이력서 수정");
 }
 
-//아력서 삭제하기
+//이력서 삭제하기
 function deleteBtn(resumeNo){
     alert(resumeNo + "번 이력서 삭제");
+}
+
+//이력서 상세보기
+function resumeDetail(resumeNo){
+    alert(resumeNo + "번 이력서 상세보기");
 }
 
 //모달 추가
@@ -68,10 +73,10 @@ function addModal(applyList){
             buttonHtml = `<button class="cancelApplication" onclick="cancelApplication(${apply.applicationNo})">지원취소</button>`;
             applyStatusGbnCode = `<div id="H">진행중</div>`;
         } else if (apply.applyStatusGbnCode === 'P') {
-            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; ">취소불가</button>';
+            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; transform: none;">취소불가</button>';
             applyStatusGbnCode = `<div id="P" style="margin-right: 10px;">합격</div>`;
         }else if (apply.applyStatusGbnCode === 'F') {
-            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; ">취소불가</button>';
+            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; transform: none;">취소불가</button>';
             applyStatusGbnCode = `<div id="F">불합격</div>`;
         }
 
