@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class ResumeDto {
 
-    private int resumeNo;   //이력서 번호
     private String usename; //구직자 이름
     private String gender; // 성별
     private Date birth; //생일

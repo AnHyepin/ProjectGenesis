@@ -8,6 +8,7 @@ import org.green.backend.entity.Company;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
 import org.green.backend.repository.dao.hws.CompanyDao;
+import org.green.backend.repository.dao.kwanhyun.CompanyDao;
 import org.green.backend.repository.jpa.hws.CompanyRepository;
 import org.green.backend.service.common.FileService;
 import org.modelmapper.ModelMapper;
@@ -34,6 +35,8 @@ public class CompanyService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final FileService fileService;
+    private final CompanyDao companyDao;
+
     private final CompanyDao companyDao;
 
     /**
@@ -99,6 +102,39 @@ public class CompanyService {
      */
     public String duplicateCheck(String username) {
         return companyRepository.findByUsername(username) != null ? "중복됨" : "사용 가능";
+    }
+
+    /**
+     * 회사 정보 조회 - 관현(25.01.02. 12:30)
+     */
+    public CompanyDto getCompanyByUsername(String username) {
+        CompanyDto company = companyDao.findCompanyByUsername(username);
+        company.setAddress(company.toAddress());
+
+
+        if(company != null) {
+            return company;
+        }
+        return null;
+    }
+
+    /**
+     * 회사 정보 수정 - 관현(25.01.02. 14:00)
+     */
+    public String updateCompany(CompanyDto companyDto) {
+        CompanyDto company = companyDao.findCompanyByUsername(companyDto.getUsername());
+        companyDao.updateCompany(company);
+
+        return "성공";
+    }
+
+    /**
+     * 회사 정보 삭제 - 관현(25.01.02. 14:50)
+     */
+    public String deleteCompany(CompanyDto companyDto) {
+        CompanyDto company = companyDao.findCompanyByUsername(companyDto.getUsername());
+
+        return "성공";
     }
 
 

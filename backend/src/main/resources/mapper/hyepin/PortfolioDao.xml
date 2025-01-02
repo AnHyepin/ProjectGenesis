@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hyepin.PortfolioDao">
+
+    <insert id="save">
+        INSERT INTO tbl_resume_portfolio
+            (resume_no, resume_portfolio_start_date, resume_portfolio_end_date,
+            resume_portfolio_url, resume_portfolio_cnt, resume_portfolio_content)
+        VALUES
+            (#{resumeNo}, #{resumePortfolioStartDate}, #{resumePortfolioEndDate},
+            #{resumePortfolioUrl}, #{resumePortfolioCnt}, #{resumePortfolioContent})
+    </insert>
+
+    <select id="maxNumByResumeNo" resultType="int">
+        SELECT max(resume_portfolio_no)
+        FROM tbl_resume_portfolio
+        WHERE resume_no = #{resumeNo}
+    </select>
+
+</mapper>

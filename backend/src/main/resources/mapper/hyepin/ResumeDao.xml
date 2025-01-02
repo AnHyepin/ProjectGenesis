@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hyepin.ResumeDao">
+
+    <select id="getMaxNum" resultType="int">
+       SELECT max(resume_no) FROM tbl_resumes WHERE username = #{username}
+    </select>
+
+    <select id="getSavedraft" resultType="org.green.backend.dto.hyepin.ResumeDto">
+        SELECT * FROM tbl_resumes WHERE username = #{username} and savedraft = '1'
+    </select>
+
+    <delete id="savedraftDelete">
+        DELETE FROM tbl_resumes WHERE username = #{username} and savedraft = '1'
+    </delete>
+
+    <insert id="create">
+        INSERT INTO tbl_resumes (username, resume_title)
+        VALUES(#{username}, '임시저장입니다.')
+    </insert>
+
+    <update id="save">
+        UPDATE tbl_resumes
+        SET resume_title = #{resumeTitle}, resume_my_title = #{resumeMyTitle},
+            resume_my_content = #{resumeMyContent}, resume_pubilce_yn = #{resumePubilceYn},
+            salary = #{salary}, career = #{career}, savedraft = '0'
+        WHERE resume_no = #{resumeNo}
+    </update>
+</mapper>

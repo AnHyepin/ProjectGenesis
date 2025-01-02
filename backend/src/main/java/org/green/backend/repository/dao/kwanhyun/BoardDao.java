@@ -1,9 +1,9 @@
-package org.green.backend.repository.dao;
+package org.green.backend.repository.dao.kwanhyun;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.kwanhyun.BoardDto;
-import org.green.backend.entity.kwanhyun.Board;
+import org.green.backend.entity.Board;
 
 import java.util.List;
 

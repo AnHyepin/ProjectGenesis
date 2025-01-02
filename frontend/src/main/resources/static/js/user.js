@@ -37,3 +37,8 @@ function secondHandleClick(event){
     const clickedId = event.target.id;
     localStorage.setItem('activeMenu', 'resumeManagement');
 }
+
+function bellClick(){
+    document.getElementById('header-bell-block').style.display = "block";
+    document.getElementById('header-redbell-block').style.display = "none";
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hyepin.CertificateDao">
+
+    <insert id="save">
+        INSERT INTO tbl_resume_certificates
+            (resume_no, certificate_dt, certificate_name,
+            certificate_place, certificate_gbn_cd)
+        VALUES
+            (#{resumeNo}, #{certificateDt}, #{certificateName},
+            #{certificatePlace}, #{certificateGbnCd})
+    </insert>
+</mapper>

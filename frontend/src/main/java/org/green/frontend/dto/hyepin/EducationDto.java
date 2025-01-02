@@ -9,6 +9,7 @@ public class EducationDto {
 
     private int resumeEducationNo;
     private int resumeNo;
+    private String username;
     private String resumeEducationGbnCode;
     private String resumeEducationName;
     private String resumeEducationMajor;
