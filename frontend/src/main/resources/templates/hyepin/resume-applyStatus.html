@@ -25,8 +25,8 @@
             <div style="font-weight: bold">[[${finalCnt}]] 건</div>
         </div>
     </div>
-    <div style="display: flex; justify-content: space-between;">
-        <div>공고명 / 지원 이력서</div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="margin-left: 10px;">공고명 / 지원 이력서</div>
         <div style="margin-right: 165px;">
             <select style="border-radius: 10px; padding: 5px; border: 1px solid #929292;">
                 <option>심사현황</option>
@@ -41,8 +41,13 @@
         <th:block th:each="as : ${applyStatusList}">
             <div style="display: flex; justify-content: space-between; padding: 0px 20px;">
                 <div style="display: flex; flex-direction: column; justify-content: center;">
-                    <div>[[${as.applicationTitle}]] <span>[[${as.companyName}]]</span></div>
-                    <div>[[${as.resumeTitle}]]</div>
+                    <div style="display: flex; gap: 10px; align-items: baseline">
+                        <a href="">  <span style="font-size: 20px; font-weight: bold;">
+                             [[${as.applicationTitle}]]  </span> </a>
+                        <span style="font-size: 16px; color: #4e4e4e;">[[${as.companyName}]]</span>
+                    </div>
+                    <div style="font-size: 16px; margin-top: 5px;">
+                        <a th:href="@{/resume/detail(resumeNo=${as.resumeNo})}">[[${as.resumeTitle}]]</a></div>
                 </div>
                 <div style="display: flex; gap: 20px; align-items: center;">
                     <th:block th:if="${as.applyStatusGbnCode == 'H'}">
@@ -56,7 +61,7 @@
                     </th:block>
                     <div>
                         <th:block th:if="${as.applyStatusGbnCode == 'H'}">
-                            <button class="cancelApplication">지원취소</button>
+                            <button class="cancelApplication"  th:onclick="'cancelApply(' + ${as.resumeNo} + ')'">지원취소</button>
                         </th:block>
                         <th:block th:if="${as.applyStatusGbnCode == 'P' || as.applyStatusGbnCode == 'F'}">
                             <button class="noCancelApplication" style="transform: none; cursor: default;">취소불가</button>
