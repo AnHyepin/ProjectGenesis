@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
+    <select id="companyByScore" resultType="org.green.backend.dto.hws.CompanyDto">
+        SELECT company_name AS '기업명', AVG(jr_star) AS score FROM tbl_ratings GROUP BY company_name;
+    </select>
+
+</mapper>
