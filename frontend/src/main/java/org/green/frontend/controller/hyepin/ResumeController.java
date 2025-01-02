@@ -26,7 +26,7 @@ public class ResumeController {
     @GetMapping
     public String resumeRegist(Model model) {
         // 파라미터를 Map 형태로 구성
-        Map<String, String> params = Map.of("username", "123");
+        Map<String, String> params = Map.of("username", "혜빈");
         var userResponse = apiService.fetchData("/api/resume",  params, true);
         var user =  userResponse.getBody();
 
