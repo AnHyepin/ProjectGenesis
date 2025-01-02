@@ -26,11 +26,7 @@ public class MainController {
     public MainPageDataDto nonLoginMain(HttpServletRequest request) {
         String token = tokenGetHeaderUtil.extractToken(request);
 
-        if (token != null) {
-            return mainService.getNonLoginPageData(jwtUtil.getUsername(token));
-        }
-
-        return mainService.getNonLoginPageData(null);
+        return mainService.getNonLoginPageData(token != null ? jwtUtil.getUsername(token) : null);
     }
 
 }

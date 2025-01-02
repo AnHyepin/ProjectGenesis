@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hws.CompanyDao2">
+
+    <resultMap id="CompanyDetailsMap" type="org.green.backend.dto.hws.CompanyDetailsDto">
+        <result property="avgRating" column="avgRating"/>
+        <result property="totalBookMark" column="totalBookMark"/>
+        <result property="isBookMark" column="isBookMark"/>
+        <result property="profileUrl" column="profileUrl"/>
+
+        <association property="company" javaType="org.green.backend.dto.hws.CompanyDetailsDto$InnerCompany">
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="name" column="name"/>
+            <result property="email" column="email"/>
+            <result property="phone" column="phone"/>
+            <result property="content" column="content"/>
+            <result property="birth" column="birth"/>
+            <result property="address" column="address"/>
+            <result property="addressDetail" column="address_detail"/>
+            <result property="zipCode" column="zip_code"/>
+            <result property="ceoName" column="ceo_name"/>
+            <result property="homepage" column="homepage"/>
+            <result property="employees" column="employees"/>
+            <result property="sale" column="sale"/>
+            <result property="role" column="role"/>
+            <result property="deleteYn" column="delete_yn"/>
+            <result property="registDt" column="regist_dt"/>
+            <result property="modiDt" column="modi_dt"/>
+        </association>
+
+        <collection property="applications" ofType="org.green.backend.dto.hws.CompanyDetailsDto$InnerApplication">
+            <result property="applicationNo" column="application_no"/>
+            <result property="username" column="username"/>
+            <result property="applicationTitle" column="application_title"/>
+            <result property="startDate" column="start_date"/>
+            <result property="deadlineDate" column="deadline_date"/>
+            <result property="applicationCode" column="application_code"/>
+            <result property="salary" column="salary"/>
+            <result property="careerCode" column="career_code"/>
+            <result property="positionCode" column="position_code"/>
+            <result property="educationGbnCode" column="education_gbn_code"/>
+            <result property="employmentCode" column="employment_code"/>
+            <result property="workingArea" column="working_area"/>
+            <result property="roleCode" column="role_code"/>
+            <result property="content" column="content"/>
+            <result property="procedureCode" column="procedure_code"/>
+            <result property="deleteYn" column="delete_yn"/>
+            <result property="registDt" column="regist_dt"/>
+            <result property="modiDt" column="modi_dt"/>
+            <result property="isScrap" column="isScrapPerApplication"/>
+            <collection property="files" ofType="org.green.backend.dto.hws.CompanyDetailsDto$InnerFile">
+                <result property="fileNo" column="file_no"/>
+                <result property="fileGubnCode" column="file_gubn_code"/>
+                <result property="fileRefNo" column="file_ref_no"/>
+                <result property="fileOldName" column="file_old_name"/>
+                <result property="fileNewName" column="file_new_name"/>
+                <result property="fileExt" column="file_ext"/>
+                <result property="fileSize" column="file_size"/>
+                <result property="fileUrl" column="file_url"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="companyDetails" resultMap="CompanyDetailsMap">
+        SELECT
+        c.*,
+        a.*,
+        f2.file_url AS profileUrl,
+        f.file_no,
+        f.file_gubn_code,
+        f.file_ref_no,
+        f.file_old_name,
+        f.file_new_name,
+        f.file_ext,
+        f.file_size,
+        f.file_url,
+        AVG(r.jr_star) AS avgRating,
+        COUNT(DISTINCT IF(l.like_code = 'G', l.username, NULL)) AS totalBookMark,
+        COUNT(IF(l.like_code = 'G' AND l.username = #{username}, 1, NULL)) > 0 AS isBookMark,
+        IF( COUNT(IF(l.like_code = 'S' AND l.username = #{username} AND l.like_id = a.application_no, 1, NULL)) > 0, 1,
+        0 ) AS isScrapPerApplication
+        FROM tbl_companys c
+        LEFT JOIN tbl_ratings r ON c.username = r.company_name
+        LEFT JOIN tbl_applications a ON c.username = a.username
+        LEFT JOIN tbl_likes l ON (l.like_code = 'G' AND c.username = l.like_id) OR (l.like_code = 'S' AND
+        a.application_no = l.like_id)
+        LEFT JOIN tbl_file f ON f.file_ref_no = a.application_no
+        LEFT JOIN tbl_file f2 ON f2.file_ref_no = #{companyName} AND f2.file_gubn_code = 'company_detail'
+        WHERE c.username = #{companyName}
+        AND a.delete_yn = 'N'
+        GROUP BY c.username, a.application_no, f.file_no;
+    </select>
+
+</mapper>

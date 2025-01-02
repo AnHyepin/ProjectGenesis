@@ -13,14 +13,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RatingApplicationDTO {
+public class RatingApplicationDto {
     private String username;
     private String name;
     private Application application;
     private Double averageStar;
     private List<File> files;
 
-    public RatingApplicationDTO(String username,String companyName, Double averageStar) {
+    public RatingApplicationDto(String username, String companyName, Double averageStar) {
         this.username = username;
         this.name = companyName;
         this.averageStar = averageStar;

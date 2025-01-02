@@ -54,6 +54,7 @@ public class MainController {
         }
 
         model.addAttribute("mainData", mainData);
+        log.info("Main data added to model: {}", mainData);
 
         return "main";
     }

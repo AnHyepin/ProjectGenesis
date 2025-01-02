@@ -2,11 +2,11 @@ package org.green.backend.controller.hws;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
-import org.green.backend.dto.hws.UserDto;
-import org.green.backend.dto.hws.UserWithFileDto;
-import org.green.backend.entity.Company;
 import org.green.backend.service.hws.CompanyService;
+import org.green.backend.utils.JWTUtil;
+import org.green.backend.utils.TokenGetUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * 12-27 (작성자: 한우성)
  * 기업 전용 컨트롤러
- * 
  * 01-02 (작성자: 노관현)
  * 기업정보조회, 수정 추가
  */
@@ -27,6 +26,8 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyService companyService;
+    private final TokenGetUtil tokenGetUtil;
+    private final JWTUtil jwtUtil;
 
 
     @PostMapping
@@ -57,6 +58,11 @@ public class CompanyController {
         companyService.updateCompany(companyDto);
 
         return null;
+    }
+
+    @GetMapping("/detail/{companyName}")
+    public CompanyDetailsDto companyDetail(@PathVariable String companyName, @RequestParam String username) {
+        return companyService.companyDetails(companyName, username);
     }
 
 }

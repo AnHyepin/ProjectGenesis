@@ -2,13 +2,16 @@ package org.green.backend.service.hws;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.entity.Company;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
+import org.green.backend.repository.dao.hws.CompanyDao2;
 import org.green.backend.repository.dao.kwanhyun.CompanyDao;
 import org.green.backend.repository.jpa.hws.CompanyRepository;
 import org.green.backend.service.common.FileService;
+import org.green.backend.utils.DateUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +37,7 @@ public class CompanyService {
     private final PasswordEncoder passwordEncoder;
     private final FileService fileService;
     private final CompanyDao companyDao;
-
+    private final CompanyDao2 companyDao2;
 
     /**
      * 회사 정보를 저장하고 프로필 및 관련 파일을 저장
@@ -108,7 +112,7 @@ public class CompanyService {
         company.setAddress(company.toAddress());
 
 
-        if(company != null) {
+        if (company != null) {
             return company;
         }
         return null;
@@ -124,12 +128,35 @@ public class CompanyService {
         return "성공";
     }
 
-    /**
-     * 회사 정보 삭제 - 관현(25.01.02. 14:50)
-     */
-    public String deleteCompany(CompanyDto companyDto) {
-        CompanyDto company = companyDao.findCompanyByUsername(companyDto.getUsername());
 
-        return "성공";
+    public CompanyDetailsDto companyDetails(String companyName, String username) {
+        List<CompanyDetailsDto> companyDetailsList = companyDao2.companyDetails(companyName, username);
+
+        if (companyDetailsList.isEmpty()) {
+            return null;
+        }
+
+        CompanyDetailsDto newDetails = companyDetailsList.get(0);
+
+        List<CompanyDetailsDto.InnerApplication> applications = new ArrayList<>();
+
+        for (CompanyDetailsDto details : companyDetailsList) {
+            if (details.getApplications() != null) {
+                for (CompanyDetailsDto.InnerApplication app : details.getApplications()) {
+                    if (!applications.contains(app)) {
+                        if (app.getFiles() == null || app.getFiles().isEmpty()) {
+                            app.setFiles(null);
+                        }
+                        app.setDaysLeft(DateUtil.calculateDaysLeft(app.getDeadlineDate()));
+                        applications.add(app);
+                    }
+                }
+            }
+        }
+
+        newDetails.setApplications(applications);
+        return newDetails;
     }
+
+
 }
