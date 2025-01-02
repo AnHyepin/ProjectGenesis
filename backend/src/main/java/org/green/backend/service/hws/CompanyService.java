@@ -4,12 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
+import org.green.backend.dto.hws.RatingDto2;
 import org.green.backend.entity.Company;
+import org.green.backend.entity.Rating;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
 import org.green.backend.repository.dao.hws.CompanyDao2;
+import org.green.backend.repository.dao.hws.RatingDao2;
 import org.green.backend.repository.dao.kwanhyun.CompanyDao;
 import org.green.backend.repository.jpa.hws.CompanyRepository;
+import org.green.backend.repository.jpa.hws.RatingRepository;
 import org.green.backend.service.common.FileService;
 import org.green.backend.utils.DateUtil;
 import org.modelmapper.ModelMapper;
@@ -35,9 +39,11 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final RatingRepository ratingRepository;
     private final FileService fileService;
     private final CompanyDao companyDao;
     private final CompanyDao2 companyDao2;
+    private final RatingDao2 ratingDao;
 
     /**
      * 회사 정보를 저장하고 프로필 및 관련 파일을 저장
@@ -158,5 +164,9 @@ public class CompanyService {
         return newDetails;
     }
 
+    public String ratingSave(RatingDto2 rating) {
+        ratingDao.insertRating(rating);
+        return "성공";
+    }
 
 }

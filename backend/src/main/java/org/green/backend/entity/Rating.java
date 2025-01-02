@@ -1,14 +1,16 @@
 package org.green.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "tbl_ratings")
 public class Rating {
     @EmbeddedId private RatingId id;

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
+import org.green.backend.dto.hws.RatingDto2;
 import org.green.backend.service.hws.CompanyService;
 import org.green.backend.utils.JWTUtil;
 import org.green.backend.utils.TokenGetUtil;
@@ -63,6 +64,12 @@ public class CompanyController {
     @GetMapping("/detail/{companyName}")
     public CompanyDetailsDto companyDetail(@PathVariable String companyName, @RequestParam String username) {
         return companyService.companyDetails(companyName, username);
+    }
+
+    @PostMapping("/rating")
+    public String ratingSave(@RequestBody RatingDto2 rating) {
+        log.info("ratingadsfasf{}",rating);
+        return companyService.ratingSave(rating);
     }
 
 }

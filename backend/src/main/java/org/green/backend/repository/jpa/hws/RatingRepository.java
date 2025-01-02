@@ -1,6 +1,7 @@
 package org.green.backend.repository.jpa.hws;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.hws.RatingApplicationDto;
 import org.green.backend.entity.Rating;
 import org.green.backend.entity.RatingId;
@@ -24,4 +25,9 @@ public interface RatingRepository extends JpaRepository<Rating, RatingId> {
     ORDER BY AVG(r.jrStar) DESC
     """)
     List<RatingApplicationDto> findTopRatedCompanies();
+
+        @Query("SELECT COUNT(r) > 0 FROM Rating r WHERE r.id.companyName = :companyName AND r.id.username = :username")
+        boolean existsByCompanyNameAndUsername(@Param("companyName") String companyName, @Param("username") String username);
+
+
 }
