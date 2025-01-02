@@ -8,11 +8,13 @@ import org.green.backend.dto.hws.*;
 import org.green.backend.entity.Application;
 import org.green.backend.entity.Company;
 import org.green.backend.entity.File;
+import org.green.backend.repository.dao.hws.MainDao;
 import org.green.backend.repository.jpa.common.FileRepository;
 import org.green.backend.repository.jpa.hws.ApplicationRepository;
 import org.green.backend.repository.jpa.hws.ApplyStatusRepository;
 import org.green.backend.repository.jpa.hws.LikeRepository;
 import org.green.backend.repository.jpa.hws.RatingRepository;
+import org.green.backend.utils.DateUtil;
 import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ public class MainService {
     private final LikeRepository likeRepository;
     private final FileRepository fileRepository;
     private final ModelMapper modelMapper;
+    private final MainDao mainDao;
 
 
     /**
@@ -148,5 +151,46 @@ public class MainService {
                     .collect(Collectors.toList()));
             return likeApplicationDto;
         }).collect(Collectors.toList());
+    }
+
+
+    public CompanyMainDto getApplicantsWithDetails(String companyUsername) {
+
+        List<Applicant> applicants = mainDao.getApplicantsForCompany(companyUsername);
+        List<CApplicationDto> applications = mainDao.getApplications(companyUsername);
+
+        for (CApplicationDto cApplicationDto : applications) {
+            cApplicationDto.setDaysLeft(DateUtil.calculateDaysLeft(cApplicationDto.getDeadlineDate()));
+        }
+        for (Applicant applicant : applicants) {
+
+            Integer totalCareer = mainDao.getTotalCareerByResumeNo(applicant.getResumeNo());
+            totalCareer = totalCareer != null ? totalCareer : 0;
+            String formattedCareer = formatCareer(totalCareer);
+            applicant.setTotalCareerDescription(formattedCareer);
+
+            List<String> topSkills = mainDao.getTopSkillsByResumeNo(applicant.getResumeNo());
+            applicant.setTopSkills(topSkills);
+        }
+
+        return new CompanyMainDto(applicants, applications);
+    }
+
+
+    //TODO: 시간관계상 여기서 처리
+    private String formatCareer(int totalDays) {
+        if (totalDays <= 0) {
+            return null;
+        }
+
+        int years = totalDays / 365;
+        int remainingDays = totalDays % 365;
+        int months = remainingDays / 30;
+
+        if (years == 0 && months == 0) {
+            return null;
+        }
+
+        return String.format("%d년 %d개월", years, months);
     }
 }
