@@ -579,4 +579,40 @@ function submitForm(){
             });
     }
 }
+/*
+//완성도
+function changeCompletion() {
+    let completedFields = 0; // 채워진 필드 개수
+    let totalFields = 5; // 총 필드 개수 (예: 학교명, 전공, 입학년월 등)
 
+    // 학력 섹션의 필드 값 확인
+    const educationName = document.getElementById("resumeEducationName").value;
+    const educationMajor = document.getElementById("resumeEducationMajor").value;
+    const educationIndt = document.getElementById("resumeEducationIndt").value;
+    const educationOutdt = document.getElementById("resumeEducationOutdt").value;
+    const educationGbnCode = document.getElementById("resumeEducationGbnCode").value;
+
+    // 값이 입력된 필드 개수 계산
+    if (educationName.trim() !== "") completedFields++;
+    if (educationMajor.trim() !== "") completedFields++;
+    if (educationIndt.trim() !== "") completedFields++;
+    if (educationOutdt.trim() !== "") completedFields++;
+    if (educationGbnCode !== "학력 구분 선택") completedFields++;
+
+    // 완성도 계산
+    const completionRate = Math.floor((completedFields / totalFields) * 100);
+
+    // 프로그레스 바와 텍스트 업데이트
+    const progressBar = document.getElementById("education-progress");
+    const progressText = document.getElementById("education-progress-text");
+    progressBar.value = completionRate;
+    progressText.textContent = `${completionRate}%`;
+}
+
+// 각 필드에 change 이벤트 리스너 추가
+document.getElementById("resumeEducationName").addEventListener("input", changeCompletion);
+document.getElementById("resumeEducationMajor").addEventListener("input", changeCompletion);
+document.getElementById("resumeEducationIndt").addEventListener("input", changeCompletion);
+document.getElementById("resumeEducationOutdt").addEventListener("input", changeCompletion);
+document.getElementById("resumeEducationGbnCode").addEventListener("change", changeCompletion);
+*/

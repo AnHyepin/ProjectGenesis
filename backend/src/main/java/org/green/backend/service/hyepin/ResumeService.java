@@ -38,8 +38,8 @@ public class ResumeService {
     //처음 이력서 작성 생성할 때 임시저장 이력서 삭제
     public int savedraftResume(String username) {
         //임시저장 이력서 삭제
-        ResumeDto savedraftResume = resumeDao.getSavedraft(username);
-        if(savedraftResume != null){
+        List<ResumeDto> savedraftResume = resumeDao.getSavedraft(username);
+        if(!savedraftResume.isEmpty()){
             resumeDao.savedraftDelete(username);
         }
         //임시저장으로 이력서 생성
