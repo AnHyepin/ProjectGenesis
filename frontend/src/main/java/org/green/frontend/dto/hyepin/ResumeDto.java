@@ -25,6 +25,5 @@ public class ResumeDto {
     private String salary;  //요구연봉
     private String career;  //지원할 때 경력(신입/경력)
     private List<String> gubnCode; //기술 스택 이름 리스트
-
-
+    private int applyCount; //지원한 공고 카운트
 }
