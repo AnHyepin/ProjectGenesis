@@ -133,6 +133,12 @@ public class ResumeService {
         return applyList;
     }
 
+    //지원현황 리스트
+    public List<ApplyStatusDto>  getApplyStatusList(String username){
+        List<ApplyStatusDto> applyStatusListList = resumeDao.getApplyStatusList(username);
+        return applyStatusListList;
+    }
+
 
 }
 

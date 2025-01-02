@@ -185,10 +185,16 @@ public class ResumeController {
     @GetMapping("/applyList")
     public List<ApplyApplycationDto> applyList (@RequestParam("resumeNo") int resumeNo) throws IOException {
         List<ApplyApplycationDto> applyList = resumeService.getApplyList(resumeNo);
-        for(ApplyApplycationDto applyApplycationDto : applyList){
-            System.out.println(applyApplycationDto);
-        }
         return applyList;
+    }
+
+    @GetMapping("/applyStatus")
+    public List<ApplyStatusDto> applyStatusList (@RequestParam("username") String  username) throws IOException {
+        List<ApplyStatusDto> applyStatusList = resumeService.getApplyStatusList(username);
+        for(ApplyStatusDto a : applyStatusList) {
+            System.out.println(a.toString());
+        }
+        return applyStatusList;
     }
 
 }
