@@ -78,7 +78,7 @@
         f.file_ext,
         f.file_size,
         f.file_url,
-        AVG(r.jr_star) AS avgRating,
+        ROUND(AVG(r.jr_star),2) AS avgRating,
         COUNT(DISTINCT IF(l.like_code = 'G', l.username, NULL)) AS totalBookMark,
         COUNT(IF(l.like_code = 'G' AND l.username = #{username}, 1, NULL)) > 0 AS isBookMark,
         IF( COUNT(IF(l.like_code = 'S' AND l.username = #{username} AND l.like_id = a.application_no, 1, NULL)) > 0, 1,
