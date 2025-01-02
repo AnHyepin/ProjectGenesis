@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
+    <select id="findCompanyByUsername" resultType="org.green.backend.dto.hws.CompanyDto">
+        SELECT *, address as  roadAddress, address_detail as detailAddress  FROM tbl_companys WHERE username = #{username}
+    </select>
+
+    <update id="updateCompany">
+        UPDATE tbl_companys SET
+        name = #{name},
+        email = #{email},
+        phone = #{phone},
+        content = #{content},
+        birth = #{birth},
+        address = #{roadAddress},
+        address_detail = #{detailAddress},
+        zip_code = #{zipcode},
+        ceo_name = #{ceoName},
+        employees = #{employees},
+        sale = #{sale},
+        homepage = #{homepage}
+        WHERE username = #{username};
+    </update>
+
+</mapper>

@@ -49,6 +49,7 @@ public class ApiRequestService {
                 String fullUrl = urlBuilder.toString();
                 log.info("인코딩되지 않은 URL: {}", fullUrl);
 
+
                 return webClient
                         .get()
                         .uri(fullUrl)

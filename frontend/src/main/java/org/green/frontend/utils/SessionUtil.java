@@ -2,6 +2,7 @@ package org.green.frontend.utils;
 
 import jakarta.servlet.http.HttpSession;
 import org.green.frontend.dto.hws.UserDto;
+import org.green.frontend.dto.kwanhyun.CompanyDto;
 
 public class SessionUtil {
 
@@ -18,4 +19,15 @@ public class SessionUtil {
         }
         return null;
     }
+
+ /*   private static final String COMPANY_SESSION_KEY = "company";
+
+    public static CompanyDto getCompany(HttpSession session) {
+        Object attribute = session.getAttribute(COMPANY_SESSION_KEY);
+        if (attribute instanceof CompanyDto) {
+            return (CompanyDto) attribute;
+        }
+        return null;
+    }*/
+
 }

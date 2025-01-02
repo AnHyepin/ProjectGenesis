@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.green.backend.repository.dao.BoardDao">
+<mapper namespace="org.green.backend.repository.dao.kwanhyun.BoardDao">
     <insert id="regBoard">
         INSERT INTO tbl_board (title, content, regist_id)
         VALUES (#{board.title}, #{board.content}, #{board.registId})
