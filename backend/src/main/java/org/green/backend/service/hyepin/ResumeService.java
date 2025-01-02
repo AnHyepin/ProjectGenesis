@@ -109,4 +109,30 @@ public class ResumeService {
         return result;
     }
 
+    //유저 ID로 이력서 목록 가져오기
+    public List<ResumeDto> getResumeList(String username) {
+        List<ResumeDto> resumeList = resumeDao.getResumeListByUsername(username);
+        return resumeList;
+    }
+
+    //유저 ID로 이력서 카운트
+    public int getResumeCount(String username) {
+        int resumeCount = resumeDao.getResumeCount(username);
+        return resumeCount;
+    }
+
+    //포지션제안 받기로 업데이트
+    public int updatePosition(int resumeNo){
+        int result = resumeDao.updatePosition(resumeNo);
+        return result;
+    }
+
+    //이력서 번호별 지원 현황
+    public List<ApplyApplycationDto> getApplyList(int resumeNo){
+        List<ApplyApplycationDto> applyList = resumeDao.getApplyList(resumeNo);
+        return applyList;
+    }
+
+
 }
+

@@ -550,7 +550,7 @@ function submitForm(){
 
         const resumeMyTitle = document.getElementById('resumeMyTitle').innerHTML;
         const resumeMyContent = document.getElementById('resumeMyContent').innerHTML;
-        const resumePubilceYn = document.getElementById('resumePubilceYn').value;
+        const resumePubilceYn = document.querySelector('input[name="resumePubilceYn"]:checked').value;
         const career = document.getElementById('career').value;
         const salary = document.getElementById('salary').value;
         const username = document.getElementById('username').textContent;

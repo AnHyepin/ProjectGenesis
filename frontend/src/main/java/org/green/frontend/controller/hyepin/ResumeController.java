@@ -23,10 +23,11 @@ public class ResumeController {
 
     private final ApiRequestService apiService;
 
+
     @GetMapping
     public String resumeRegist(Model model) {
         // 파라미터를 Map 형태로 구성
-        Map<String, String> params = Map.of("username", "혜빈");
+        Map<String, String> params = Map.of("username", "안혜빈");
         var userResponse = apiService.fetchData("/api/resume",  params, true);
         var user =  userResponse.getBody();
 
@@ -50,6 +51,23 @@ public class ResumeController {
         System.out.println("certificate 리스트 : " +certificateList);
         return "/hyepin/resume-regist";
     }
+
+    @GetMapping("/list")
+    public String resumeList(Model model) {
+        //유저 이력서 가져오기
+        Map<String, String> params = Map.of("username", "안혜빈");
+        //지원한 숫자까지 포함해서 가져오기
+        var resumeListResponse = apiService.fetchData("/api/resume/list",  params, true);
+        var applyCountResponse = apiService.fetchData("/api/resume/count",  params, true);
+        var resumeList =  resumeListResponse.getBody();
+        var applyCount =  applyCountResponse.getBody();
+
+        model.addAttribute("resumeList", resumeList);
+        model.addAttribute("count", applyCount);
+        return "/hyepin/resume-list";
+    }
+
+
 
 
 }

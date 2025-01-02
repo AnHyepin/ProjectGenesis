@@ -29,4 +29,42 @@
             salary = #{salary}, career = #{career}, savedraft = '0'
         WHERE resume_no = #{resumeNo}
     </update>
+
+    <select id="getResumeListByUsername" resultType="org.green.backend.dto.hyepin.ResumeDto">
+        SELECT COUNT(a.application_no) AS applyCount, r.*
+        FROM tbl_resumes r
+        LEFT JOIN tbl_apply_status a ON r.resume_no = a.resume_no
+        WHERE r.username = #{username} AND r.savedraft = '0'
+        GROUP BY r.resume_no;
+    </select>
+
+    <select id="getResumeCount" resultType="int">
+        SELECT count(*) AS count
+        FROM tbl_resumes
+        WHERE username = #{username} AND savedraft = '0';
+    </select>
+
+    <update id="updatePosition">
+        UPDATE tbl_resumes
+        SET resume_pubilce_yn = 'Y'
+        WHERE resume_no = #{resumeNo}
+    </update>
+
+    <select id="getApplyList" resultType="org.green.backend.dto.hyepin.ApplyApplycationDto">
+        SELECT
+            a.resume_no,
+            a.application_no,
+            a.apply_status_gbn_code,
+            b.application_title,
+            b.username,
+            c.name AS companyName
+        FROM
+            tbl_apply_status a
+        JOIN
+            tbl_applications b ON a.application_no = b.application_no
+        JOIN
+            tbl_companys c ON b.username = c.username
+        WHERE
+            a.resume_no = #{resumeNo};
+    </select>
 </mapper>
