@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hyepin.EducationDao">
+
+    <insert id="save">
+        INSERT INTO tbl_resume_education
+            (resume_no, resume_education_gbn_code, resume_education_name,
+            resume_education_major, resume_education_score,
+            resume_education_indt, resume_education_outdt, resume_education_transfer_yn)
+        VALUES
+            (#{resumeNo}, #{resumeEducationGbnCode}, #{resumeEducationName},
+            #{resumeEducationMajor}, #{resumeEducationScore}, #{resumeEducationIndt},
+            #{resumeEducationOutdt}, #{resumeEducationTransferYn})
+    </insert>
+</mapper>
