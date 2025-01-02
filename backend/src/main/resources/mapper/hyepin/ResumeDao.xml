@@ -6,7 +6,7 @@
 <mapper namespace="org.green.backend.repository.dao.hyepin.ResumeDao">
 
     <select id="getMaxNum" resultType="int">
-       SELECT max(resume_no) FROM tbl_resumes WHERE username = #{username}
+       SELECT max(resume_no) FROM tbl_resumes WHERE username = #{username} AND delete_yn = 'N'
     </select>
 
     <select id="getSavedraft" resultType="org.green.backend.dto.hyepin.ResumeDto">
@@ -34,14 +34,14 @@
         SELECT COUNT(a.application_no) AS applyCount, r.*
         FROM tbl_resumes r
         LEFT JOIN tbl_apply_status a ON r.resume_no = a.resume_no
-        WHERE r.username = #{username} AND r.savedraft = '0'
-        GROUP BY r.resume_no;
+        WHERE r.username = #{username} AND r.savedraft = '0' AND r.delete_yn = 'N'
+        GROUP BY r.resume_no
     </select>
 
     <select id="getResumeCount" resultType="int">
         SELECT count(*) AS count
         FROM tbl_resumes
-        WHERE username = #{username} AND savedraft = '0';
+        WHERE username = #{username} AND savedraft = '0' AND delete_yn = 'N'
     </select>
 
     <update id="updatePosition">

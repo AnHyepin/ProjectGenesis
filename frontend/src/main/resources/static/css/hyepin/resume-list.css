@@ -11,6 +11,10 @@ button{
     border-radius: 15px;
 }
 
+button:hover{
+    transform: scale(1.1);
+}
+
 .modal {
     position: fixed;
     top: 0;

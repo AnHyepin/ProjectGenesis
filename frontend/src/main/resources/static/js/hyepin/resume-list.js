@@ -73,10 +73,10 @@ function addModal(applyList){
             buttonHtml = `<button class="cancelApplication" onclick="cancelApplication(${apply.applicationNo})">지원취소</button>`;
             applyStatusGbnCode = `<div id="H">진행중</div>`;
         } else if (apply.applyStatusGbnCode === 'P') {
-            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; ">취소불가</button>';
+            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; transform: none;">취소불가</button>';
             applyStatusGbnCode = `<div id="P" style="margin-right: 10px;">합격</div>`;
         }else if (apply.applyStatusGbnCode === 'F') {
-            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; ">취소불가</button>';
+            buttonHtml = '<button class="noCancelApplication"  style="cursor: default; transform: none;">취소불가</button>';
             applyStatusGbnCode = `<div id="F">불합격</div>`;
         }
 
