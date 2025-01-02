@@ -1,7 +1,10 @@
 package org.green.frontend.controller.hyepin;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.hyepin.ApplyStatusDto;
 import org.green.frontend.dto.jeyeon.GubnDto;
+import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 12-31 (작성자: 안혜빈)
@@ -31,7 +36,6 @@ public class ResumeController {
         Map<String, String> params = Map.of("username", "안혜빈");
         var userResponse = apiService.fetchData("/api/resume",  params, true);
         var user =  userResponse.getBody();
-
 
         var jobListResponse = apiService.fetchData("/api/gubn/job");
         var certificateResponse = apiService.fetchData("/api/gubn/certificate");
@@ -73,6 +77,51 @@ public class ResumeController {
                                 Model model) {
         System.out.println("resumeNo: " + resumeNo);
         return "/hyepin/resume-detail";
+    }
+
+    @GetMapping("/applyStatus")
+    public String resumeApplyStatus(Model model) {
+
+        //지원완료(submitCnt) = list.size()
+        //전형진행중(processCnt) = if(list.getApply_status_gbn_code.equals("H"))
+        //최종발표(finalCnt) = else
+
+        List<ApplyStatusDto> applyStatusList = new ArrayList<>();
+
+        int submitCnt = 0;
+        int processCnt = 0;
+        int finalCnt = 0;
+
+        //유저 지원현황 가져오기
+        Map<String, String> params = Map.of("username", "안혜빈");
+        
+        //이거 for문 돌리는 로직
+        ApiResponse<?> response = apiService.fetchData("/api/resume/applyStatus", params, true);
+        Object body = response.getBody();
+
+        if (body instanceof List) {
+           applyStatusList = ((List<?>) body).stream()
+                    .map(item -> new ObjectMapper().convertValue(item, ApplyStatusDto.class))
+                    .collect(Collectors.toList());
+
+            submitCnt = applyStatusList.size();
+
+            for (ApplyStatusDto applyStatus : applyStatusList) {
+                if(applyStatus.getApplyStatusGbnCode().equals("H")){
+                    processCnt++;
+                }else {
+                    finalCnt++;
+                }
+            }
+        } else {
+            throw new IllegalStateException("body가 List<ApplyStatusDto>가 아님");
+        }
+
+        model.addAttribute("applyStatusList", applyStatusList);
+        model.addAttribute("submitCnt", submitCnt);
+        model.addAttribute("processCnt", processCnt);
+        model.addAttribute("finalCnt", finalCnt);
+        return "/hyepin/resume-applyStatus";
     }
 
 }

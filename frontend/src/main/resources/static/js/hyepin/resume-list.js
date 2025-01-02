@@ -84,7 +84,7 @@ function addModal(applyList){
                    <div style="display: flex; justify-content: space-between;">
                         <div style="display: flex; flex-direction: column; justify-content: center; padding: 20px;">
                             <div style="font-size: 18px; cursor: pointer;" onclick="applycation(${apply.applicationNo})">${apply.applicationTitle}</div>
-                            <div style="font-size: 14px; color: #929292">(주) ${apply.companyName}</div>
+                            <div style="font-size: 14px; color: #929292">${apply.companyName}</div>
                         </div>
                         <div style="display: flex; justify-content: space-between; gap:20px; align-items: center;">
                             ${applyStatusGbnCode}

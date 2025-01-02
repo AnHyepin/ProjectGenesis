@@ -67,4 +67,19 @@
         WHERE
             a.resume_no = #{resumeNo};
     </select>
+
+    <select id="getApplyStatusList" resultType="org.green.backend.dto.hyepin.ApplyStatusDto">
+        SELECT  s.resume_no, s.application_no,
+                a.application_title, c.name AS companyName, r.resume_title,
+                s.apply_status_gbn_code
+        FROM tbl_apply_status s
+        JOIN tbl_applications a
+        ON s.application_no = a.application_no
+        JOIN tbl_resumes r
+        ON s.resume_no = r.resume_no
+        JOIN tbl_companys c
+        ON a.username = c.username
+        WHERE s.regist_id = #{username}
+
+    </select>
 </mapper>
