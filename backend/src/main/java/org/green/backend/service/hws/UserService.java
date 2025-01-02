@@ -120,7 +120,6 @@ public class UserService {
      */
     @Transactional
     public String updateUser(UserDto userDto, MultipartFile profilePicture, Long fileNo) throws IOException {
-
         User user = userRepository.findByUsername(userDto.getUsername());
 
         try {

@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.frontend.dto.hws.UserDto;
+import org.green.frontend.dto.kwanhyun.CompanyDto;
 import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.green.frontend.utils.SessionUtil;
@@ -52,5 +53,23 @@ public class UserAndCompanyController {
         model.addAttribute("user", responseData.get("user"));
         model.addAttribute("file", responseData.get("file"));
         return "hws/user-edit";
+    }
+
+    @GetMapping("/company-edit")
+    public String companyEdit(HttpSession session, Model model) {
+       // UserDto company = SessionUtil.getUser(session);
+/*
+        if (company == null) {
+            log.warn("세션에 기업 정보가 없습니다.");
+            return "redirect:/login";
+        }*/
+
+        var apiResponse = apiRequestService.fetchData("/api/company/" + "company96");
+        log.info("apiResponse: {}", apiResponse.getBody());
+
+        Map<String, Object> responseData = (Map<String, Object>) apiResponse.getBody();
+
+        model.addAttribute("company", apiResponse.getBody());
+        return "kwanhyun/company-edit";
     }
 }
