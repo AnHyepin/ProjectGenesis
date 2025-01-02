@@ -1,7 +1,6 @@
 package org.green.frontend.controller.hyepin;
 
 import lombok.RequiredArgsConstructor;
-import org.green.frontend.dto.jeyeon.GubnDto;
 import org.green.frontend.service.ApiRequestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

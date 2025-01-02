@@ -33,19 +33,32 @@
             <section class="job-detail">
                 <div class="job-summary">
                     <div class="label">경력</div>
-                    <div class="value">[[${applicationResponse.careerCode}]]</div>
+                    <div class="value" th:text="${applicationResponse.careerCode == 'G' ? '경력' :
+                                    (applicationResponse.careerCode == 'S' ? '신입' : '신입/경력')}"></div>
 
                     <div class="label">급여</div>
                     <div class="value" th:text="${applicationResponse.salary == 0 ? '면접 후 결정' : applicationResponse.salary + '만원'}"></div>
 
+                    <th:block th:if="${applicationResponse.educationGbnCode != null}">
+                        <div class="label">학력</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'H'}">고등학교 졸업</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'U3'}">대학(2,3년)</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'U4'}">대학교(4년)</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'S'}">대학원(석사)</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'D'}">박사</div>
+                    </th:block>
 
-                    <div class="label">학력</div>
-                    <div class="value">학력무관</div>
-                    <div class="label">직급/직책</div>
-                    <div class="value">사원</div>
+                    <th:block th:if="${applicationResponse.positionCode != null}">
+                        <div class="label">직급/직책</div>
+                        <div th:if="${applicationResponse.positionCode == 'D'}">대리</div>
+                        <div th:if="${applicationResponse.positionCode == 'S'}">사원</div>
+                        <div th:if="${applicationResponse.positionCode == 'J'}">주임</div>
+                        <div th:if="${applicationResponse.positionCode == 'T'}">팀장</div>
+                    </th:block>
 
                     <div class="label">근무형태</div>
-                    <div class="value">정규직, 계약직</div>
+                    <div class="value" th:text="${applicationResponse.employmentCode == 'A' ? '계약/정규직' :
+                                    (applicationResponse.employmentCode == 'C' ? '계약직' : '정규직')}"></div>
                 </div>
             </section>
 
@@ -57,9 +70,17 @@
             <section class="job-slider">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" style="background-color: rgb(255, 127, 127);">Slide 1</div>
-                        <div class="swiper-slide" style="background-color: rgb(127, 175, 255);">Slide 2</div>
-                        <div class="swiper-slide" style="background-color: rgb(127, 255, 127);">Slide 3</div>
+                        <th:block th:if="${#lists.isEmpty(fileList)}">
+                            <img src="/static/img/img_default_gonggo.png">
+                        </th:block>
+
+                        <th:block th:if="${!#lists.isEmpty(fileList)}" th:each="file, status : ${fileList}">
+                            <img th:src="${file.fileUrl}"
+                                 th:alt="'job Image ' + ${status.count}"
+                                 class="swiper-slide">
+                        </th:block>
+
+
                     </div>
 
                     <!-- 내비게이션 버튼 -->

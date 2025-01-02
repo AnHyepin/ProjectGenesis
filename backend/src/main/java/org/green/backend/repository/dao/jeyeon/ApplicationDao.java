@@ -15,8 +15,7 @@ import org.green.backend.entity.Company;
 public interface ApplicationDao {
     public void insertApplication(@Param("applicationRequestDto") ApplicationRequestDto applicationRequestDto);
     public int selectLastApplicationNo();
-
     public ApplicationResponseDto selectApplication(@Param("applicationNo") int applicationNo);
-
     public Company selectApplicatinCompany(@Param("username") String username);
+
 }

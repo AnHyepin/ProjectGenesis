@@ -2,6 +2,7 @@ package org.green.backend.service.jeyeon;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.entity.Application;
@@ -9,12 +10,14 @@ import org.green.backend.entity.ApplicationStack;
 import org.green.backend.entity.Company;
 import org.green.backend.entity.File;
 import org.green.backend.repository.dao.jeyeon.ApplicationDao;
+import org.green.backend.repository.jpa.common.FileRepository;
 import org.green.backend.service.common.FileService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 12-28 (작성자: 안제연)
@@ -28,6 +31,7 @@ public class ApplicationService {
     private final ApplicationDao applicationDao;
     private final ApplicationStackService applicationStackService;
     private final FileService fileService;
+    private final FileRepository fileRepository;
 
     public void registApplication(ApplicationRequestDto applicationRequestDto, List<MultipartFile> files) throws IOException {
         applicationDao.insertApplication(applicationRequestDto);
@@ -57,15 +61,14 @@ public class ApplicationService {
     }
 
     private int getLastApplicationNo() {
-        int lastApplicationNo = applicationDao.selectLastApplicationNo();
-        System.out.println(lastApplicationNo);
-
-        return lastApplicationNo;
+        return applicationDao.selectLastApplicationNo();
     }
 
     public ApplicationResponseDto getApplication(int applicationNo) {
         ApplicationResponseDto application = applicationDao.selectApplication(applicationNo);
-        System.out.println(application);
+        List<File> fileList = fileRepository.findFilesByApplicationNo(applicationNo,"application_no");
+        application.setFileList(fileList);
+        System.out.println(application + "-------------back");
         return application;
     }
 
