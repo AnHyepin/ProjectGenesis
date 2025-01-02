@@ -141,9 +141,9 @@ public class MainService {
      * 스크랩한 공고 조회
      */
     private List<LikeApplicationDto> getLikedApplications(String username) {
-        return likeRepository.findLikeApplications(username).stream().map(likeApplicationDto -> {
+        return likeRepository.findLikeApplications(username).stream().limit(3).map(likeApplicationDto -> {
             List<File> files = fileRepository.findFilesByApplicationNo(likeApplicationDto.getApplication().getApplicationNo(), "application_no");
-            likeApplicationDto.setFile(files.stream()
+            likeApplicationDto.setFiles(files.stream()
                     .map(file -> modelMapper.map(file, FileDto.class))
                     .collect(Collectors.toList()));
             return likeApplicationDto;

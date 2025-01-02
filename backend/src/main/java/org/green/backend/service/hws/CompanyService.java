@@ -7,10 +7,11 @@ import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.entity.Company;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
-import org.green.backend.repository.dao.hws.CompanyDao;
+import org.green.backend.repository.dao.hws.CompanyDao2;
 import org.green.backend.repository.dao.kwanhyun.CompanyDao;
 import org.green.backend.repository.jpa.hws.CompanyRepository;
 import org.green.backend.service.common.FileService;
+import org.green.backend.utils.DateUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,8 +37,7 @@ public class CompanyService {
     private final PasswordEncoder passwordEncoder;
     private final FileService fileService;
     private final CompanyDao companyDao;
-
-    private final CompanyDao companyDao;
+    private final CompanyDao2 companyDao2;
 
     /**
      * 회사 정보를 저장하고 프로필 및 관련 파일을 저장
@@ -112,7 +112,7 @@ public class CompanyService {
         company.setAddress(company.toAddress());
 
 
-        if(company != null) {
+        if (company != null) {
             return company;
         }
         return null;
@@ -128,48 +128,33 @@ public class CompanyService {
         return "성공";
     }
 
-    /**
-     * 회사 정보 삭제 - 관현(25.01.02. 14:50)
-     */
-    public String deleteCompany(CompanyDto companyDto) {
-        CompanyDto company = companyDao.findCompanyByUsername(companyDto.getUsername());
-
-        return "성공";
-    }
-
 
     public CompanyDetailsDto companyDetails(String companyName, String username) {
-        List<CompanyDetailsDto> companyDetailsList = companyDao.companyDetails(companyName, username);
+        List<CompanyDetailsDto> companyDetailsList = companyDao2.companyDetails(companyName, username);
 
         if (companyDetailsList.isEmpty()) {
             return null;
         }
 
         CompanyDetailsDto newDetails = companyDetailsList.get(0);
+
         List<CompanyDetailsDto.InnerApplication> applications = new ArrayList<>();
-        List<CompanyDetailsDto.InnerFile> files = new ArrayList<>();
 
         for (CompanyDetailsDto details : companyDetailsList) {
             if (details.getApplications() != null) {
                 for (CompanyDetailsDto.InnerApplication app : details.getApplications()) {
                     if (!applications.contains(app)) {
+                        if (app.getFiles() == null || app.getFiles().isEmpty()) {
+                            app.setFiles(null);
+                        }
+                        app.setDaysLeft(DateUtil.calculateDaysLeft(app.getDeadlineDate()));
                         applications.add(app);
                     }
                 }
-          /*  }
-            if (details.getFiles() != null) {
-                for (CompanyDetailsDto.InnerFile file : details.getFiles()) {
-                    if (!files.contains(file)) {
-                        files.add(file);
-                    }
-                }
-            }*/
             }
         }
 
         newDetails.setApplications(applications);
-        // newDetails.setFiles(files);
-
         return newDetails;
     }
 

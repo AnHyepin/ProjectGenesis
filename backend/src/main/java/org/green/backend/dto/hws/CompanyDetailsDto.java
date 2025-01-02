@@ -17,7 +17,7 @@ public class CompanyDetailsDto {
     private Double avgRating;
     private Integer totalBookMark;
     private Integer isBookMark;
-    private Integer isScrap;
+    private String profileUrl;
 
     @Data
     @AllArgsConstructor
@@ -65,6 +65,8 @@ public class CompanyDetailsDto {
         private String deleteYn;
         private String registDt;
         private String modiDt;
+        private String daysLeft;
+        private Integer isScrap;
         private List<InnerFile> files;
     }
 

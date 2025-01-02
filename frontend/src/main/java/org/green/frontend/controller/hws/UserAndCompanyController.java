@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -57,11 +58,14 @@ public class UserAndCompanyController {
     }
 
     @GetMapping("/company-detail/{company}")
-    public String companyDetail(@PathVariable String company) {
-        var apiResponse = apiRequestService.fetchData("/api/company/" + company);
+    public String companyDetail(@PathVariable String company, HttpSession session, Model model) {
+        UserDto user = SessionUtil.getUser(session);
+        Map<String, String> params = new HashMap<>();
+        params.put("username", user != null ? user.getUsername() : null);
+        
+        var apiResponse = apiRequestService.fetchData("/api/company/detail/" + company, params, true);
 
-        log.info(apiResponse.toString() + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
+        model.addAttribute("company", apiResponse.getBody());
         return "hws/company-detail";
     }
 
