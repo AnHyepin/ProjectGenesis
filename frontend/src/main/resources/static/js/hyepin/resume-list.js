@@ -46,9 +46,14 @@ function modiBtn(resumeNo){
     alert(resumeNo + "번 이력서 수정");
 }
 
-//아력서 삭제하기
+//이력서 삭제하기
 function deleteBtn(resumeNo){
     alert(resumeNo + "번 이력서 삭제");
+}
+
+//이력서 상세보기
+function resumeDetail(resumeNo){
+    alert(resumeNo + "번 이력서 상세보기");
 }
 
 //모달 추가
