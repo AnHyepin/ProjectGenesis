@@ -11,13 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MainPageDataDto {
-    private List<RatingApplicationDTO> topRatedCompanies;
+    private List<RatingApplicationDto> topRatedCompanies;
     private List<PopularApplicationDto> popularApplications;
     private List<LikeApplicationDto> likeApplications;
     private List<BookmarkApplicationDto> bookmarkApplications;
     private List<Integer> scrappedApplicationIds;
 
-    public MainPageDataDto(List<RatingApplicationDTO> topRatedCompanies, List<PopularApplicationDto> popularApplications) {
+    public MainPageDataDto(List<RatingApplicationDto> topRatedCompanies, List<PopularApplicationDto> popularApplications) {
         this.topRatedCompanies = topRatedCompanies;
         this.popularApplications = popularApplications;
     }

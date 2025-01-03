@@ -41,7 +41,11 @@
             <td th:text="${user.email}"></td>
             <td th:text="${user.gender == 'M' ? '남자' : '여자'}"></td>
             <td th:text="${user.birth}"></td>
-            <td th:text="${#strings.substring(user.phone, 0, 3) + '-' + #strings.substring(user.phone, 3, 7) + '-' + #strings.substring(user.phone, 7)}"></td>
+            <td th:text="${#strings.length(user.phone) >= 7 ?
+              #strings.substring(user.phone, 0, 3) + '-' +
+              #strings.substring(user.phone, 3, 7) + '-' +
+              #strings.substring(user.phone, 7) : user.phone}">
+            </td>
             <td th:text="${user.address.address} + ', ' + ${user.address.addressDetail}"></td>
             <td th:text="${user.deleteYn == 'N' ? '활성화' : '비활성화'}"></td>
             <td>
@@ -59,7 +63,7 @@
                 <!-- 처음 페이지 버튼 -->
                 <li th:class="${paging.firstPageBtn ? 'page-item' : 'page-item disabled'}">
                     <a class="page-link"
-                       th:href="${paging.firstPageBtn ? '/admin?page=1&size=10' : '#'}"
+                       th:href="${paging.firstPageBtn ? '/admin?page=0&size=10' : '#'}"
                        aria-label="처음">&laquo;</a>
                 </li>
 

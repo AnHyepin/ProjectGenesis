@@ -17,7 +17,7 @@ public class LikeApplicationDto {
     private String username;
     private Character likeCode;
     private Application application;
-    private List<FileDto> file;
+    private List<FileDto> files;
 
     public LikeApplicationDto(Long likeId, String username, Character likeCode, Application application,String name) {
         this.likeId = likeId;

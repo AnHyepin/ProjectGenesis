@@ -1,4 +1,4 @@
-package org.green.backend.entity.kwanhyun;
+package org.green.backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

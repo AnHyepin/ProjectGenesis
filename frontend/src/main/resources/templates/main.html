@@ -23,7 +23,7 @@
             </div>
 
 
-            <!-- 스크랩 한 공고 섹션 -->
+            <!-- 스크랩 한 공고 -->
             <div th:if="${session.user != null}" class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>스크랩한 공고</h2>
@@ -33,11 +33,10 @@
                         <img th:src="${#lists.isEmpty(like.files) ? '/static/img/img_default_gonggo.png' : like.files[0].fileUrl}"
                              alt="topCompany Application">
 
-                        <div class="genesis-card-heart"
-                             th:data-id="${like.applicationData.applicationNo}"
-                             th:data-is-scrapped="${like.applicationData.isScrap}"
-                             onclick="toggleHeart(this)">
-                            <i th:classappend="${like.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                        <div class="genesis-card-heart">
+                            <i class="scrap-icon" data-action-type="S"
+                               th:data-action-id="${like.applicationData.applicationNo}"
+                               th:classappend="${like.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
                                style="color: #3AF26E;"></i>
                         </div>
 
@@ -48,7 +47,12 @@
 
                         <div class="genesis-main-card-content">
                             <h3 th:text="${like.applicationData.applicationTitle}"></h3>
-                            <p th:text="${like.companyName}"></p>
+                            <p>
+                                <a th:href="@{/company-detail/{company}(company=${like.applicationData.username})}"
+                                   th:text="${like.companyName}"
+                                   style="text-decoration: none; color: inherit;">
+                                </a>
+                            </p>
                             <p th:text="${like.applicationData.workingArea} + ' · ' +
                               (like.applicationData.careerCode == 'G' ? '경력' :
                               (like.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
@@ -57,7 +61,7 @@
                 </div>
             </div>
 
-            <!-- 구독한 기업공고 섹션 -->
+            <!-- 구독한 기업공고 -->
             <div th:if="${session.user != null}" class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>구독 기업공고</h2>
@@ -66,11 +70,10 @@
                     <div th:each="bookmark : ${mainData.bookmarkApplications}" class="genesis-main-card">
                         <img th:src="${#lists.isEmpty(bookmark.files) ? '/static/img/img_default_gonggo.png' : bookmark.files[0].fileUrl}"
                              alt="topCompany Application">
-                        <div class="genesis-card-heart"
-                             th:data-id="${bookmark.applicationData.applicationNo}"
-                             th:data-is-scrapped="${bookmark.applicationData.isScrap}"
-                             onclick="toggleHeart(this)">
-                            <i th:classappend="${bookmark.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                        <div class="genesis-card-heart">
+                            <i class="scrap-icon" data-action-type="S"
+                               th:data-action-id="${bookmark.applicationData.applicationNo}"
+                               th:classappend="${bookmark.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
                                style="color: #3AF26E;"></i>
                         </div>
                         <div class="genesis-card-label"
@@ -80,7 +83,12 @@
 
                         <div class="genesis-main-card-content">
                             <h3 th:text="${bookmark.applicationData.applicationTitle}"></h3>
-                            <p th:text="${bookmark.companyName}"></p>
+                            <p>
+                                <a th:href="@{/company-detail/{company}(company=${bookmark.applicationData.username})}"
+                                   th:text="${bookmark.companyName}"
+                                   style="text-decoration: none; color: inherit;">
+                                </a>
+                            </p>
                             <p th:text="${bookmark.applicationData.workingArea} + ' · ' +
                               (bookmark.applicationData.careerCode == 'G' ? '경력' :
                               (bookmark.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
@@ -90,7 +98,7 @@
             </div>
 
 
-            <!-- 인기 공고 섹션 -->
+            <!-- 인기 공고 -->
             <div class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>인기 공고</h2>
@@ -100,11 +108,10 @@
                         <img th:src="${#lists.isEmpty(popularApp.files) ? '/static/img/img_default_gonggo.png' : popularApp.files[0].fileUrl}"
                              alt="Popular Application">
 
-                        <div class="genesis-card-heart"
-                             th:data-id="${popularApp.applicationData.applicationNo}"
-                             th:data-is-scrapped="${popularApp.applicationData.isScrap}"
-                             onclick="toggleHeart(this)">
-                            <i th:classappend="${popularApp.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                        <div class="genesis-card-heart">
+                            <i class="scrap-icon" data-action-type="S"
+                               th:data-action-id="${popularApp.applicationData.applicationNo}"
+                               th:classappend="${popularApp.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
                                style="color: #3AF26E;"></i>
                         </div>
 
@@ -114,7 +121,12 @@
                                        : '상시'}"></div>
                         <div class="genesis-main-card-content">
                             <h3 th:text="${popularApp.applicationData.applicationTitle}"></h3>
-                            <p th:text="${popularApp.companyName}"></p>
+                            <p>
+                                <a th:href="@{/company-detail/{company}(company=${popularApp.applicationData.username})}"
+                                   th:text="${popularApp.companyName}"
+                                   style="text-decoration: none; color: inherit;">
+                                </a>
+                            </p>
                             <p th:text="${popularApp.applicationData.workingArea} + ' · ' +
                                           (popularApp.applicationData.careerCode == 'G' ? '경력' :
                                           (popularApp.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
@@ -141,7 +153,7 @@
                 </div>
             </div>
 
-            <!-- 평점 높은 기업 섹션 -->
+            <!-- 평점 높은 기업 -->
             <div class="genesis-main-section">
                 <div class="genesis-main-section-header">
                     <h2>평점 높은 기업공고</h2>
@@ -157,7 +169,9 @@
                              th:data-id="${topCompany.applicationData.applicationNo}"
                              th:data-is-scrapped="${topCompany.applicationData.isScrap}"
                              onclick="toggleHeart(this)">
-                            <i th:classappend="${topCompany.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
+                            <i class="scrap-icon" data-action-type="S"
+                               th:data-action-id="${topCompany.applicationData.applicationNo}"
+                               th:classappend="${topCompany.applicationData.isScrap} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'"
                                style="color: #3AF26E;"></i>
                         </div>
 
@@ -168,7 +182,13 @@
 
                         <div class="genesis-main-card-content">
                             <h3 th:text="${topCompany.applicationData.applicationTitle}"></h3>
-                            <p th:utext="${topCompany.name + ' <span style=&quot;color: gold;&quot;>★</span> ' + topCompany.averageStar}"></p>
+
+                            <p>
+                                <a th:href="@{/company-detail/{company}(company=${topCompany.applicationData.username})}"
+                                   th:utext="${topCompany.name + ' <span style=&quot;color: gold;&quot;>★</span> ' + topCompany.averageStar}"
+                                   style="text-decoration: none; color: inherit;">
+                                </a>
+                            </p>
                             <p th:text="${topCompany.applicationData.workingArea} + ' · ' +
                                           (topCompany.applicationData.careerCode == 'G' ? '경력' :
                                           (topCompany.applicationData.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
@@ -177,7 +197,10 @@
                     </div>
                 </div>
             </div>
-
+            <div id="user-data"
+                 th:data-is-logged-in="${session.user != null}"
+                 th:data-username="${session.user?.username}">
+            </div>
         </div>
 
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -194,24 +217,7 @@
 
         </script>
 
-        <script>
-            function toggleHeart(element) {
-                const heartIcon = element.querySelector('i');
-
-                if (heartIcon.classList.contains('far')) {
-                    heartIcon.classList.remove('far');
-                    heartIcon.classList.add('fas');
-                } else {
-                    heartIcon.classList.remove('fas');
-                    heartIcon.classList.add('far');
-                }
-
-                const id = element.getAttribute('data-id');
-                console.log(`클릭 ID: ${id}`);
-            }
-        </script>
-
-
-
     </body>
 </html>
+
+<script src="/static/js/scrap-bookmark.js"></script>

@@ -48,13 +48,24 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
             String username = jsonRequest.get("username");
             String password = jsonRequest.get("password");
+            String userType = jsonRequest.get("userType");
 
-            if (username == null || password == null) {
-                throw new RuntimeException("Username 또는 Password가 비었음 하지만 프론트에서 처리했기 때문에 안오겠지?");
+            if (username == null || password == null || userType == null) {
+                throw new RuntimeException("Username, Password 또는 UserType이 비었음");
             }
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password, null);
-            return authenticationManager.authenticate(authToken);
+            Authentication authentication = authenticationManager.authenticate(authToken);
+
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            String role = userDetails.getAuthorities().iterator().next().getAuthority();
+
+            if ((userType.equals("USER_OR_ADMIN") && !(role.equals("ROLE_USER") || role.equals("ROLE_ADMIN"))) ||
+                    (userType.equals("COMPANY") && !role.equals("ROLE_COMPANY"))) {
+                throw new RuntimeException("잘못된 사용자 유형입니다.");
+            }
+
+            return authentication;
 
         } catch (IOException e) {
             throw new RuntimeException("파싱 오류 ", e);

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout-test/layout}">
+<head>
+    <link rel="stylesheet" href="/static/css/hyepin/resume-list.css"/>
+    <title>Title</title>
+</head>
+<body layout:fragment="content">
+
+    <div class="resume-container">
+        <div style="display: flex; gap: 10px; align-items: baseline; margin-bottom: 5px;">
+            <h2>이력서 관리</h2>
+            <div>총 <span style="color: #3af26e;">[[${count}]]</span>건</div>
+        </div>
+        <hr style="border: 1px solid #4e4e4e;">
+        <div style="padding: 0px 20px 10px 20px;">
+            <th:block th:each="resume : ${resumeList}">
+                <input type="hidden" value="${resume.resumeNo}">
+
+                <div style="display: flex; justify-content: space-between; padding: 10px; align-items: center;">
+                    <div>
+                        <a th:href="@{/resume/detail(resumeNo=${resume.resumeNo})}">
+                            <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;" >
+                                  [[${resume.resumeTitle}]]</div></a>
+                        <div style="color: #4e4e4e">입사 지원 내역
+                            <span style="cursor: pointer; color: #3af26e; font-weight: bolder;"
+                                  th:onclick="'applyManagement(' + ${resume.resumeNo} + ')'">
+                            [[${resume.applyCount}]]건 > </span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display: flex; justify-content: center; margin-bottom: 5px;">
+                            <th:block th:if="${resume.resumePubilceYn == 'Y'}">
+                                <button class="positionBtn" style="background-color: gainsboro; border: 2px solid gainsboro; cursor: default;  transform: none;">
+                                    포지션 제안 받기
+                                </button>
+                            </th:block>
+                            <th:block th:if="${resume.resumePubilceYn == 'N'}">
+                                <button class="positionBtn" th:onclick="'position(' + ${resume.resumeNo} + ')'" style="background-color: #3af26e; border: 1px solid #3af26e;">
+                                    포지션 제안 받기
+                                </button>
+                            </th:block>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="modiBtn" th:onclick="'modiBtn(' + ${resume.resumeNo} + ')'" style="background-color: white; border: 2px solid #3af26e;">
+                                수정
+                            </button>
+                            <button class="deleteBtn" th:onclick="'deleteBtn(' + ${resume.resumeNo} + ')'" style="background-color: white; border: 2px solid #F20F38;">
+                                삭제
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </th:block>
+        </div>
+
+    </div>
+
+    <div class="modal" id="modal">
+        <div>
+            <div style="display: flex; justify-content: space-between;">
+                <div>공고명</div> <div style="margin-right: 155px;">심사현황</div>
+            </div>
+            <hr style="border: 1px solid #4e4e4e;">
+            <div class="modalList" id="modalList">
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 20px; gap: 10px; align-items: center;">
+                <button class="cancelBtn" onclick="cancelBtn()">닫기</button>
+                <button class="applyStatus"><a href="/resume/applyStatus"> 입사지원 현황 바로가기 </a></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/hyepin/resume-list.js"></script>
+
+</body>
+</html>

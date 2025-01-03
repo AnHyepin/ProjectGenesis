@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-test/layout}">
+<head>
+    <link rel="stylesheet" href="/static/css/hyepin/resume-applyStatus.css"/>
+    <title>Title</title>
+</head>
+<body layout:fragment="content">
+<div class="detail-container">
+    <div style="display: flex; align-items: center;margin-top: 10px;"><h2>입사지원 현황</h2>
+        <span style="margin-left: 10px;">총
+        <span style="color: #3af26e;">[[${submitCnt}]]</span>건</span></div>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+        <div class="applyBox">
+            <div style="font-weight: bold">지원완료</div>
+            <div style="font-weight: bold">[[${submitCnt}]] 건</div>
+        </div>
+        <div class="applyBox" >
+            <div style="font-weight: bold">전형 진행중</div>
+            <div style="font-weight: bold">[[${processCnt}]] 건</div>
+        </div>
+        <div class="applyBox" >
+            <div style="font-weight: bold">최종발표</div>
+            <div style="font-weight: bold">[[${finalCnt}]] 건</div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="margin-left: 10px;">공고명 / 지원 이력서</div>
+        <div style="margin-right: 165px;">
+            <select style="border-radius: 10px; padding: 5px; border: 1px solid #929292;">
+                <option>심사현황</option>
+                <option value="P">합격</option>
+                <option value="F">불합격</option>
+                <option value="H">진행중</option>
+            </select>
+        </div>
+    </div>
+    <hr style="border: 1px solid #4e4e4e; margin-top: 5px;">
+    <div>
+        <th:block th:each="as : ${applyStatusList}">
+            <div style="display: flex; justify-content: space-between; padding: 0px 20px;">
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; gap: 10px; align-items: baseline">
+                        <a href="">  <span style="font-size: 20px; font-weight: bold;">
+                             [[${as.applicationTitle}]]  </span> </a>
+                        <span style="font-size: 16px; color: #4e4e4e;">[[${as.companyName}]]</span>
+                    </div>
+                    <div style="font-size: 16px; margin-top: 5px;">
+                        <a th:href="@{/resume/detail(resumeNo=${as.resumeNo})}">[[${as.resumeTitle}]]</a></div>
+                </div>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <th:block th:if="${as.applyStatusGbnCode == 'H'}">
+                        <div>진행중</div>
+                    </th:block>
+                    <th:block th:if="${as.applyStatusGbnCode == 'P'}">
+                        <div style="color: #3AF26E; margin-right: 10px;">합격</div>
+                    </th:block>
+                    <th:block th:if="${as.applyStatusGbnCode == 'F'}">
+                        <div style="color: #F20F38;">불합격</div>
+                    </th:block>
+                    <div>
+                        <th:block th:if="${as.applyStatusGbnCode == 'H'}">
+                            <button class="cancelApplication"  th:onclick="'cancelApply(' + ${as.resumeNo} + ')'">지원취소</button>
+                        </th:block>
+                        <th:block th:if="${as.applyStatusGbnCode == 'P' || as.applyStatusGbnCode == 'F'}">
+                            <button class="noCancelApplication" style="transform: none; cursor: default;">취소불가</button>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </th:block>
+    </div>
+</div>
+<script src="/static/js/hyepin/resume-applyStatus.js"></script>
+</body>
+</html>
