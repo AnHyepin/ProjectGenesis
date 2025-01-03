@@ -1,10 +1,13 @@
 package org.green.backend.controller.jeyeon;
 
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.common.GubnDto;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.entity.Application;
 import org.green.backend.entity.Company;
+import org.green.backend.service.common.GubnService;
+import org.green.backend.service.hws.CompanyService;
 import org.green.backend.service.jeyeon.ApplicationService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +25,7 @@ import java.util.List;
 public class ApplicationApiController {
 
     private final ApplicationService applicationService;
+    private final GubnService gubnService;
 
     @PostMapping("/regist")
     public void register(@ModelAttribute ApplicationRequestDto applicationRequestDto,
@@ -40,5 +44,10 @@ public class ApplicationApiController {
     @GetMapping("/detail/company/{username}")
     public Company getCompany(@PathVariable("username") String username) {
         return applicationService.getApplicationCompany(username);
+    }
+
+    @GetMapping("/{stackCode}")
+    public List<GubnDto> getGubnList(@PathVariable String stackCode) {
+        return gubnService.getSkillName(stackCode);
     }
 }

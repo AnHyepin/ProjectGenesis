@@ -18,6 +18,7 @@ public class ApplicationResponseDto {
     private String applicationTitle;       // 채용공고 제목
     private String startDate;              // 공고 시작
     private String deadlineDate;           // 공고 마감일
+    private String day;
     private String applicationCode;        // 채용구분 (C: 마감, O: 모집중, S: 모집 일시중지)
     private int salary;                    // 연봉
     private String careerCode;             // 경력 (S:신입, G:경력, SG:신입/경력)

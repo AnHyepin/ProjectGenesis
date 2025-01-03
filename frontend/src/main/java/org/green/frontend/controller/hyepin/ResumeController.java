@@ -3,7 +3,6 @@ package org.green.frontend.controller.hyepin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.hyepin.ApplyStatusDto;
-import org.green.frontend.dto.jeyeon.GubnDto;
 import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.springframework.stereotype.Controller;

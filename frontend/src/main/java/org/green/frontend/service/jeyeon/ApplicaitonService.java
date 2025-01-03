@@ -1,13 +1,27 @@
 package org.green.frontend.service.jeyeon;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.jeyeon.ApplicationStackDto;
+import org.green.frontend.dto.jeyeon.GubnDto;
+import org.green.frontend.global.ApiResponse;
+import org.green.frontend.service.ApiRequestService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 12-31 (작성자: 안제연)
  * 이 클래스는 채용공고 화면이동에 관한 서비스입니다.
  */
 @Service
+@RequiredArgsConstructor
 public class ApplicaitonService {
+
+    private final ApiRequestService apiService;
+    private final ObjectMapper objectMapper;
 
     public  String createJobPost(String content) {
         // 정규식을 사용하여 두 개 이상의 줄바꿈을 기준으로 항목별로 나누기
@@ -52,5 +66,25 @@ public class ApplicaitonService {
 
         // System.out.println(htmlContent.toString());  // 생성된 HTML 출력
         return htmlContent.toString();
+    }
+
+    public List<String> getSkillNameList(List<ApplicationStackDto> skillList){
+        List<GubnDto> sList = new ArrayList<>();
+
+        for(ApplicationStackDto skill : skillList){
+            var skillResponse = apiService.fetchData("/api/application/" + skill.getStackCode());
+            List<GubnDto> gubnDtos = objectMapper.convertValue(
+                    skillResponse.getBody(),
+                    new TypeReference<List<GubnDto>>() {}
+            );
+            sList.addAll(gubnDtos);
+        }
+
+        List<String> skillNameList = new ArrayList<>();
+        for(GubnDto skillName : sList){
+            skillNameList.add(skillName.getGubnName());
+        }
+
+        return skillNameList;
     }
 }

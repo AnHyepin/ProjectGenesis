@@ -1,8 +1,13 @@
 package org.green.frontend.controller.jeyeon;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.hws.UserDto;
 import org.green.frontend.dto.jeyeon.ApplicationResponseDto;
+import org.green.frontend.dto.jeyeon.ApplicationStackDto;
+import org.green.frontend.dto.jeyeon.GubnDto;
 import org.green.frontend.service.ApiRequestService;
 import org.green.frontend.service.jeyeon.ApplicaitonService;
 import org.springframework.stereotype.Controller;
@@ -12,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -62,21 +69,35 @@ public class ApplicationController {
     }
 
     @GetMapping("/detail/{applicationNo}")
-    public String applicationDetail(@PathVariable("applicationNo") int applicationNo, Model model) {
+    public String applicationDetail(@PathVariable("applicationNo") int applicationNo, HttpSession session, Model model) {
         var applicationResponse = apiService.fetchData("/api/application/detail/" + applicationNo);
 
         // ObjectMapper를 사용하여 LinkedHashMap을 DTO로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         ApplicationResponseDto applicationDto = objectMapper.convertValue(applicationResponse.getBody(), ApplicationResponseDto.class);
 
-         String content = applicaitonService.createJobPost(applicationDto.getContent());
+
+        if(applicationDto.getContent() != null){
+            String content = applicaitonService.createJobPost(applicationDto.getContent());
+            model.addAttribute("content", content);
+        }
+
+        List<String> skillNameList = applicaitonService.getSkillNameList(applicationDto.getSkillList());
 
         var companyResponse = apiService.fetchData("/api/application/detail/company/" + applicationDto.getUsername());
+        /*System.out.println(companyResponse.getBody());
+        System.out.println(companyResponse);*/
+
+        UserDto user = (UserDto) session.getAttribute("user");
+        if(user != null){
+            // 모델에 username을 추가
+            model.addAttribute("username", user.getUsername());
+
+        }
 
         model.addAttribute("companyResponse", companyResponse.getBody());
         model.addAttribute("fileList",applicationDto.getFileList());
-        model.addAttribute("content", content);
-        model.addAttribute("skillList",applicationDto.getSkillList());
+        model.addAttribute("skillNameList",skillNameList);
         model.addAttribute("applicationResponse", applicationResponse.getBody());
         return "/jeyeon/application-detail";
     }

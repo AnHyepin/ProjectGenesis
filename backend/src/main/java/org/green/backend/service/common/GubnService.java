@@ -25,4 +25,6 @@ public class GubnService {
         return gubnDao.getSkillList();
     }
 
+    public List<GubnDto> getSkillName(String stackCode){return gubnDao.getSkillName(stackCode);};
+
 }

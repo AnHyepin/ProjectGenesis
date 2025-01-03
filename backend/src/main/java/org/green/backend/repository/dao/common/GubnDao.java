@@ -11,5 +11,5 @@ import java.util.List;
 public interface GubnDao {
     public List<GubnDto> getGubnList(@Param("gubnCode") String gubnCode);
     public List<GubnDto> getSkillList();
-
+    public List<GubnDto> getSkillName(@Param("stackCode") String stackCode);
 }

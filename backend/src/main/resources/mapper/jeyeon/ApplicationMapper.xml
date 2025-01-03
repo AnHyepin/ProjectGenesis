@@ -64,7 +64,10 @@
             working_area,
             role_code,
             content,
-            procedure_code
+            procedure_code,
+            CASE
+            WHEN deadline_date IS NOT NULL THEN DATEDIFF(deadline_date, CURDATE())
+            END AS day
         FROM tbl_applications
         WHERE application_no = #{applicationNo};
     </select>
