@@ -28,6 +28,6 @@ public class ResumeDto {
     private String career;  //지원할 때 경력(신입/경력)
     private boolean savedraft; //임시저장 여부
     private List<String> gubnCode; //기술 스택 이름 리스트
-
+    private int applyCount; //지원한 공고 카운트
 
 }

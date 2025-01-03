@@ -47,6 +47,4 @@ public class AdminController {
         return companyService.companyStatusChange(username);
     }
 
-
-
 }

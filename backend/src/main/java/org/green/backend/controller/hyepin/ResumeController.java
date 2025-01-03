@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 12-30 (작성자: 안혜빈)
@@ -116,18 +118,6 @@ public class ResumeController {
         }
     }
 
-    /*
-    @PostMapping
-    public String createUser(@ModelAttribute UserDto userDto, @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture) throws IOException {
-        userService.saveUser(userDto, profilePicture);
-        return "회원가입 성공";
-    }
-    */
-
-
-
-
-
     @PostMapping("/portfolio")
     public String createPortfolio(@ModelAttribute PortfolioDto portfolioDto, @RequestParam(value = "portfolioFile", required = false)
                                     MultipartFile portfolioFile) throws IOException {
@@ -153,8 +143,6 @@ public class ResumeController {
         }
     }
 
-
-
     //이력서 최종 저장
     @PostMapping("/resumeSubmit")
     public String resumeSubmit(@ModelAttribute ResumeDto resumeDto) throws IOException {
@@ -170,6 +158,43 @@ public class ResumeController {
         }else{
             return "이력서 저장 실패";
         }
+    }
+
+    @GetMapping("/list")
+    public List<ResumeDto> getResumeList(@RequestParam String username){
+        List<ResumeDto> reseumeList = resumeService.getResumeList(username);
+        return reseumeList;
+    }
+
+    @GetMapping("/count")
+    public int getResumeCount(@RequestParam String username){
+        int resumeCount = resumeService.getResumeCount(username);
+        return resumeCount;
+    }
+
+    @PostMapping("/positionUpdate")
+    public String resumePositionUpdate(@RequestParam("resumeNo") int resumeNo) throws IOException {
+        int result = resumeService.updatePosition(resumeNo);
+        if(result == 1) {
+            return "포지션 제안받기 성공";
+        }else{
+            return "포지션 제안받기 실패";
+        }
+    }
+
+    @GetMapping("/applyList")
+    public List<ApplyApplycationDto> applyList (@RequestParam("resumeNo") int resumeNo) throws IOException {
+        List<ApplyApplycationDto> applyList = resumeService.getApplyList(resumeNo);
+        return applyList;
+    }
+
+    @GetMapping("/applyStatus")
+    public List<ApplyStatusDto> applyStatusList (@RequestParam("username") String  username) throws IOException {
+        List<ApplyStatusDto> applyStatusList = resumeService.getApplyStatusList(username);
+        for(ApplyStatusDto a : applyStatusList) {
+            System.out.println(a.toString());
+        }
+        return applyStatusList;
     }
 
 }

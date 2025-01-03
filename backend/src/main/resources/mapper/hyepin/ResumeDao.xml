@@ -6,7 +6,7 @@
 <mapper namespace="org.green.backend.repository.dao.hyepin.ResumeDao">
 
     <select id="getMaxNum" resultType="int">
-       SELECT max(resume_no) FROM tbl_resumes WHERE username = #{username}
+       SELECT max(resume_no) FROM tbl_resumes WHERE username = #{username} AND delete_yn = 'N'
     </select>
 
     <select id="getSavedraft" resultType="org.green.backend.dto.hyepin.ResumeDto">
@@ -29,4 +29,57 @@
             salary = #{salary}, career = #{career}, savedraft = '0'
         WHERE resume_no = #{resumeNo}
     </update>
+
+    <select id="getResumeListByUsername" resultType="org.green.backend.dto.hyepin.ResumeDto">
+        SELECT COUNT(a.application_no) AS applyCount, r.*
+        FROM tbl_resumes r
+        LEFT JOIN tbl_apply_status a ON r.resume_no = a.resume_no
+        WHERE r.username = #{username} AND r.savedraft = '0' AND r.delete_yn = 'N'
+        GROUP BY r.resume_no
+    </select>
+
+    <select id="getResumeCount" resultType="int">
+        SELECT count(*) AS count
+        FROM tbl_resumes
+        WHERE username = #{username} AND savedraft = '0' AND delete_yn = 'N'
+    </select>
+
+    <update id="updatePosition">
+        UPDATE tbl_resumes
+        SET resume_pubilce_yn = 'Y'
+        WHERE resume_no = #{resumeNo}
+    </update>
+
+    <select id="getApplyList" resultType="org.green.backend.dto.hyepin.ApplyApplycationDto">
+        SELECT
+            a.resume_no,
+            a.application_no,
+            a.apply_status_gbn_code,
+            b.application_title,
+            b.username,
+            c.name AS companyName
+        FROM
+            tbl_apply_status a
+        JOIN
+            tbl_applications b ON a.application_no = b.application_no
+        JOIN
+            tbl_companys c ON b.username = c.username
+        WHERE
+            a.resume_no = #{resumeNo};
+    </select>
+
+    <select id="getApplyStatusList" resultType="org.green.backend.dto.hyepin.ApplyStatusDto">
+        SELECT  s.resume_no, s.application_no,
+                a.application_title, c.name AS companyName, r.resume_title,
+                s.apply_status_gbn_code
+        FROM tbl_apply_status s
+        JOIN tbl_applications a
+        ON s.application_no = a.application_no
+        JOIN tbl_resumes r
+        ON s.resume_no = r.resume_no
+        JOIN tbl_companys c
+        ON a.username = c.username
+        WHERE s.regist_id = #{username}
+
+    </select>
 </mapper>

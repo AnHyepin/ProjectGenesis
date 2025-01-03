@@ -41,3 +41,4 @@ public class File {
     @Column(name="file_url", length = 255)
     private String fileUrl;
 }
+

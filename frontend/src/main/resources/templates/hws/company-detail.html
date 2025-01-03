@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout-test/layout}">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/hws/company-detail.css"/>
+    <style>
+
+        .rating_box {
+            display: flex;
+        }
+
+        .rating {
+            position: relative;
+            color: #ddd;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .rating input {
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .rating_star {
+            width: 0;
+            color: #ffc107;
+            position: absolute;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .rating-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1000;
+        }
+
+        .rating-popup.on {
+            display: block;
+        }
+
+        .popup-content {
+            text-align: center;
+        }
+
+        #confirm-rating {
+            margin-top: 15px;
+        }
+
+        .rate {
+            position: relative;
+            color: gray;
+        }
+
+        .active_rate {
+            position: absolute;
+            color: yellow;
+            filter: drop-shadow(0 0 0.1rem #aaa);
+            top: 0;
+            left: 0;
+            font-size: 30px;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .rate_range {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body layout:fragment="content">
+
+<div class="genesis-company-detail-container">
+    <div class="genesis-company-detail-header">
+        <div class="genesis-company-detail-header-left">
+            <div>
+                <span th:text="${'⭐ ' + company.avgRating}" class="rating-badge">⭐ 3.0</span>
+                <span class="rating-badge scrap-icon" data-action-type="G"
+                      th:data-action-id="${company.company.username}">
+                            <i th:classappend="${company.isBookMark == 1 ? 'bi-bookmark-fill' : 'bi-bookmark'}"
+                               style="color: #32CD32;"></i>
+                            <span th:text="${company.totalBookMark}">99+</span>
+                        </span>
+
+
+            </div>
+            <h1 th:text="${company.company.name}"><span
+                    style="font-size: 16px; font-weight: normal;">5년차 (2020)</span></h1>
+            <p th:text="${company.company.ceoName}">(대표자 명)</p>
+            <p class="address">
+                <span th:text="${company.company.zipCode + ' ' + company.company.address}">47282 부산 수영구 광안리 땡땡길 땡땡대로</span><br>
+                <span th:text="${company.company.addressDetail}">4층, 그린컴퓨터 아카데미</span>
+            </p>
+            <p class="sub-info">
+                <a th:if="${company.company.homepage != null}"
+                   th:text="${company.company.homepage}"
+                   th:href="${company.company.homepage}"
+                   target="_blank" style="text-decoration: none; color: #1a73e8;"></a>
+                <span th:if="${company.company.homepage == null}" style="color: #999;">홈페이지 없음</span>
+            </p>
+
+        </div>
+        <img th:src="${company.profileUrl}" class="genesis-company-detail-header-right">
+    </div>
+
+    <div class="genesis-company-detail-section">
+        <h2>기업 설명</h2>
+        <p th:text="${company.company.content}">
+            이 회사는 소프트웨어 개발과 관련된 다양한 서비스를 제공합니다.
+            회사는 최신 기술을 활용하여 클라이언트의 문제를 해결하고,
+            창의적이고 혁신적인 솔루션을 제공합니다.
+        </p>
+    </div>
+
+    <div class="genesis-company-detail-section">
+        <h2>채용중인 공고</h2>
+        <div class="genesis-main-cards">
+            <div th:each=" applicationList: ${company.applications}" class="genesis-main-card">
+                <img th:src="${applicationList.files != null && applicationList.files[0]?.fileUrl != null
+                            ? applicationList.files[0].fileUrl
+                            : '/static/img/img_default_gonggo.png'}"
+                     alt="채용 이미지">
+
+                <div class="genesis-card-label"
+                     th:text="${applicationList.daysLeft != null && applicationList.daysLeft != 'D-0'
+                                       ? applicationList.daysLeft
+                                       : '상시'}"></div>
+                <div class="genesis-card-heart">
+                    <i class="scrap-icon" data-action-type="S"
+                       th:data-action-id="${applicationList.applicationNo}"
+                       th:classappend="${applicationList.isScrap == 1 ? 'fas fa-heart' : 'far fa-heart'}"
+                       style="color: #3AF26E; font-size: 2em;"></i>
+                </div>
+
+                <div class="genesis-main-card-content">
+                    <h3 th:text="${applicationList.applicationTitle}">백엔드 엔지니어</h3>
+                    <p th:text="${applicationList.workingArea} + ' · ' +
+                                          (applicationList.careerCode == 'G' ? '경력' :
+                                          (applicationList.careerCode == 'S' ? '신입' : '신입/경력'))"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="genesis-company-detail-section">
+        <h2>위치 보기</h2>
+        <div class="genesis-map-container">
+            <iframe th:src="'https://www.google.com/maps?q=' + ${company.company.address} + ' ' + (${company.company.addressDetail != null ? company.company.addressDetail : ''}) + '&output=embed'"
+                    allowfullscreen=""
+                    loading="lazy">
+            </iframe>
+        </div>
+        <h3 th:text="${company.company.address} + ' ' + (${company.company.addressDetail != null ? company.company.addressDetail : ''})">
+            백엔드 엔지니어</h3>
+    </div>
+
+    <div id="user-data"
+         th:data-is-logged-in="${session.user != null}"
+         th:data-username="${session.user?.username}">
+    </div>
+
+    <div id="company-data"
+         th:data-company-data="${company.company.username}">
+    </div>
+
+    <!-- 별점 팝업 -->
+    <div id="rating-popup" class="rating-popup">
+        <div class="popup-content">
+            <h3>별점을 주시겠어요?</h3>
+            <p style="color: red">별점을 주면 수정이 불가능 합니다.</p>
+            <div class="rating-box">
+                           <span class="rate" style=" font-size: 30px;">
+                                    ★★★★★
+                                    <span class="active_rate">★★★★★</span>
+                                    <input type="range" class="rate_range" value="0" step="1" min="0" max="10">
+                                    </span>
+                <p class="range_text">0점
+                <p>
+                    <input type="hidden" name="rate_value" id="rate_value" value="">
+            </div>
+            <button id="confirm-rating" class="rating-button">확인</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
+
+<script src="/static/js/scrap-bookmark.js"></script>
+
+<script src="/static/js/hws/company-detail.js"></script>

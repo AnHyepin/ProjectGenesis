@@ -12,7 +12,9 @@ import org.green.frontend.utils.SessionUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -53,6 +55,18 @@ public class UserAndCompanyController {
         model.addAttribute("user", responseData.get("user"));
         model.addAttribute("file", responseData.get("file"));
         return "hws/user-edit";
+    }
+
+    @GetMapping("/company-detail/{company}")
+    public String companyDetail(@PathVariable String company, HttpSession session, Model model) {
+        UserDto user = SessionUtil.getUser(session);
+        Map<String, String> params = new HashMap<>();
+        params.put("username", user != null ? user.getUsername() : null);
+        
+        var apiResponse = apiRequestService.fetchData("/api/company/detail/" + company, params, true);
+
+        model.addAttribute("company", apiResponse.getBody());
+        return "hws/company-detail";
     }
 
     @GetMapping("/company-edit")

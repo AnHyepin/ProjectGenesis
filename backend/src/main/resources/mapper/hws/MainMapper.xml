@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hws.MainDao">
+
+    <select id="getTotalCareerByResumeNo" resultType="int">
+        SELECT
+        SUM(
+        IF(
+        d.resume_career_out_dt IS NULL,
+        DATEDIFF(CURRENT_DATE, d.resume_career_join_dt), DATEDIFF(d.resume_career_out_dt, d.resume_career_join_dt))) AS total_career
+        FROM tbl_resume_career d
+        WHERE d.resume_no = #{resumeNo}
+        GROUP BY d.resume_no
+    </select>
+
+    <select id="getTopSkillsByResumeNo" resultType="string">
+        SELECT
+        f.gubn_name
+        FROM tbl_resume_stack e
+        LEFT JOIN tbl_gubn f ON f.gubn_code = e.stack_code
+        WHERE e.resume_no = #{resumeNo}
+        ORDER BY f.gubn_name ASC
+        LIMIT 2
+    </select>
+
+    <select id="getApplicantsForCompany" resultMap="ApplicantResultMap">
+        SELECT DISTINCT
+        a.apply_status_no,
+        a.resume_no,
+        a.application_no,
+        a.apply_status_gbn_code,
+        b.username,
+        b.`name`,
+        b.gender,
+        TIMESTAMPDIFF(YEAR, b.birth, NOW()) AS age,
+        c.resume_title,
+        c.resume_my_title,
+        c.regist_dt
+        FROM tbl_apply_status a
+        LEFT JOIN tbl_users b ON a.regist_id = b.username AND b.delete_yn = 'N'
+        LEFT JOIN tbl_resumes c ON b.username = c.username AND c.delete_yn = 'N' AND c.resume_pubilce_yn = 'Y'
+        LEFT JOIN tbl_applications g ON a.application_no = g.application_no AND g.delete_yn = 'N'
+        WHERE g.username = #{companyUsername}
+        GROUP BY a.resume_no
+        ORDER BY a.regist_dt DESC
+        LIMIT 3
+    </select>
+
+    <select id="getApplications" resultType="org.green.backend.dto.hws.CApplicationDto">
+        SELECT a.application_no,
+        a.username,
+        a.application_title,
+        a.working_area,
+        a.career_code,
+        a.start_date,
+        a.deadline_date,
+        b.file_url
+        FROM tbl_applications a
+        LEFT JOIN tbl_file b on a.application_no = b.file_ref_no
+        WHERE username = #{companyUsername}
+        AND delete_yn ='N'
+        ORDER BY regist_dt desc;
+    </select>
+
+    <resultMap id="ApplicantResultMap" type="org.green.backend.dto.hws.Applicant">
+        <id property="applyStatusNo" column="apply_status_no" />
+        <result property="resumeNo" column="resume_no" />
+        <result property="applicationNo" column="application_no" />
+        <result property="applyStatusGbnCode" column="apply_status_gbn_code" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="gender" column="gender" />
+        <result property="age" column="age" />
+        <result property="resumeTitle" column="resume_title" />
+        <result property="registDt" column="regist_dt" />
+    </resultMap>
+</mapper>
