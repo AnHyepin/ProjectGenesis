@@ -48,6 +48,7 @@ public class TokenUtil {
             user.setUsername((String) userData.get("username"));
             user.setName((String) userData.get("name"));
             user.setRole((String) userData.get("role"));
+            user.setFileUrl((String) userData.get("fileUrl"));
             session.setAttribute("user", user);
 
             log.info("세션에 유저 정보 저장: {}", user);
