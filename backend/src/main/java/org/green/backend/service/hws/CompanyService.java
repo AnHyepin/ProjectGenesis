@@ -6,7 +6,6 @@ import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.dto.hws.RatingDto2;
 import org.green.backend.entity.Company;
-import org.green.backend.entity.Rating;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
 import org.green.backend.repository.dao.hws.CompanyDao2;
@@ -169,4 +168,11 @@ public class CompanyService {
         return "성공";
     }
 
+
+    public String deleteUser(String username) {
+        Company company = companyRepository.findByUsername(username);
+        company.setDeleteYn('Y');
+        companyRepository.save(company);
+        return "성공";
+    }
 }

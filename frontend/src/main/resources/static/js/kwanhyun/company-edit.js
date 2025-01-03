@@ -30,4 +30,20 @@ function submitForm() {
             console.error('업데이트 실패:', error);
             alert('정보 수정에 실패했습니다.');
         });
+
+
+}
+
+function deleteCompany() {
+    const username = document.getElementById('username').value
+    api.put(`/api/company/delete/${username}`)
+        .then(data => {
+            console.log('삭제 성공:', data);
+            alert('유저 삭제 성공');
+            location.href = '/logout';
+        })
+        .catch(error => {
+            console.error('업데이트 실패:', error);
+            alert('정보 수정에 실패했습니다.');
+        });
 }

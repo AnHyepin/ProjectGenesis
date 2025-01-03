@@ -72,5 +72,10 @@ public class CompanyController {
         return companyService.ratingSave(rating);
     }
 
+    @PutMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username) {
+        return companyService.deleteUser(username);
+    }
+
 }
 
