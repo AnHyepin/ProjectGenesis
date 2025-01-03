@@ -146,5 +146,12 @@ public class UserService {
         }
         return "성공";
     }
+
+    public String deleteUser(String username) {
+        User user = userRepository.findByUsername(username);
+        user.setDeleteYn('Y');
+        userRepository.save(user);
+        return "성공";
+    }
 }
 
