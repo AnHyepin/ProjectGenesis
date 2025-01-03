@@ -3,7 +3,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <th:block th:replace="/layout/config-user :: configFragment"></th:block>
+  <th:block th:if="${session.user == null}">
+    <th:block th:replace="/layout/config-guest :: configFragment"></th:block>
+  </th:block>
+
+  <th:block th:if="${session.user != null and (session.user.role == 'ROLE_USER' or session.user.role == 'ROLE_ADMIN')}">
+    <th:block th:replace="/layout/config-user :: configFragment"></th:block>
+  </th:block>
+
+  <th:block th:if="${session.user != null and session.user.role == 'ROLE_COMPANY'}">
+    <th:block th:replace="/layout/config-company :: configFragment"></th:block>
+  </th:block>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -17,10 +28,34 @@
 </head>
 
 <!-- Header 영역 -->
-<header th:replace="/layout/header-user :: header"></header>
+  <th:block th:if="${session.user == null}">
+    <header th:replace="/layout/header-guest :: header"></header>
+  </th:block>
 
-<body layout:fragment="content"></body>
+  <th:block th:if="${session.user != null and (session.user.role == 'ROLE_USER' or session.user.role == 'ROLE_ADMIN')}">
+    <header th:replace="/layout/header-user :: header"></header>
+  </th:block>
+
+  <th:block th:if="${session.user != null and session.user.role == 'ROLE_COMPANY'}">
+    <header th:replace="/layout/header-company :: header"></header>
+  </th:block>
+
+  <body layout:fragment="content">
+
+  </body>
+
 
 <!-- Footer 영역 -->
-<footer th:replace="/layout/footer-user :: footer"></footer>
+
+  <th:block th:if="${session.user == null}">
+    <footer th:replace="/layout/footer-user :: footer"></footer>
+  </th:block>
+
+  <th:block th:if="${session.user != null and (session.user.role == 'ROLE_USER' or session.user.role == 'ROLE_ADMIN')}">
+    <footer th:replace="/layout/footer-user :: footer"></footer>
+  </th:block>
+
+  <th:block th:if="${session.user != null and session.user.role == 'ROLE_COMPANY'}">
+    <footer th:replace="/layout/footer-company :: footer"></footer>
+  </th:block>
 </html>
