@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/static/css/jeyeon/applicationDetail.css" />
     <title>Application Detail</title>
 </head>
@@ -17,91 +17,236 @@
         <div class="job-posting">
             <header class="job-header">
                 <div class="flex-box">
-                    <span class="company-name">(주)회사명</span>
+                    <span class="company-name">[[${companyResponse.name}]]</span>
                     <button type="button" class="subscribeBtn"><i class="bi bi-bookmark"></i>구독기업</button>
                 </div>
-                <h1> <span class="job-title">(Full Stack) 개발자 신입 채용</span></h1>
+                <h1> <span class="job-title">[[${applicationResponse.applicationTitle}]]</span></h1>
+
+                <th:block th:if="${companyResponse.username != null && username != null}">
+                    <div class="company-management-btn" th:if="${companyResponse.username == username}">
+                        <button type="button" class="jobBtn resume-listBtn" >지원이력서 보기</button>
+                        <button type="button" class="jobBtn updateBtn">수정</button>
+                        <button type="button" class="jobBtn deleteBtn">삭제</button>
+                    </div>
+                </th:block>
+
             </header>
 
-            <section class="job-details">
+            <section class="job-detail">
                 <div class="job-summary">
-                    <h2>모집분야 및 상세내용</h2>
-                    <ul>
-                        <li>정규직</li>
-                        <li>경력: 신입</li>
-                        <li>근무지역: 서울</li>
-                    </ul>
-                    <ul>
-                        <li>직무명: 개발자</li>
-                        <li>경력: 신입</li>
-                        <li>근무지역: 서울</li>
-                    </ul>
+                    <div class="label">경력</div>
+                    <div class="value" th:text="${applicationResponse.careerCode == 'G' ? '경력' :
+                                    (applicationResponse.careerCode == 'S' ? '신입' : '신입/경력')}"></div>
+
+                    <div class="label">급여</div>
+                    <div class="value" th:text="${applicationResponse.salary == 0 ? '면접 후 결정' : applicationResponse.salary + '만원'}"></div>
+
+                    <th:block th:if="${applicationResponse.educationGbnCode != null}">
+                        <div class="label">학력</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'H'}">고등학교 졸업</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'U3'}">대학(2,3년)</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'U4'}">대학교(4년)</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'S'}">대학원(석사)</div>
+                        <div th:if="${applicationResponse.educationGbnCode == 'D'}">박사</div>
+                    </th:block>
+
+                    <th:block th:if="${applicationResponse.positionCode != null}">
+                        <div class="label">직급/직책</div>
+                        <div th:if="${applicationResponse.positionCode == 'D'}">대리</div>
+                        <div th:if="${applicationResponse.positionCode == 'S'}">사원</div>
+                        <div th:if="${applicationResponse.positionCode == 'J'}">주임</div>
+                        <div th:if="${applicationResponse.positionCode == 'T'}">팀장</div>
+                    </th:block>
+
+                    <div class="label">근무형태</div>
+                    <div class="value" th:text="${applicationResponse.employmentCode == 'A' ? '계약/정규직' :
+                                    (applicationResponse.employmentCode == 'C' ? '계약직' : '정규직')}"></div>
+                </div>
+            </section>
+
+            <section class="user-management-btn">
+                <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
+                <button type="button" class="jobBtn applyBtn">입사지원</button>
+            </section>
+
+            <section class="job-slider">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <th:block th:if="${#lists.isEmpty(fileList)}">
+                            <img src="/static/img/img_default_gonggo.png">
+                        </th:block>
+
+                        <th:block th:if="${!#lists.isEmpty(fileList)}" th:each="file, status : ${fileList}">
+                            <img th:src="${file.fileUrl}"
+                                 th:alt="'job Image ' + ${status.count}"
+                                 class="swiper-slide">
+                        </th:block>
+                    </div>
+
+                    <!-- 내비게이션 버튼 -->
+                    <th:block th:if="${!#lists.isEmpty(fileList)}" th:each="file, status : ${fileList}">
+                        <button type="button" aria-label="Previous" class="prevBtn" id="prevBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">
+                                <path stroke="#d2d2d2" d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
+                                <path fill="#d2d2d2" d="M23.09 26.84a.833.833 0 0 1-1.179 0l-6.25-6.25a.833.833 0 0 1 0-1.18l6.25-6.25a.833.833 0 0 1 1.179 1.18L17.43 20l5.66 5.66a.833.833 0 0 1 0 1.18Z"></path>
+                            </svg>
+                        </button>
+
+                        <button type="button" aria-label="Next" class="nextBtn" id="nextBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">
+                                <path stroke="#d2d2d2" d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
+                                <path fill="#d2d2d2" d="M16.911 13.16a.833.833 0 0 1 1.179 0l6.25 6.25a.833.833 0 0 1 0 1.18l-6.25 6.25a.833.833 0 1 1-1.179-1.18l5.66-5.66-5.66-5.66a.833.833 0 0 1 0-1.18Z"></path>
+                            </svg>
+                        </button>
+                    </th:block>
+                </div>
+            </section>
+
+            <section class="job-requirements" th:if="${content != null}">
+                <div class="flex-box">
+                    <div class="check"><i class="bi bi-check-lg"></i></div><h2>모집부문 및 상세내용</h2>
                 </div>
 
+                <div class="job-content" th:utext="${content}"></div>
             </section>
-            <section class="slider">
-                <div class="slides">
 
-                    <div class="slide" style="background-color: #ff7f7f;">Slide 1</div>
-                    <div class="slide" style="background-color: #7fafff;">Slide 2</div>
-                    <div class="slide" style="background-color: #7fff7f;">Slide 3</div>
+            <section class="job-stack" th:if="${!#lists.isEmpty(skillNameList)}">
+                <div class="flex-box">
+                    <div class="check"><i class="bi bi-check-lg"></i></div><h2>요구 스킬</h2>
                 </div>
-
-                <button type="button" aria-label="Previous" data-role="none" class="prevBtn" style="display: block;" onclick="prevSlide()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40" aria-hidden="true">
-                        <g clip-path="url(#clip0_2450_17212)">\
-                            <path stroke="#ffffff" d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
-                            <path fill="#ffffff" fill-rule="evenodd" d="M23.09 26.84a.833.833 0 0 1-1.179 0l-6.25-6.25a.833.833 0 0 1 0-1.18l6.25-6.25a.833.833 0 0 1 1.179 1.18L17.43 20l5.66 5.66a.833.833 0 0 1 0 1.18Z" clip-rule="evenodd"></path>
-                        </g>
-                    </svg>
-                </button>
-                <button type="button" aria-label="Next" data-role="none" class="nextBtn" style="display: block;" onclick="nextSlide()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40" aria-hidden="true">
-                        <g clip-path="url(#clip0_2450_17215)">
-                            <path stroke="#ffffff" d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
-                            <path fill="#ffffff" fill-rule="evenodd" d="M16.911 13.16a.833.833 0 0 1 1.179 0l6.25 6.25a.833.833 0 0 1 0 1.18l-6.25 6.25a.833.833 0 1 1-1.179-1.18l5.66-5.66-5.66-5.66a.833.833 0 0 1 0-1.18Z" clip-rule="evenodd"></path>
-                        </g>
-                    </svg>
-                </button>
+                <th:block th:if="${!#lists.isEmpty(skillNameList)}" th:each="skill, stat : ${skillNameList}">
+                    <div class="green-box"
+                         th:classappend="${stat.index == 0} ? 'first-skill' : ''">
+                        [[${skill}]]
+                    </div>
+                </th:block>
             </section>
-            <section class="job-requirements">
-                <h3>주요 스택</h3>
-                <span class="highlight">Spring Boot</span>
-                <h3>우대사항</h3>
-                <p>백엔드 경험자, AI 지식 보유자 우대</p>
 
-                <h3>진행단계</h3>
-                <div class="process-steps">
-                    <span class="step active">서류전형</span>
-                    <span class="step">면접</span>
-                    <span class="step">최종</span>
+            <section class="process-steps" th:if="${applicationResponse.procedureCode != null}">
+                <div class="flex-box">
+                    <div class="check"><i class="bi bi-check-lg"></i></div><h2>전형절차</h2>
+                </div>
+                <div class="steps-container">
+                    <!-- steps를 반복하여 각 단계 출력 -->
+                    <div class="step">서류 통과</div>
+                    <div class="connector"></div>
+                    <th:block th:each="number : ${#numbers.sequence(1, applicationResponse.procedureCode-1)}">
+                        <div th:if="${applicationResponse.procedureCode > 0}" class="step" th:text="${number + '차 면접'}"></div>
+                        <div th:if="${applicationResponse.procedureCode > 0}" class="connector"></div>
+                    </th:block>
+                    <div class="step last-step">최종 합격</div>
                 </div>
             </section>
 
             <section class="job-map">
-                <h3>근무지역</h3>
-                <div id="map">지도 위치</div>
+                <div class="flex-box">
+                    <div class="check"><i class="bi bi-check-lg"></i></div><h2>근무 지역</h2>
+                </div>
+                <div class="job-content">
+                    <ul>
+                        <li>[[${applicationResponse.workingArea}]]</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="job-notice">
+                <div class="flex-box">
+                    <div class="check"><i class="bi bi-check-lg"></i></div><h2>유의사항</h2>
+                </div>
+                <div class="job-content">
+                    <ul>
+                        <li>입사지원 서류에 허위사실이 발견된 경우, 채용확정 이후라도 채용이 취소될 수 있습니다.</li>
+                    </ul>
+                </div>
             </section>
 
             <section class="company-info">
-                <h3>회사정보</h3>
-                <ul>
-                    <li>산업분야: IT</li>
-                    <li>기업규모: 중견기업</li>
-                    <li>근무형태: 정규직</li>
+                <h2>접수 기간 및 방법</h2>
+                <ul class="company-detail">
+                    <div class="status">
+                        <div class="info_timer" th:if="${applicationResponse.day != null}">
+                            <span class="txt">남은 기간<span class="day">&nbsp;[[${applicationResponse.day}]]</span>일</span>
+                        </div>
+                         <p class="copy once" th:if="${applicationResponse.day == null}">
+                             <strong>상시 채용</strong>중인
+                             <br>공고입니다.
+                         </p>
+
+                        <dl class="info_period">
+                            <dt>시작일</dt>
+                            <dd>[[${applicationResponse.startDate}]]</dd>
+
+                            <th:block th:if="${applicationResponse.deadlineDate != null}">
+                                <dt>마감일</dt>
+                                <dd>[[${applicationResponse.deadlineDate}]]</dd>
+                            </th:block>
+                        </dl>
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <button type="button" class="jobBtn applyBtn" style="margin-top: 25px; ">입사지원</button>
+                        </div>
+                    </div>
+                    <div class="guid">
+                        <ul>
+                            <li><span class="label">지원방법</span>  사이트 입사지원</li>
+                            <li><span class="label">접수양식</span>  사이트 이력서 양식</li>
+                        </ul>
+                    </div>
                 </ul>
             </section>
-
-            <footer class="related-posts">
-                <h3>관련 채용 공고</h3>
-                <div class="related-item">관련 공고 1</div>
-                <div class="related-item">관련 공고 2</div>
-            </footer>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script src="/static/js/jeyeon/detail-application.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+
+    const swiper = new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        speed: 600,
+        navigation: {
+            nextEl: '#nextBtn',  // 우측 버튼
+            prevEl: '#prevBtn',  // 좌측 버튼
+        },
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const totalSteps = parseInt(document.querySelector('.steps-container').getAttribute('data-procedure-code'), 10);
+
+        // 단계 요소들 가져오기
+        const stepElements = document.querySelectorAll('.step');
+        const connectorElements = document.querySelectorAll('.connector');
+
+        // 각 단계의 텍스트 설정 (해당 단계가 몇 번째인지에 따라 다르게 텍스트 설정)
+        for (let i = 0; i < totalSteps; i++) {
+            const stepElement = stepElements[i];
+            if (stepElement) {
+                stepElement.textContent = i === 0 ? '서류전형' :
+                    i === 1 ? '면접' :
+                        i === 2 ? '1차면접' :
+                            i === 3 ? '2차면접' : '합격';
+            }
+        }
+
+        // 각 단계 사이의 연결선 설정
+        for (let i = 0; i < totalSteps - 1; i++) {
+            const connectorElement = connectorElements[i];
+            if (connectorElement) {
+                connectorElement.style.display = 'block';
+            }
+        }
+
+        // 마지막 단계는 bold 처리
+        if (stepElements[totalSteps - 1]) {
+            stepElements[totalSteps - 1].classList.add('last-step');
+        }
+    });
+</script>
 </body>
 </html>

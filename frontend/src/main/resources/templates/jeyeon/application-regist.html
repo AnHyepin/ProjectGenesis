@@ -25,7 +25,7 @@
             <label for="roleCode">개발 직무</label>
             <select id="roleCode" name="roleCode">
                 <option value="" selected disabled>직무 선택</option>
-                <option th:each="stack : ${stack1thList}" th:value="${stack.gubnCode}">[[${stack.gubnName}]]</option>
+                <option th:each="job : ${jobList}" th:value="${job.gubnCode}">[[${job.gubnName}]]</option>
             </select>
         </div>
 

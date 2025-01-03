@@ -1,22 +1,21 @@
-package org.green.backend.dto.jeyeon;
+package org.green.frontend.dto.jeyeon;
 
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 /**
- * 12-28 (작성자: 안제연)
- * 이 클래스는 채용공고 요청 Dto입니다.
+ * 12-31 (작성자: 안제연)
+ * 이 클래스는 채용공고 응답 Dto입니다.
  */
 @Data
-public class ApplicationRequestDto {
+public class ApplicationResponseDto {
     private Long applicationNo;            // 채용공고 번호
     private String username;               // 사용자 고유 ID
     private String applicationTitle;       // 채용공고 제목
     private String startDate;              // 공고 시작
     private String deadlineDate;           // 공고 마감일
+    private String day;
     private String applicationCode;        // 채용구분 (C: 마감, O: 모집중, S: 모집 일시중지)
     private int salary;                    // 연봉
     private String careerCode;             // 경력 (S:신입, G:경력, SG:신입/경력)
@@ -27,8 +26,6 @@ public class ApplicationRequestDto {
     private String roleCode;               // 개발직무
     private String content;                // 모집부문 및 상세내용
     private Integer procedureCode;         // 1차(1), 2차(2), 3차(3)
-    private String deleteYn;               // 삭제여부 (N: 미삭제, Y: 삭제)
-    private String registDt;               // 생성일
-    private String modiDt;                 // 수정일
-    private List<String> skillList;        // 스킬리스트
+    private List<ApplicationStackDto> skillList;        // 스킬리스트
+    private List<FileDto> fileList;        // 파일리스트
 }

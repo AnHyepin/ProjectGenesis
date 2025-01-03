@@ -47,4 +47,48 @@
         FROM tbl_applications
         ORDER BY application_no desc
     </select>
+
+    <select id="selectApplication">
+        SELECT
+            application_no,
+            username,
+            application_title,
+            start_date,
+            deadline_date,
+            application_code,
+            salary,
+            career_code,
+            position_code,
+            education_gbn_code,
+            employment_code,
+            working_area,
+            role_code,
+            content,
+            procedure_code,
+            CASE
+            WHEN deadline_date IS NOT NULL THEN DATEDIFF(deadline_date, CURDATE())
+            END AS day
+        FROM tbl_applications
+        WHERE application_no = #{applicationNo};
+    </select>
+
+    <select id="selectApplicatinCompany">
+        SELECT
+            username,
+            name,
+            email,
+            phone,
+            content,
+            birth,
+            address,
+            address_detail,
+            zip_code,
+            ceo_name,
+            homepage,
+            employees,
+            sale,
+            role
+        FROM tbl_companys
+        WHERE username=#{username};
+    </select>
 </mapper>

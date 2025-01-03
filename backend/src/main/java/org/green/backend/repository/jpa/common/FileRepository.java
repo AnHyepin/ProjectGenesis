@@ -11,4 +11,6 @@ public interface FileRepository extends JpaRepository<File, Long> {
     List<File> findFilesByApplicationNo(int applicationNo,String applicationGubnCode);
 
     File findFileByFileRefNoAndFileGubnCode(String fileRefNo, String fileGubnCode);
+
+
 }

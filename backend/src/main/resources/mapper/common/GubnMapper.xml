@@ -18,4 +18,13 @@
             WHERE group_code = 'stack_code');
     </select>
 
+    <select id="getSkillName" resultType="org.green.backend.dto.common.GubnDto">
+        SELECT group_code, gubn_code, gubn_name
+        FROM tbl_gubn
+        WHERE group_code
+            in(SELECT gubn_code
+            FROM tbl_gubn
+            WHERE group_code = 'stack_code') and gubn_code = #{stackCode};
+    </select>
+
 </mapper>
