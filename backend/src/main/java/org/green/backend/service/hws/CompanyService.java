@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.dto.hws.RatingDto2;
+import org.green.backend.dto.kwanhyun.CompanyScoreDto;
 import org.green.backend.entity.Company;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
@@ -114,10 +115,9 @@ public class CompanyService {
      */
     public CompanyDto getCompanyByUsername(String username) {
         CompanyDto company = companyDao.findCompanyByUsername(username);
-        company.setAddress(company.toAddress());
-
 
         if (company != null) {
+            company.setAddress(company.toAddress());
             return company;
         }
         return null;
@@ -132,7 +132,6 @@ public class CompanyService {
 
         return "성공";
     }
-
 
     public CompanyDetailsDto companyDetails(String companyName, String username) {
         List<CompanyDetailsDto> companyDetailsList = companyDao2.companyDetails(companyName, username);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
+    <select id="bookmarkList" resultType="org.green.backend.dto.kwanhyun.BookmarkCompanyDto">
+        SELECT
+        r.username,
+        c.name,
+        (SELECT ROUND(AVG(COALESCE(r.jr_star, 0)), 1)
+        FROM tbl_ratings r
+        WHERE r.company_name = c.username) AS 'jrStar',
+        c.address,
+        c.employees,
+        c.sale,
+        l.like_code,
+        (SELECT COUNT(r.company_name) FROM tbl_ratings r WHERE r.username=#{username}) AS 'count'
+        FROM tbl_companys c
+        INNER JOIN tbl_ratings r ON r.company_name = c.username AND r.username = #{username}
+        LEFT JOIN tbl_likes l ON c.username = l.like_id AND l.username = #{username}
+        GROUP BY c.username;
+    </select>
+</mapper>

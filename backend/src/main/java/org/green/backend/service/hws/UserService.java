@@ -6,9 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.UserDto;
 import org.green.backend.dto.hws.UserWithFileDto;
+import org.green.backend.dto.kwanhyun.BookmarkCompanyDto;
+import org.green.backend.dto.kwanhyun.CompanyScoreDto;
 import org.green.backend.entity.User;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
+import org.green.backend.repository.dao.kwanhyun.CompanyDao;
 import org.green.backend.repository.jpa.hws.UserRepository;
 import org.green.backend.service.common.FileService;
 import org.modelmapper.ModelMapper;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 12-27 (작성자: 한우성)
@@ -33,6 +37,7 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final FileService fileService;
+    private final CompanyDao companyDao;
 
     /**
      * 사용자 정보를 저장하고 프로필 사진을 저장.
@@ -152,6 +157,32 @@ public class UserService {
         user.setDeleteYn('Y');
         userRepository.save(user);
         return "성공";
+    }
+
+    /**
+     * 별점 기업목록 조회 - 관현(25.01.03. 11:00)
+     */
+    public List<CompanyScoreDto> companyScoreLists(String username) {
+        List<CompanyScoreDto> companyScoreList = companyDao.myScoreList(username);
+
+        if(companyScoreList.isEmpty()) {
+            return null;
+        }
+
+        return companyScoreList;
+    }
+
+    /**
+     * 북마크 기업목록 조회 - 관현(25.01.03. 17:40)
+     */
+    public List<BookmarkCompanyDto> bookmarkCompanyLists(String username) {
+        List<BookmarkCompanyDto> bookmarkcompanyList = companyDao.bookmarkList(username);
+
+        if(bookmarkcompanyList.isEmpty()) {
+            return null;
+        }
+
+        return bookmarkcompanyList;
     }
 }
 
