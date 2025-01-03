@@ -1,7 +1,11 @@
 package org.green.backend.repository.dao.hyepin;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.common.GubnDto;
 import org.green.backend.dto.hyepin.CareerDto;
+
+import java.util.List;
 
 /**
  * 12-31 (작성자: 안혜빈)
@@ -10,4 +14,5 @@ import org.green.backend.dto.hyepin.CareerDto;
 @Mapper
 public interface CareerDao {
     public int save(CareerDto career);
+    public List<CareerDto> getCareerListByResumeNo(@Param("resumeNo") int resumeNo);
 }

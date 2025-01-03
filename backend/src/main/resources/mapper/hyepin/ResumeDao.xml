@@ -80,6 +80,12 @@
         JOIN tbl_companys c
         ON a.username = c.username
         WHERE s.regist_id = #{username}
-
     </select>
+    <select id="getResumeByResumeNo" resultType="org.green.backend.dto.hyepin.ResumeDto">
+        SELECT *
+        FROM tbl_resumes
+        WHERE resume_no = #{resumeNo}
+    </select>
+
 </mapper>
+

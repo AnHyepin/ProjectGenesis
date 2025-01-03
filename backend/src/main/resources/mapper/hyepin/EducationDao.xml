@@ -15,4 +15,11 @@
             #{resumeEducationMajor}, #{resumeEducationScore}, #{resumeEducationIndt},
             #{resumeEducationOutdt}, #{resumeEducationTransferYn})
     </insert>
+    <select id="getEducationListByResumeNo" resultType="org.green.backend.dto.hyepin.EducationDto">
+        SELECT e.*, g.gubn_name AS resumeEducationGbnName
+        FROM tbl_resume_education e
+        JOIN tbl_gubn g
+        ON e.resume_education_gbn_code = g.gubn_code
+        WHERE resume_no = #{resumeNo} AND g.group_code = 'education_code'
+    </select>
 </mapper>

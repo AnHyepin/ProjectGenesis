@@ -92,7 +92,8 @@
                         </select>
                         <input type="text" placeholder="학교명 *" name="resumeEducationName" id="resumeEducationName" style="width: 30%;">
                         <div class="checkbox">
-                            <input type="checkbox" name="resumeEducationTransferYn" value="Y" id="resumeEducationTransferYn">편입
+                            <input type="hidden" name="resumeEducationTransferYn" value="N" id="hiddenInput">
+                            <input type="checkbox" id="resumeEducationTransferYn">편입
                         </div>
                     </div>
                     <div class="section_plus_box_detail2">
@@ -189,7 +190,7 @@
                             <option value="">직무 *</option>
                             <!-- 여기 직무 th:each -->
                             <th:block  th:each="job : ${jobList}">
-                                <option value="${job.gubnCode}">[[${job.gubnName}]]</option>
+                                <option th:value="${job.gubnCode}">[[${job.gubnName}]]</option>
                             </th:block>
                         </select>
                         <input type="text" name="resumeCareerDepartmentName" id="resumeCareerDepartmentName" placeholder="근무부서">
@@ -199,12 +200,12 @@
                         <div>담당업무</div>
                     </div>
                     <div class="section_plus_box_detail4">
-                        <textarea name="resumeCareerDuties" id="resumeCareerDuties" placeholder="담당업무를 입력해주세요.&#10 - 담당한 업무 내용을 요약해서 작성해 보세요!"></textarea>
+                        <textarea  id="resumeCareerDuties" name="resumeCareerDuties" placeholder="담당업무를 입력해주세요.&#10 - 담당한 업무 내용을 요약해서 작성해 보세요!"></textarea>
                     </div>
 
                     <div class="section_plus_box_save_btn">
                         <input type="button" class="cancelBtn" value="취소">
-                        <input type="button" class="saveBtn" onclick="careerSave()" value="저장">
+                        <input type="button" class="saveBtn"  onclick="careerSave()" value="저장">
                     </div>
                 </div>
             </form>
@@ -363,7 +364,7 @@
                         </div>
                     </div>
                     <div class="section_box2_detail2">
-                        <div id="resumeMyContent"></div>
+                        <div id="resumeMyContent" style="white-space: pre-wrap;"></div>
                     </div>
                 </div>
             </div>

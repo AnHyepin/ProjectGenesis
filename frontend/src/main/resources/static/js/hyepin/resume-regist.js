@@ -21,6 +21,17 @@ function educationSave(){
             console.log(key, value);
         }
 
+        var checkbox = document.getElementById("resumeEducationTransferYn");
+        var hiddenInput = document.getElementById("hiddenInput");
+        checkbox.addEventListener("change", function() {
+            // 체크박스가 체크되었으면 hiddenInput 값을 "Y"로 변경, 아니면 "N"으로 변경
+            if (checkbox.checked) {
+                hiddenInput.value = "Y";
+            } else {
+                hiddenInput.value = "N";
+            }
+        });
+
         //이름 추가
         formData.append('username', username);
 
@@ -146,7 +157,7 @@ function careerInsert(){
         </div>
     </div>
     <div class="section_box2_detail2">
-        <div>${resumeCareerDuties}</div>
+        <div style="white-space: pre-wrap;">${resumeCareerDuties}</div>
     </div>
             
 `;
@@ -366,7 +377,7 @@ function portfolioInsert(){
             <div class="section_box2_detail2">
                 <div>작업기간: ${resumePortfolioStartDate} ~ ${resumePortfolioEndDate}</div>
                 <div>작업인원: ${resumePortfolioCnt}명</div>
-                <div>작품소개: ${resumePortfolioContent}</div>
+                <div style="white-space: pre-wrap;">작품소개: ${resumePortfolioContent}</div>
             </div>
     `;
     // 부모 요소에 추가

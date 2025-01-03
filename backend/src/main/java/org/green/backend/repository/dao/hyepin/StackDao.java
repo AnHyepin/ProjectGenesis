@@ -2,6 +2,7 @@ package org.green.backend.repository.dao.hyepin;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.common.GubnDto;
 import org.green.backend.dto.hyepin.StackDto;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface StackDao {
     public int save(@Param("resumeNo") int resumeNo, @Param("stackCode") String stackCode);
     public List<String> getByResumeNo(@Param("resumeNo") int resumeNo);
     public void delete(@Param("resumeNo") int resumeNo);
-
+    public List<GubnDto> getStackListByResumeNo(@Param("resumeNo") int resumeNo);
 }

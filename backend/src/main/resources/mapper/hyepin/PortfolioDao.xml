@@ -20,4 +20,11 @@
         WHERE resume_no = #{resumeNo}
     </select>
 
+    <select id="getPortfolioListByResumeNo" resultType="org.green.backend.dto.hyepin.PortfolioDto">
+        SELECT p.*, f.*
+        FROM tbl_resume_portfolio p
+        LEFT JOIN tbl_file f
+        ON p.resume_portfolio_no = f.file_ref_no AND f.file_gubn_code = 'portfolio_no'
+        WHERE p.resume_no = ${resumeNo};
+    </select>
 </mapper>
