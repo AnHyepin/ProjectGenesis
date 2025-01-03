@@ -68,6 +68,10 @@ public class ApplicationService {
         ApplicationResponseDto application = applicationDao.selectApplication(applicationNo);
         List<File> fileList = fileRepository.findFilesByApplicationNo(applicationNo,"application_no");
         application.setFileList(fileList);
+
+        List<ApplicationStack> skillList = applicationStackService.getApplicationStack(applicationNo);
+        application.setSkillList(skillList);
+
         System.out.println(application + "-------------back");
         return application;
     }

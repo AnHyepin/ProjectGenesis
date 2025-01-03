@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2c5e73fdd0fc4f5f05ec46d655832382&libraries=services"></script>
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/static/css/jeyeon/applicationDetail.css" />
     <title>Application Detail</title>
@@ -100,7 +100,6 @@
                 </div>
             </section>
 
-
             <section class="job-requirements">
                 <div class="flex-box">
                     <div class="check"><i class="bi bi-check-lg"></i></div><h2>모집부문 및 상세내용</h2>
@@ -113,7 +112,11 @@
                 <div class="flex-box">
                     <div class="check"><i class="bi bi-check-lg"></i></div><h2>요구 스킬</h2>
                 </div>
-
+                <th:block th:if="${!#lists.isEmpty(skillList)}" th:each="skill : ${skillList}">
+                    <div class="green-box">
+                        [[${skill.stackCode}]]
+                    </div>
+                </th:block>
             </section>
 
             <section class="process-steps" th:if="${applicationResponse.procedureCode != null}">
@@ -126,7 +129,11 @@
                 <div class="flex-box">
                     <div class="check"><i class="bi bi-check-lg"></i></div><h2>근무 지역</h2>
                 </div>
-                <div id="map" style="width:100%;height:350px;"></div>
+                <div class="job-content">
+                    <ul>
+                        <li>[[${applicationResponse.workingArea}]]</li>
+                    </ul>
+                </div>
             </section>
 
             <section class="job-notice">
@@ -137,7 +144,6 @@
                     <ul>
                         <li>입사지원 서류에 허위사실이 발견된 경우, 채용확정 이후라도 채용이 취소될 수 있습니다.</li>
                     </ul>
-
                 </div>
             </section>
 
@@ -161,7 +167,8 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     const swiper = new Swiper('.swiper-container', {
         loop: true,
@@ -175,46 +182,6 @@
             prevEl: '#prevBtn',  // 좌측 버튼
         },
     });
-</script>
-
-<script>
-    window.onload = function() {
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(35.15983491237982, 129.05978926181044), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-
-        // 지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption);
-
-        // 주소-좌표 변환 객체를 생성합니다
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        // 주소로 좌표를 검색합니다
-        geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                // 결과값으로 받은 위치를 마커로 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-
-                // 인포윈도우로 장소에 대한 설명을 표시합니다
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-                });
-                infowindow.open(map, marker);
-
-                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                map.setCenter(coords);
-            }
-        });
-    };
 </script>
 </body>
 </html>

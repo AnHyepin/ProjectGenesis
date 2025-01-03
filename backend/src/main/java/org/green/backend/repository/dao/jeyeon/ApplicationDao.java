@@ -18,4 +18,5 @@ public interface ApplicationDao {
     public ApplicationResponseDto selectApplication(@Param("applicationNo") int applicationNo);
     public Company selectApplicatinCompany(@Param("username") String username);
 
+
 }

@@ -76,6 +76,7 @@ public class ApplicationController {
         model.addAttribute("companyResponse", companyResponse.getBody());
         model.addAttribute("fileList",applicationDto.getFileList());
         model.addAttribute("content", content);
+        model.addAttribute("skillList",applicationDto.getSkillList());
         model.addAttribute("applicationResponse", applicationResponse.getBody());
         return "/jeyeon/application-detail";
     }

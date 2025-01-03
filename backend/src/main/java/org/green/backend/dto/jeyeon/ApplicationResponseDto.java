@@ -2,6 +2,7 @@ package org.green.backend.dto.jeyeon;
 
 
 import lombok.Data;
+import org.green.backend.entity.ApplicationStack;
 import org.green.backend.entity.File;
 
 import java.util.List;
@@ -27,6 +28,6 @@ public class ApplicationResponseDto {
     private String roleCode;               // 개발직무
     private String content;                // 모집부문 및 상세내용
     private Integer procedureCode;         // 1차(1), 2차(2), 3차(3)
-    private List<String> skillList;        // 스킬리스트
+    private List<ApplicationStack> skillList;        // 스킬리스트
     private List<File> fileList;           // 파일리스트
 }
