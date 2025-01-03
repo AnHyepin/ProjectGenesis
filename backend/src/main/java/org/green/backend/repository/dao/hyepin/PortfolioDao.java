@@ -15,4 +15,5 @@ import java.util.List;
 public interface PortfolioDao {
     public int save(PortfolioDto portfolio);
     public int maxNumByResumeNo(@Param("resumeNo") int resumeNo);
+    public List<PortfolioDto> getPortfolioListByResumeNo(@Param("resumeNo") int resumeNo);
 }

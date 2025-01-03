@@ -15,4 +15,12 @@
             #{resumeCareerOutDt}, #{resumeCareerDepartmentName}, #{resumeCareerPosition},
             #{resumeCareerDuties}, #{resumeCareerJob})
     </insert>
+
+    <select id="getCareerListByResumeNo" resultType="org.green.backend.dto.hyepin.CareerDto">
+        SELECT c.*, g.gubn_name AS resumeCareerJobName
+        FROM tbl_resume_career c
+        JOIN tbl_gubn g
+        ON c.resume_career_job = g.gubn_code
+        WHERE c.resume_no = #{resumeNo} and g.group_code = 'job_code'
+    </select>
 </mapper>

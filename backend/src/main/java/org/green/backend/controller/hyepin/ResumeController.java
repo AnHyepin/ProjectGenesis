@@ -33,7 +33,6 @@ public class ResumeController {
     private final UserServiceAhp userService;
     private final FileService fileService;
 
-
     @GetMapping
     public ResumeUserDto resumeRegist(@RequestParam String username) {
         //임시저장인 이력서가 있으면 삭제하고, 임시저장 이력서 생성
@@ -160,18 +159,6 @@ public class ResumeController {
         }
     }
 
-    @GetMapping("/list")
-    public List<ResumeDto> getResumeList(@RequestParam String username){
-        List<ResumeDto> reseumeList = resumeService.getResumeList(username);
-        return reseumeList;
-    }
-
-    @GetMapping("/count")
-    public int getResumeCount(@RequestParam String username){
-        int resumeCount = resumeService.getResumeCount(username);
-        return resumeCount;
-    }
-
     @PostMapping("/positionUpdate")
     public String resumePositionUpdate(@RequestParam("resumeNo") int resumeNo) throws IOException {
         int result = resumeService.updatePosition(resumeNo);
@@ -180,6 +167,18 @@ public class ResumeController {
         }else{
             return "포지션 제안받기 실패";
         }
+    }
+
+    @GetMapping("/list")
+    public List<ResumeDto> getResumeList(@RequestParam String username) throws IOException {
+        List<ResumeDto> reseumeList = resumeService.getResumeList(username);
+        return reseumeList;
+    }
+
+    @GetMapping("/count")
+    public int getResumeCount(@RequestParam String username) throws IOException {
+        int resumeCount = resumeService.getResumeCount(username);
+        return resumeCount;
     }
 
     @GetMapping("/applyList")

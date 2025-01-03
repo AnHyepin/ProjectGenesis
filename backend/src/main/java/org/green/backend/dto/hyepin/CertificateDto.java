@@ -10,5 +10,6 @@ public class CertificateDto {
     private String certificateDt; //자격증 취득일
     private String certificateName; //자격증명
     private String certificatePlace;    //발급기관
-    private char certificateGbnCd; //합격구분
+    private char certificateGbnCd; //합격구분코드
+    private String certificateGbnName;  //합격구분이름
 }

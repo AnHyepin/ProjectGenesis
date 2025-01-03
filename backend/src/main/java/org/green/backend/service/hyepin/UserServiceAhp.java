@@ -7,6 +7,10 @@ import org.green.backend.repository.dao.hyepin.ResumeDao;
 import org.green.backend.repository.jpa.hws.UserRepository;
 import org.springframework.stereotype.Service;
 
+/**
+ * 12-30 (작성자: 안혜빈)
+ * 유저를 관리하는 서비스
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
