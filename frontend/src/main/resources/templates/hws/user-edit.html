@@ -93,8 +93,11 @@
             <input type="hidden" name="username" id="username" th:value="${user.username}">
 
 
-            <div class="input-group">
-                <button onclick="submitForm()" class="join-btn">회원수정</button>
+            <div class="input-group" style="display:flex !important; flex-direction: row; " >
+                <button onclick="submitForm()" class="join-btn" style="max-width:200px; min-width:200px">회원수정</button>
+                <button onclick="deleteUser()" class="join-btn" style="max-width: 200px; min-width: 200px; background: linear-gradient(to right, #F23A3D, #8C2223);">
+                    회원탈퇴
+                </button>
             </div>
         </div>
     </body>

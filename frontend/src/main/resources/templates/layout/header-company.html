@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<header th:fragment="header" class="header-container">
+    <header th:fragment="header" class="header-container">
 
-    <!-- 로고 -->
-    <div class="header-logo">
-        <a href=""> <img src="/static/img/genesis.png" alt="로고이미지" /> </a>
-    </div>
+        <!-- 로고 -->
+        <div class="header-logo">
+            <a href="/company"> <img src="/static/img/genesis.png" alt="로고이미지" /> </a>
+        </div>
 
-    <div class="header-menu">
-        <p id="recruitment" onclick="handleClick(event)">채용공고</p>
-        <div class="header-applicationManagement">
-            <p id="applicationManagement" onclick="handleClick(event)">공고 관리</p>
-            <div class="header-application-dropdown">
-                <p id="application-regist" onclick="secondHandleClick(event)"><a href="">공고 등록</a></p>
-                <p id="application-list" onclick="secondHandleClick(event)"><a href="">내 공고 목록</a></p>
-                <p id="application-management" onclick="secondHandleClick(event)"><a href="">지원자 관리</a></p>
+        <div class="header-menu">
+            <p id="recruitment" onclick="handleClick(event)">채용공고</p>
+            <div class="header-applicationManagement">
+                <p id="applicationManagement" onclick="handleClick(event)">공고 관리</p>
+                <div class="header-application-dropdown">
+                    <p id="application-regist" onclick="secondHandleClick(event)"><a href="">공고 등록</a></p>
+                    <p id="application-list" onclick="secondHandleClick(event)"><a href="">내 공고 목록</a></p>
+                    <p id="application-management" onclick="secondHandleClick(event)"><a href="">지원자 관리</a></p>
+                </div>
+            </div>
+
+            <p id="matching" onclick="handleClick(event)">매칭리스트</p>
+            <p id="support" onclick="handleClick(event)">고객센터</p>
+        </div>
+
+        <!-- 회색 줄 -->
+        <div class="header-divider"></div>
+
+        <!-- 오른쪽 메뉴 -->
+        <div class="header-right-menu">
+            <div class="header-login-user">
+                <p>
+                    <img th:src="${session.user != null and session.user.fileUrl != null ? session.user.fileUrl : '/static/img/증명사진.jpg'}"
+                         width="50px"
+                         height="50px"
+                         style="border-radius: 50%;"
+                         alt="사용자 프로필 이미지">
+                </p>
+                <p>
+                        <span class="header-username"
+                        th:text="${session.user != null and session.user.name != null ? session.user.name : 'Guest'}"></span>
+                         <span> 님</span>
+                </p>
+            </div>
+            <div class="header-service-button">
+                기업 서비스
+                <div class="header-arrow">^</div>
+                <div class="header-service-dropdown">
+                    <p><a href="">기업정보 관리</a></p>
+                    <p><a href="">공고 등록</a></p>
+                    <p><a href="">스크랩</a></p>
+                    <p><a onclick="clearStorage()">로그아웃</a></p>
+                </div>
             </div>
         </div>
+        <script>
+            //TODO 시간관계상 여기서 처리
+            function clearStorage() {
+                sessionStorage.clear();
+                localStorage.clear();
+                location.href = '/logout'
+            }
+        </script>
+    </header>
 
-        <p id="matching" onclick="handleClick(event)">매칭리스트</p>
-        <p id="support" onclick="handleClick(event)">고객센터</p>
-    </div>
-
-    <!-- 회색 줄 -->
-    <div class="header-divider"></div>
-
-    <!-- 오른쪽 메뉴 -->
-    <div class="header-right-menu">
-        <div class="header-login-user">
-            <p><img src="/static/img/증명사진.jpg" width="50px" style="border-radius: 50%;"></p>
-            <p><span class="header-username">[[${username}]]</span><span > 님</span></p>
-        </div>
-        <div class="header-service-button">
-            기업 서비스
-            <div class="header-arrow">^</div>
-            <div class="header-service-dropdown">
-                <p> <a href="">기업정보 관리</a></p>
-                <p> <a href="">공고 등록</a></p>
-                <p> <a href="">스크랩</a></p>
-                <p> <a href="">로그아웃</a></p>
-            </div>
-        </div>
-    </div>
-
-</header>
 </html>

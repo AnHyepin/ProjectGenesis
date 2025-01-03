@@ -106,6 +106,21 @@ function submitForm() {
 }
 
 
+function deleteUser() {
+    const username = document.getElementById('username').value
+    api.put(`/api/user/delete/${username}`)
+        .then(data => {
+            console.log('삭제 성공:', data);
+            alert('유저 삭제 성공');
+            location.href = '/logout';
+        })
+        .catch(error => {
+            console.error('업데이트 실패:', error);
+            alert('정보 수정에 실패했습니다.');
+        });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     setInitialProfileImage();
 });

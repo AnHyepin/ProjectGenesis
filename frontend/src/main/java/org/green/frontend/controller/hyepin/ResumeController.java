@@ -3,7 +3,6 @@ package org.green.frontend.controller.hyepin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.hyepin.ApplyStatusDto;
-import org.green.frontend.dto.jeyeon.GubnDto;
 import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.springframework.stereotype.Controller;
@@ -11,12 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 12-31 (작성자: 안혜빈)
@@ -29,13 +25,13 @@ public class ResumeController {
 
     private final ApiRequestService apiService;
 
-
     @GetMapping
     public String resumeRegist(Model model) {
         // 파라미터를 Map 형태로 구성
-        Map<String, String> params = Map.of("username", "안혜빈");
+        Map<String, String> params = Map.of("username", "혜빈");
         var userResponse = apiService.fetchData("/api/resume",  params, true);
         var user =  userResponse.getBody();
+
 
         var jobListResponse = apiService.fetchData("/api/gubn/job");
         var certificateResponse = apiService.fetchData("/api/gubn/certificate");
@@ -57,71 +53,5 @@ public class ResumeController {
         return "/hyepin/resume-regist";
     }
 
-    @GetMapping("/list")
-    public String resumeList(Model model) {
-        //유저 이력서 가져오기
-        Map<String, String> params = Map.of("username", "안혜빈");
-        //지원한 숫자까지 포함해서 가져오기
-        var resumeListResponse = apiService.fetchData("/api/resume/list",  params, true);
-        var applyCountResponse = apiService.fetchData("/api/resume/count",  params, true);
-        var resumeList =  resumeListResponse.getBody();
-        var applyCount =  applyCountResponse.getBody();
-
-        model.addAttribute("resumeList", resumeList);
-        model.addAttribute("count", applyCount);
-        return "/hyepin/resume-list";
-    }
-
-    @GetMapping("/detail")
-    public String resumeDetail(@RequestParam("resumeNo") int resumeNo,
-                                Model model) {
-        System.out.println("resumeNo: " + resumeNo);
-        return "/hyepin/resume-detail";
-    }
-
-    @GetMapping("/applyStatus")
-    public String resumeApplyStatus(Model model) {
-
-        //지원완료(submitCnt) = list.size()
-        //전형진행중(processCnt) = if(list.getApply_status_gbn_code.equals("H"))
-        //최종발표(finalCnt) = else
-
-        List<ApplyStatusDto> applyStatusList = new ArrayList<>();
-
-        int submitCnt = 0;
-        int processCnt = 0;
-        int finalCnt = 0;
-
-        //유저 지원현황 가져오기
-        Map<String, String> params = Map.of("username", "안혜빈");
-        
-        //이거 for문 돌리는 로직
-        ApiResponse<?> response = apiService.fetchData("/api/resume/applyStatus", params, true);
-        Object body = response.getBody();
-
-        if (body instanceof List) {
-           applyStatusList = ((List<?>) body).stream()
-                    .map(item -> new ObjectMapper().convertValue(item, ApplyStatusDto.class))
-                    .collect(Collectors.toList());
-
-            submitCnt = applyStatusList.size();
-
-            for (ApplyStatusDto applyStatus : applyStatusList) {
-                if(applyStatus.getApplyStatusGbnCode().equals("H")){
-                    processCnt++;
-                }else {
-                    finalCnt++;
-                }
-            }
-        } else {
-            throw new IllegalStateException("body가 List<ApplyStatusDto>가 아님");
-        }
-
-        model.addAttribute("applyStatusList", applyStatusList);
-        model.addAttribute("submitCnt", submitCnt);
-        model.addAttribute("processCnt", processCnt);
-        model.addAttribute("finalCnt", finalCnt);
-        return "/hyepin/resume-applyStatus";
-    }
 
 }

@@ -11,7 +11,7 @@
 <div class="header-container">
     <!-- 로고 -->
     <div class="header-logo">
-        <a href=""> <img src="/static/img/genesis.png" alt="로고이미지" /> </a>
+        <a href="/"> <img src="/static/img/genesis.png" alt="로고이미지" /> </a>
     </div>
 
     <div class="header-menu">
@@ -45,9 +45,18 @@
                 <i class="bi bi-bell-fill" style="font-size: 24px;"></i>
                 <span class="header-redbell"></span>
             </div>
-
-            <p><img src="/static/img/증명사진.jpg" width="50px" style="border-radius: 50%;"></p>
-            <p><span class="header-username">[[${username}]]</span><span > 님</span></p>
+            <p>
+                <img th:src="${session.user != null and session.user.fileUrl != null ? session.user.fileUrl : '/static/img/증명사진.jpg'}"
+                     width="50px"
+                     height="50px"
+                     style="border-radius: 50%;"
+                     alt="사용자 프로필 이미지">
+            </p>
+            <p>
+                        <span class="header-username"
+                              th:text="${session.user != null and session.user.name != null ? session.user.name : 'Guest'}"></span>
+                <span> 님</span>
+            </p>
         </div>
         <div class="header-service-button">
             회원 서비스
@@ -58,10 +67,18 @@
                 <p> <a href="">스크랩</a></p>
                 <p> <a href="">북마크</a></p>
                 <p> <a href="">별점 관리</a></p>
-                <p> <a href="">로그아웃</a></p>
+                <p> <a onclick="clearStorage()">로그아웃</a></p>
             </div>
         </div>
     </div>
 </div>
+<script>
+    //TODO 시간관계상 여기서 처리
+    function clearStorage() {
+        sessionStorage.clear();
+        localStorage.clear();
+        location.href = '/logout'
+    }
+</script>
 </header>
 </html>

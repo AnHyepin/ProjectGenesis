@@ -2,7 +2,6 @@ package org.green.backend.controller.hws;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.hws.UserDto;
 import org.green.backend.dto.hws.UserWithFileDto;
 import org.green.backend.service.hws.UserService;
@@ -51,5 +50,10 @@ public class UserController {
         userService.updateUser(userDto,profilePicture,fileNo);
 
         return null;
+    }
+
+    @PutMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username) {
+        return userService.deleteUser(username);
     }
 }

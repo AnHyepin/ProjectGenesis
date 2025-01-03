@@ -97,17 +97,24 @@ public class MainService {
      */
     public List<RatingApplicationDto> getTopRatingApplication(int limit) {
         List<RatingApplicationDto> topCompanies = ratingRepository.findTopRatedCompanies();
+
         topCompanies.forEach(dto -> {
             Application latestApplication = applicationRepository.findLatestApplicationByCompany(dto.getUsername());
             if (latestApplication != null) {
                 List<File> files = fileRepository.findFilesByApplicationNo(latestApplication.getApplicationNo(), "application_no");
+
                 dto.setApplication(latestApplication);
                 dto.setFiles(files);
             }
-            dto.setApplication(latestApplication);
+
+            dto.setAverageStar(Math.round(dto.getAverageStar() * 100.0) / 100.0);
         });
-        return topCompanies.stream().limit(limit).collect(Collectors.toList());
+
+        return topCompanies.stream()
+                .limit(limit)
+                .collect(Collectors.toList());
     }
+
 
 
     /**
@@ -154,6 +161,9 @@ public class MainService {
     }
 
 
+    /**
+     *  기업메인 데이터
+     */
     public CompanyMainDto getApplicantsWithDetails(String companyUsername) {
 
         List<Applicant> applicants = mainDao.getApplicantsForCompany(companyUsername);

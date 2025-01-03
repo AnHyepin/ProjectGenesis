@@ -8,16 +8,16 @@ function handleClick(event) {
     // localStorage에 클릭한 메뉴의 id 값을 저장
     localStorage.setItem('activeMenu', clickedId);
 
-    if(clickedId === 'recruitment'){
+    if (clickedId === 'recruitment') {
         window.location.href = '';
         alert('채용공고');
-    }else if(clickedId === 'applicationManagement'){
+    } else if (clickedId === 'applicationManagement') {
         window.location.href = '';
         alert('공고 관리');
-    }else if(clickedId === 'matching'){
+    } else if (clickedId === 'matching') {
         window.location.href = '';
         alert('매칭리스트');
-    } else if(clickedId === 'support'){
+    } else if (clickedId === 'support') {
         window.location.href = '';
         alert('고객센터');
     }
@@ -33,7 +33,8 @@ window.onload = function () {
     }
 };
 
-function secondHandleClick(event){
+function secondHandleClick(event) {
     const clickedId = event.target.id;
     localStorage.setItem('activeMenu', 'applicationManagement');
 }
+
