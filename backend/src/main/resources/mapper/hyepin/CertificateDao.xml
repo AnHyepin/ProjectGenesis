@@ -13,4 +13,12 @@
             (#{resumeNo}, #{certificateDt}, #{certificateName},
             #{certificatePlace}, #{certificateGbnCd})
     </insert>
+
+    <select id="getCertificateListByResumeNo" resultType="org.green.backend.dto.hyepin.CertificateDto">
+        SELECT c.*, g.gubn_name AS certificateGbnName
+        FROM tbl_resume_certificates c
+        JOIN tbl_gubn g
+        ON c.certificate_gbn_cd = g.gubn_code
+        WHERE resume_no = #{resumeNo} AND g.group_code = 'certificate_pass_code'
+    </select>
 </mapper>

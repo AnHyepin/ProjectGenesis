@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-test/layout}">
+<head>
+    <link rel="stylesheet" href="/static/css/hyepin/resume-detail.css"/>
+    <title>Title</title>
+</head>
+<body layout:fragment="content">
+<div class="resume-container">
+    <!-- 왼쪽 섹션 -->
+    <div class="left-section">
+        <!-- 기본정보 -->
+        <input type="hidden" name="resumeNo" id="resumeNo" value="${resume.resumeNo}">
+        <div class="section">
+            <div class="information">
+                <div class="information_left_box">
+                    <div class="information_box1">
+                        <div class="information_box1_detail1">
+                            <span id="username" style="margin-right: 5px;">[[${user.username}]]</span>
+                            <span style="background-color: #C0FFD2; border-radius: 20px; padding: 4px 12px;">신입</span>
+                        </div>
+                        <div class="information_box1_detail1">
+                            <span id="salary" style="margin-right: 5px;">요구연봉</span>
+                            <span style="background-color: #C0FFD2; border-radius: 20px; padding: 4px 12px;">[[${resume.salary}]]</span>
+                        </div>
+                    </div>
+                    <div class="information_box2">
+                        <div> <th:block th:if="${user.gender == 'F'}" >여 </th:block>
+                            <th:block th:if="${user.gender == 'M'}" > 남 </th:block>
+                            [[${user.birth}]]</div>
+                    </div>
+                    <div class="information_box3">
+                        <div><i class="bi bi-envelope"></i>  [[${user.email}]]   </div>
+                        <div>   <i class="bi bi-telephone"></i>  [[${user.phone}]]</div>
+                    </div>
+                    <div class="information_box4" style="display: flex; gap: 20px;">
+                        <div><i class="bi bi-house"></i>  [[${user.address.address}]]
+                            [[${user.address.addressDetail}]] </div>
+                        <div > <i class="bi bi-mailbox"></i> [[${user.address.zipCode}]]</div>
+                    </div>
+                </div>
+                <div class="information_right_box">
+                    <div class="right_img"><img th:src="${user.fileUrl}"></div>
+                    <div><i class="bi bi-pencil"></i> </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 보유 기술 -->
+        <div class="section">
+            <div class="section_box">
+                <h2>보유 기술 스택</h2>
+                <div><i class="bi bi-pencil"></i> </div>
+            </div>
+            <hr class="divider">
+
+            <div class="section_plus_box_detail2">
+                <form id="skill-list-form">
+                    <div class="skill-list">
+                        <th:block th:each="skill : ${stackList}">
+                            <div class="input-skill-list" th:id="${skill.gubnCode}">
+                                <input type="hidden" name="stackCode" th:value="${skill.gubnCode}">
+                                <div style="color: #171717;">[[${skill.gubnName}]]</div>
+                            </div>
+                        </th:block>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 학력 -->
+        <div class="section">
+            <div class="section_box">
+                <h2>학력</h2>
+                <div><i class="bi bi-pencil"></i></div>
+            </div>
+            <hr class="divider">
+
+            <!-- 값 생성 -->
+            <div class="list" name="education-list" id="education-list-form" style="margin-bottom: 30px;">
+                <th:block th:each="edu, status : ${educationList}">
+                    <div class="section_box2" style="padding: 20px;">
+                        <div class="section_box2_detail">
+                            <div class="section_box2_detail_info">
+                                <input type="hidden" name="resumeEducationNo" th:value="${edu.resumeEducationNo}">
+                                <div>[[${edu.resumeEducationName}]] ([[${edu.resumeEducationGbnName}]])</div>
+                                <div>[[${edu.resumeEducationIndt}]] ~ [[${edu.resumeEducationOutdt}]]</div>
+                            </div>
+                        </div>
+                        <div class="section_box2_detail2">
+                            <div>[[${edu.resumeEducationMajor}]]</div>
+                        </div>
+                    </div>
+                    <hr class="middle-divider">
+                </th:block>
+            </div>
+
+            <div class="section_box">
+                <h2>경력</h2>
+                <div><i class="bi bi-pencil"></i></div>
+            </div>
+            <hr class="divider">
+
+            <!-- 경력 리스트 -->
+            <div class="list"  name="career-list" id="career-list-form">
+                <th:block th:each="car, status : ${careerList}">
+                    <div class="section_box2" style="padding: 20px;">
+                        <div class="section_box2_detail">
+                            <div class="section_box2_detail_info">
+                                <input type="hidden" name="resumeEducationNo" th:value="${car.resumeCareerNo}">
+                                <div>[[${car.resumeCareerCompanyName}]]</div>
+                                <div>[[${car.resumeCareerJoinDt}]] ~ [[${car.resumeCareerOutDt}]]</div>
+                            </div>
+                        </div>
+                        <div class="section_box2_detail2">
+                            <div>[[${car.resumeCareerJobName}]] <span style="margin-left: 10px;">| [[${car.resumeCareerDepartmentName}]]([[${car.resumeCareerPosition}]])</span></div>
+                            <input type="hidden" name="resumeCareerJob" th:value="${car.resumeCareerJob}">
+                            <div style="white-space: pre-wrap;">[[${car.resumeCareerDuties}]]</div>
+                        </div>
+                    </div>
+                    <hr class="middle-divider">
+                </th:block>
+            </div>
+        </div>
+
+
+        <div class="section">
+            <div class="section_box">
+                <h2>자격증</h2>
+                <div><i class="bi bi-pencil"></i> </div>
+            </div>
+            <hr class="divider">
+
+            <!-- 리스트 출력 -->
+            <div class="list" id="certificate-list-form">
+                <th:block th:each="certi : ${certificateList}">
+                    <input type="hidden" th:value="${certi.certificateNo}">
+                    <div class="section_box2" style="padding: 20px;">
+                        <div class="section_box2_detail">
+                            <div class="section_box2_detail_info">
+                                <div class="certificate-detail">
+                                    <div>[[${certi.certificateName}]]<span>([[${certi.certificateGbnName}]]합격) | [[${certi.certificateDt}]]</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section_box2_detail2">
+                            <div>[[${certi.certificatePlace}]]</div>
+                        </div>
+                    </div>
+                    <hr class="middle-divider">
+                </th:block>
+            </div>
+        </div>
+
+        <!-- 포트폴리오 -->
+        <div class="section">
+            <div class="section_box">
+                <h2>포트폴리오</h2>
+                <div><i class="bi bi-pencil"></i> </div>
+            </div>
+            <hr class="divider">
+
+            <!-- 포트폴리오 리스트 출력 -->
+            <div class="list"  id="portfolio-list-form">
+                <th:block th:each="port : ${portfolioList}">
+                    <input type="hidden" th:value="${port.resumePortfolioNo}">
+                    <div class="file-section_box2">
+                        <div class="section_box2_detail" style="display: flex; flex-direction: column;">
+                            <th:block th:if="${port.fileOldName != null}">
+                                <div class="file-name">
+                                    <i class="bi bi-file-earmark"></i>
+                                    [[${port.fileOldName}]][[${port.fileExt}]]</div>
+                            </th:block>
+                            <div class="file-url" style="font-size: 18px; font-weight: bold; margin-left: 10px;">
+                                <i class="bi bi-link"></i>
+                                [[${port.resumePortfolioUrl}]]</div>
+                        </div>
+                        <div class="section_box2_detail2">
+                            <div>작업기간: [[${port.resumePortfolioStartDate}]] ~ [[${port.resumePortfolioEndDate}]]</div>
+                            <div>작업인원: [[${port.resumePortfolioCnt}]]명</div>
+                            <div style="white-space: pre-wrap;">작품소개: [[${port.resumePortfolioContent}]]</div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+        <!-- 자기소개서 -->
+        <div class="section">
+            <div class="section_box">
+                <h2>자기소개서</h2>
+                <div><i class="bi bi-pencil"></i> </div>
+            </div>
+            <hr class="divider">
+
+            <div class="list"  name="resumeMyinfo-list" id="resumeMyinfo-form">
+                <div class="section_box2" style="padding: 20px;">
+                    <div class="section_box2_detail">
+                        <div class="section_box2_detail_info">
+                            <div id="resumeMyTitle">[[${resume.resumeMyTitle}]]</div>
+                        </div>
+                    </div>
+                    <div class="section_box2_detail2">
+                        <div id="resumeMyContent" style="white-space: pre-wrap;">[[${resume.resumeMyContent}]]</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="complet-section">
+            <input type="button" class="completBtn" value=" 수정완료">
+        </div>
+
+    </div>
+
+
+</div>
+
+<script src="/static/js/api.js"></script>
+<script src="/static/js/hyepin/resume-detail.js"></script>
+</body>
+</html>

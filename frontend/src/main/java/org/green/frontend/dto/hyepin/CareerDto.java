@@ -14,4 +14,5 @@ public class CareerDto {
     private String resumeCareerPosition; //직책
     private String resumeCareerDuties; //담당업무
     private String resumeCareerJob; //직무코드
+    private String resumeCareerJobName; //직무 이름
 }

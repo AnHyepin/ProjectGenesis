@@ -23,4 +23,17 @@
         FROM tbl_resume_stack
         WHERE resume_no = #{resumeNo}
     </delete>
+
+    <select id="getStackListByResumeNo" resultType="org.green.backend.dto.common.GubnDto">
+        SELECT group_code, gubn_code, gubn_name
+        FROM tbl_gubn
+        WHERE group_code IN (
+            SELECT gubn_code
+            FROM tbl_gubn
+            WHERE group_code = 'stack_code')
+        AND gubn_code IN (
+            SELECT stack_code
+            FROM tbl_resume_stack
+            WHERE resume_no = ${resumeNo})
+    </select>
 </mapper>
