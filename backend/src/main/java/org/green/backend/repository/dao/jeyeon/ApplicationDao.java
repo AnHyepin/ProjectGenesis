@@ -6,6 +6,8 @@ import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.entity.Company;
 
+import java.util.List;
+
 
 /**
  * 12-27 (작성자: 안제연)
@@ -18,5 +20,5 @@ public interface ApplicationDao {
     public ApplicationResponseDto selectApplication(@Param("applicationNo") int applicationNo);
     public Company selectApplicatinCompany(@Param("username") String username);
 
-
+    public List<ApplicationResponseDto> selectApplicationList();
 }

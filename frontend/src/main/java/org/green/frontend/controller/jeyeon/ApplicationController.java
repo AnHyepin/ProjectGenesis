@@ -102,5 +102,13 @@ public class ApplicationController {
         return "/jeyeon/application-detail";
     }
 
+    @GetMapping("/applicationList")
+    public String applicationList(Model model) {
+        var applicationListResponse = apiService.fetchData("/api/application/list");
 
+        System.out.println(applicationListResponse.getBody());
+
+        model.addAttribute("applicationList", applicationListResponse.getBody());
+        return "/jeyeon/application-list";
+    }
 }

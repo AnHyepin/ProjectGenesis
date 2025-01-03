@@ -1,0 +1,54 @@
+.applicationList .list-container{
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+
+.applicationList .applyBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C0FFD2;
+    padding: 8px 16px;
+    border-radius: 10px;
+    width: 30%;
+    height: 40px;
+    margin: 20px 0px 20px 0px;
+}
+
+.applicationList button{
+    padding: 5px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.applicationList button:hover{
+    transform: scale(1.1);
+}
+
+.applicationList .cancelApplication, .noCancelApplication{
+    margin: 20px;
+}
+
+.applicationList .cancelApplication{
+    color: #F20F38;
+    background-color: white;
+    border: 2px solid #F20F38;
+}
+
+.applicationList .cancelApplication:hover{
+    transform: scale(1.1);
+}
+
+.applicationList .noCancelApplication{
+    color: #929292;
+    background-color: white;
+    border: 2px solid #929292;
+}
+
+.applicationList a{
+    text-decoration: none;
+    color: inherit;
+}

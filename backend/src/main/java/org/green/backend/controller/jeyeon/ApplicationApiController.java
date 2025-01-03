@@ -50,4 +50,9 @@ public class ApplicationApiController {
     public List<GubnDto> getGubnList(@PathVariable String stackCode) {
         return gubnService.getSkillName(stackCode);
     }
+
+    @GetMapping("/list")
+    public List<ApplicationResponseDto> getApplicationList() {
+        return applicationService.getApplicationList();
+    }
 }

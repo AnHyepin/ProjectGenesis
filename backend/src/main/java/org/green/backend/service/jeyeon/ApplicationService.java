@@ -72,11 +72,14 @@ public class ApplicationService {
         List<ApplicationStack> skillList = applicationStackService.getApplicationStack(applicationNo);
         application.setSkillList(skillList);
 
-        System.out.println(application + "-------------back");
+        //System.out.println(application + "-------------back");
         return application;
     }
 
     public Company getApplicationCompany(String username) {
         return applicationDao.selectApplicatinCompany(username);
     }
+
+    public List<ApplicationResponseDto> getApplicationList() { return applicationDao.selectApplicationList();}
+
 }

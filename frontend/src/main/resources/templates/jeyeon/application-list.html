@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout-test/layout}">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/jeyeon/applicationList.css" />
+    <title>applicationList</title>
+</head>
+<body layout:fragment="content">
+    <div class="applicationList">
+        <div class="list-container">
+            <div style="display: flex; gap: 10px; align-items: baseline; margin-bottom: 5px;">
+                <h2>이력서 관리</h2>
+                <div>총 <span style="color: #3af26e;">[[${count}]]</span>건</div>
+            </div>
+            <hr style="border: 1px solid #4e4e4e;">
+            <div style="padding: 0px 20px 10px 20px;">
+                <th:block th:each="applicate : ${applicationList}">
+                    <input type="hidden" value="${application.applicationNo}">
+
+                    <div style="display: flex; justify-content: space-between; padding: 10px; align-items: center;">
+                        <div>
+                            <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applicate.applicationNo})}">
+                                <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;" >
+                                    [[${applicate.applicationTitle}]]</div></a>
+                            <div style="color: #4e4e4e">입사 지원
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
