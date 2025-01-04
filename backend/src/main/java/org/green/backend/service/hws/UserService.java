@@ -152,11 +152,44 @@ public class UserService {
         return "성공";
     }
 
-    public String deleteUser(String username) {
-        return null;
+    /**
+     * 사용자 정보 업데이트
+     * 유저 정보 업뎃
+     */
+    @Transactional
+    public String updateUser(UserDto userDto, MultipartFile profilePicture, Long fileNo) throws IOException {
+        User user = userRepository.findByUsername(userDto.getUsername());
+
+        try {
+            if (user != null) {
+                user.setName(userDto.getName());
+                user.setBirth(userDto.getBirth());
+                user.setEmail(userDto.getEmail());
+                user.setGender(userDto.getGender());
+                user.setPhone(userDto.getPhone());
+                user.setAddress(userDto.toAddress());
+                userRepository.save(user);
+            }
+
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                // 파일 저장 후 경로 저장
+                fileService.saveFile(profilePicture, "profile_user", userDto.getUsername(), userDto.getUsername());
+            }
+
+            if (fileNo != null) {
+                fileService.deleteFileById(fileNo);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return "성공";
     }
 
-    public void updateUser(UserDto userDto, MultipartFile profilePicture, Long fileNo) {
+    public String deleteUser(String username) {
+        User user = userRepository.findByUsername(username);
+        user.setDeleteYn('Y');
+        userRepository.save(user);
+        return "성공";
     }
 
     /**
