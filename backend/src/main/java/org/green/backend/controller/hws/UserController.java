@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.UserDto;
 import org.green.backend.dto.hws.UserWithFileDto;
+import org.green.backend.dto.kwanhyun.BookmarkCompanyDto;
+import org.green.backend.dto.kwanhyun.CompanyScoreDto;
 import org.green.backend.service.hws.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -56,4 +59,15 @@ public class UserController {
     public String deleteUser(@PathVariable String username) {
         return userService.deleteUser(username);
     }
+
+    @GetMapping("/companyscore/{username}")
+    public List<CompanyScoreDto> companyScore(@PathVariable String username) {
+        return userService.companyScoreLists(username);
+    }
+
+    @GetMapping("/bookmarkcompany/{username}")
+    public List<BookmarkCompanyDto> bookmarkCompanyList(@PathVariable String username) {
+        return userService.bookmarkCompanyLists(username);
+    }
+
 }

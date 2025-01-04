@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout-test/layout}">
+<head>
+  <link rel="stylesheet" href="/static/css/kwanhyun/companyScore.css"/>
+  <title>별점 목록</title>
+  <style>
+    .company-score-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .info-summary {
+      margin-top: 10px;
+      font-size: 1em;
+    }
+
+    .info-summary .info-count {
+      color: #3af26e;
+      font-weight: bold;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 15px 0;
+    }
+
+    .company-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .company-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 30%;
+    }
+
+    .scrap-icon {
+      font-size: 1.2em;
+      color: #32CD32;
+      cursor: pointer;
+    }
+
+    .scrap-icon.active {
+      color: #3af26e;
+    }
+
+    .rating-badge {
+      font-size: 1em;
+      color: #f0c419;
+      font-weight: bold;
+    }
+
+    .company-details {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 50%;
+    }
+
+    .company-details span {
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .details-button {
+      background-color: white;
+      color: black;
+      border: 1px solid #3af26e;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 20%;
+      text-align: center;
+    }
+
+    .details-button:hover {
+      background-color: #32cd32;
+      color: white;
+    }
+  </style>
+</head>
+<body layout:fragment="content">
+
+<div class="company-score-container">
+  <div class="header">
+    <h2>북마크 목록</h2>
+    <div class="info-summary">북마크 <span class="info-count" th:text="${companyScoreList.size}">3</span>건</div>
+  </div>
+
+  <hr class="divider">
+
+  <th:block th:each="companyScore : ${companyScoreList}">
+    <div class="company-item">
+      <div class="company-info">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="scrap-icon" th:classappend="${companyScore.likeCode == 'G' ? 'bi-bookmark-fill' : 'bi-bookmark'}"></i>
+          <span th:text="${companyScore.name}">회사 이름</span>
+        </div>
+        <span class="rating-badge" th:text="'⭐ ' + ${companyScore.jrStar}">⭐ 5.0</span>
+      </div>
+      <div class="company-details">
+        <span th:text="${companyScore.address}">주소</span>
+        <div style="display: flex; gap: 10px;">
+          <span th:text="'사원수: ' + ${companyScore.employees} + '명'"></span>
+          <span th:text="'매출액: ' + ${companyScore.sale} + '원'"></span>
+        </div>
+      </div>
+      <button class="details-button">상세보기</button>
+    </div>
+  </th:block>
+</div>
+
+<script src="/static/js/api.js"></script>
+</body>
+</html>
