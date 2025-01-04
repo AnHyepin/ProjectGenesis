@@ -60,12 +60,12 @@ public class UserController {
         return userService.deleteUser(username);
     }
 
-    @GetMapping("/companyscore/{username}")
+    @GetMapping("/company-score/{username}")
     public List<CompanyScoreDto> companyScore(@PathVariable String username) {
         return userService.companyScoreLists(username);
     }
 
-    @GetMapping("/bookmarkcompany/{username}")
+    @GetMapping("/bookmark-company/{username}")
     public List<BookmarkCompanyDto> bookmarkCompanyList(@PathVariable String username) {
         return userService.bookmarkCompanyLists(username);
     }

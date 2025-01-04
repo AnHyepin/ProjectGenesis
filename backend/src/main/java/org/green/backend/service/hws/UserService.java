@@ -123,7 +123,7 @@ public class UserService {
      * 사용자 정보 업데이트
      * 유저 정보 업뎃
      */
-    @Transactional
+/*    @Transactional
     public String updateUse1r(UserDto userDto, MultipartFile profilePicture, Long fileNo) throws IOException {
         User user = userRepository.findByUsername(userDto.getUsername());
 
@@ -150,7 +150,7 @@ public class UserService {
             throw ex;
         }
         return "성공";
-    }
+    }*/
 
     /**
      * 사용자 정보 업데이트
