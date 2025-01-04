@@ -633,3 +633,9 @@
 #cancelBtn:hover, #applyStatus:hover {
     transform: scale(1.1);
 }
+
+a{
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}

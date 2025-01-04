@@ -34,7 +34,7 @@ function addModal2(resumeList) {
         modalBox.innerHTML = `
            <div style="display: flex; justify-content: space-between; padding: 0px 20px;">
                 <div style="display: flex; flex-direction: column; justify-content: center; padding: 20px 0px;">
-                    <a th:href="@{/resume/detail(resumeNo=${resume.resumeNo})}">
+                    <a href="/resume/detail?resumeNo=${resume.resumeNo}">
                     <div style="font-size: 18px; font-weight: bold; cursor: pointer;">${resume.resumeTitle}</div>
                     </a>
                 </div>
