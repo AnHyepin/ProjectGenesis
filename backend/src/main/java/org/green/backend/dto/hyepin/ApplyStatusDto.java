@@ -9,6 +9,7 @@ public class ApplyStatusDto {
     private Long applicationNo;       // 공고 번호
     private String applyStatusGbnCode; // 지원 상태 코드
     private String applicationTitle;  // 공고 제목
+    private String registId; //입력자
     private String companyName;       // 회사명
     private String resumeTitle;       // 이력서 제목
 

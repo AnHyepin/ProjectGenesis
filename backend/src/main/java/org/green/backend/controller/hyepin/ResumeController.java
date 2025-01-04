@@ -7,6 +7,7 @@ import org.green.backend.entity.File;
 import org.green.backend.entity.User;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
+import org.green.backend.repository.dao.hyepin.ApplyStatusDao;
 import org.green.backend.service.common.FileService;
 import org.green.backend.service.hyepin.ResumeService;
 import org.green.backend.service.hyepin.UserServiceAhp;
@@ -32,6 +33,7 @@ public class ResumeController {
     private final ResumeService resumeService;
     private final UserServiceAhp userService;
     private final FileService fileService;
+    private final ApplyStatusDao applyStatusDao;
 
     @GetMapping
     public ResumeUserDto resumeRegist(@RequestParam String username) {
@@ -170,13 +172,13 @@ public class ResumeController {
     }
 
     @GetMapping("/list")
-    public List<ResumeDto> getResumeList(@RequestParam String username) throws IOException {
+    public List<ResumeDto> getResumeList(@RequestParam("username") String username) throws IOException {
         List<ResumeDto> reseumeList = resumeService.getResumeList(username);
         return reseumeList;
     }
 
     @GetMapping("/count")
-    public int getResumeCount(@RequestParam String username) throws IOException {
+    public int getResumeCount(@RequestParam("username") String username) throws IOException {
         int resumeCount = resumeService.getResumeCount(username);
         return resumeCount;
     }
@@ -194,6 +196,16 @@ public class ResumeController {
             System.out.println(a.toString());
         }
         return applyStatusList;
+    }
+
+    @PostMapping("/apply")
+    public String apply(@ModelAttribute ApplyStatusDto applyStatusDto) throws IOException {
+        int result = applyStatusDao.insertApply(applyStatusDto);
+        if(result == 1) {
+            return "지원 성공";
+        }else{
+            return "지원 실패";
+        }
     }
 
 }

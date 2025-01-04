@@ -394,7 +394,7 @@ input[type="date"] {
 .file-section_box2{
     margin: 20px 10px 10px 10px;
     padding: 20px;
-    background-color: #C0FFD2;
+    background-color: rgba(242, 187, 22, 0.2);
     border-radius: 10px;
 }
 
@@ -456,23 +456,37 @@ input[type="file"], .file-section_plus_box_detail2{
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
+    padding: 0px 20px 40px 20px;
 }
 
 .completBtn{
-    background-color:#3AF26E;
-    border: 2px solid #3AF26E;
-    color: #3AF26E;
-    padding: 5px 20px;
-    width: 300px;
+    background-color:#F2BB16;
+    border: 2px solid #F2BB16;
+    color: #F2BB16;
     height: 50px;
-    font-size: 20px;
+    padding: 5px 20px;
     border-radius: 20px;
     cursor: pointer;
     color: black;
+    width: 300px;
+    font-size: 20px;
 }
 
-.completBtn:hover{
-    background-color: #3AF26E;
+.bookmark{
+    background-color: white;
+    border: 2px solid #F2BB16;
+    font-weight: bold;
+    color: #F2BB16;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 90px;
+    font-size: 30px;
+    padding: 0px;
+}
+
+.bookmark:hover, .completBtn:hover{
     transform: scale(1.1);
 }
 
