@@ -119,7 +119,7 @@ public class UserService {
      * 유저 정보 업뎃
      */
     @Transactional
-    public String updateUser(UserDto userDto, MultipartFile profilePicture, Long fileNo) throws IOException {
+    public String updateUse1r(UserDto userDto, MultipartFile profilePicture, Long fileNo) throws IOException {
         User user = userRepository.findByUsername(userDto.getUsername());
 
         try {
@@ -148,10 +148,10 @@ public class UserService {
     }
 
     public String deleteUser(String username) {
-        User user = userRepository.findByUsername(username);
-        user.setDeleteYn('Y');
-        userRepository.save(user);
-        return "성공";
+        return null;
+    }
+
+    public void updateUser(UserDto userDto, MultipartFile profilePicture, Long fileNo) {
     }
 }
 
