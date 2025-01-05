@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class BookmarkCompanyDto {
 
     private String likeCode;
+    private String likeId;
     private String name;
     private String address;
     private int count;
