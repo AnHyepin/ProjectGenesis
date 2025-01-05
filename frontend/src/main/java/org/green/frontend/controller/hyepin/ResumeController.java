@@ -61,10 +61,10 @@ public class ResumeController {
 
     //이력서 목록 페이지
     @GetMapping("/list")
-    public String resumeList(Model model) {
-
+    public String resumeList(Model model, HttpSession session) {
+        UserDto sessionUser = (UserDto) session.getAttribute( "user");
         //유저 이력서 가져오기
-        Map<String, String> params = Map.of("username", "안혜빈");
+        Map<String, String> params = Map.of("username", sessionUser.getUsername());
         //지원한 숫자까지 포함해서 가져오기
         var resumeListResponse = apiService.fetchData("/api/resume/list",  params, true);
         var applyCountResponse = apiService.fetchData("/api/resume/count",  params, true);
