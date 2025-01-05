@@ -49,7 +49,7 @@ public class UserAndCompanyController {
             log.warn("세션에 유저 정보가 없습니다.");
             return "redirect:/login";
         }*/
-        var apiResponse = apiRequestService.fetchData("/api/user/" + "yiok79");
+        var apiResponse = apiRequestService.fetchData("/api/user/" + user.getUsername());
         log.info("apiResponse: {}", apiResponse.getBody());
 
         Map<String, Object> responseData = (Map<String, Object>) apiResponse.getBody();
@@ -126,7 +126,7 @@ public class UserAndCompanyController {
     }
 
 
-    @GetMapping("/bookscrap-application")
+    @GetMapping("/scrap-application")
     public String scrapApplication(HttpSession session, Model model) {
         UserDto user = SessionUtil.getUser(session);
 

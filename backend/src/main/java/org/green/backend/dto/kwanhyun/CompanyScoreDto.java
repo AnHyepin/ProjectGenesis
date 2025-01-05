@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class CompanyScoreDto {
 
     private String username;
+    private String companyName;
     private String name;
     private float jrStar;
     private String address;
