@@ -91,4 +91,39 @@
         FROM tbl_companys
         WHERE username=#{username};
     </select>
+
+    <select id="selectApplicationList" resultType="org.green.backend.dto.jeyeon.ApplicationResponseDto">
+        SELECT
+            application_no,
+            username,
+            application_title,
+            start_date,
+            deadline_date,
+            application_code,
+            salary,
+            career_code,
+            position_code,
+            education_gbn_code,
+            employment_code,
+            working_area,
+            role_code,
+            content,
+            procedure_code
+        FROM tbl_applications
+        <where>
+            <if test="username != null and username != ''">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectApplicatinoCnt">
+        SELECT COUNT(*)
+        FROM tbl_applications
+        <where>
+            <if test="username != null and username != ''">
+                username = #{username}
+            </if>
+        </where>
+    </select>
 </mapper>

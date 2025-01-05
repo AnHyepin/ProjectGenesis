@@ -103,5 +103,25 @@ public class ApplicationController {
         return "/jeyeon/application-detail";
     }
 
+    @GetMapping("/applicationList")
+    public String applicationList(HttpSession session, Model model) {
 
+        //System.out.println(applicationListResponse.getBody());
+        UserDto user = (UserDto) session.getAttribute("user");
+        if(user != null){
+            // 모델에 username을 추가
+            model.addAttribute("username", user.getUsername());
+            String username = user.getUsername();
+            var applicationCount = apiService.fetchData("/api/application/count?username="+username);
+            model.addAttribute("applicationCount", applicationCount);
+            return "/jeyeon/application-list?username="+username;
+
+        }
+        var applicationListResponse = apiService.fetchData("/api/application/list");
+        var applicationCount = apiService.fetchData("/api/application/count");
+
+        model.addAttribute("applicationCount", applicationCount);
+        model.addAttribute("applicationList", applicationListResponse.getBody());
+        return "/jeyeon/application-list";
+    }
 }

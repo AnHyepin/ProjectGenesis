@@ -50,4 +50,14 @@ public class ApplicationApiController {
     public List<GubnDto> getGubnList(@PathVariable String stackCode) {
         return gubnService.getSkillName(stackCode);
     }
+
+    @GetMapping("/list")
+    public List<ApplicationResponseDto> getApplicationList(@RequestParam(value = "username", required = false) String username) {
+        return applicationService.getApplicationList(username);
+    }
+
+    @GetMapping("/count")
+    public int getApplicationCount(@RequestParam(value = "username", required = false) String username) {
+        return applicationService.getApplicationCount(username);
+    }
 }

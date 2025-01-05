@@ -4,21 +4,20 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
-    <select id="myScoreList" resultType="org.green.backend.dto.kwanhyun.CompanyScoreDto">
-        SELECT
-        r.username,
+    <select id="myBookmarkList" resultType="org.green.backend.dto.kwanhyun.BookmarkCompanyDto">
+        SELECT l.like_id,
         c.name,
-        (SELECT ROUND(AVG(COALESCE(r.jr_star, 0)), 1)
-        FROM tbl_ratings r
-        WHERE r.company_name = c.username) AS 'jrStar',
         c.address,
-        c.employees,
-        c.sale,
-        l.like_code,
-        (SELECT COUNT(r.company_name) FROM tbl_ratings r WHERE r.username=#{username}) AS 'count'
-        FROM tbl_companys c
-        INNER JOIN tbl_ratings r ON r.company_name = c.username AND r.username = #{username}
-        LEFT JOIN tbl_likes l ON c.username = l.like_id AND l.username = #{username}
-        GROUP BY c.username;
+        (SELECT COUNT(*) FROM tbl_applications
+        WHERE username = c.username
+        AND delete_yn = 'N'
+        AND application_code = 'O'
+        AND start_date <= NOW()
+        AND (deadline_date IS NULL OR deadline_date > NOW())
+        ) AS 'count'
+        FROM tbl_likes l
+        JOIN tbl_companys c ON l.like_id = c.username
+        WHERE l.username = #{username}
+        AND l.like_code = 'G';
     </select>
 </mapper>
