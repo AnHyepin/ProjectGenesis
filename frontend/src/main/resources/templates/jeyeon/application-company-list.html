@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout-test/layout}">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/jeyeon/applicationList.css" />
+    <title>ApplicationCompanyList</title>
+</head>
+<body>
+    <div class="applicationList">
+        <div class="list-container">
+            <div>
+                <h2 style="margin-top: 10px; font-weight: bold">채용 공고 목록</h2>
+                <div style="margin: 15px 0; font-size: 18px " >총 <span style="color: #3af26e; font-weight: bold">[[${applicationCount}]]</span>건</div>
+            </div>
+            <hr style="border: 1px solid #4e4e4e;">
+
+            <!--기업 로그인이 되지 않았을 경우-->
+            <div style="padding: 0px 20px 10px 20px;" >
+                <th:block th:each="applicate : ${applicationList}">
+
+                    <div class="job-posting">
+                        <div class="company-info">
+                            <div class="company-name">[[${applicate.name}]]</div>
+                        </div>
+                        <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applicate.applicationNo})}" class="job-title">
+                            [[${applicate.applicationTitle}]]
+                        </a>
+                        <div class="job-details">
+                            <span class="job-address">[[${applicate.workingArea}]] · </span>
+                            <span class="job-experience" th:text="${applicate.careerCode == 'G' ? '경력' :
+                                    (applicate.careerCode == 'S' ? '신입' : '신입/경력')}">경력</span>
+                        </div>
+                        <div class="deadline" th:text="${applicate.deadlineDate != null ? applicate.deadlineDate : '상시모집'}"></div>
+                    </div>
+
+                    <hr>
+                </th:block>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

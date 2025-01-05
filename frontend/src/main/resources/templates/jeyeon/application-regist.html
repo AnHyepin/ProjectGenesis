@@ -148,18 +148,6 @@
 <script src="/static/js/jeyeon/regist-application.js"></script>
 <script>
 
-    //username 반환
-    window.onload = function() {
-        // sessionStorage에서 값 가져오기
-        const username = sessionStorage.getItem('username');
-
-        // 해당 input의 값 업데이트
-        if (username) {
-            document.getElementById('username').value = username;
-        }
-    };
-
-
     // 기술 스택 태그 클릭 시 active 클래스 토글
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.skill-btn').forEach(tag => {
@@ -227,6 +215,7 @@
             })
             .then(response => {
                 alert('공고 등록이 완료되었습니다.');
+                location.href="/application/applicationList";
             })
             .catch(error => {
                 console.log("실패: " + error);

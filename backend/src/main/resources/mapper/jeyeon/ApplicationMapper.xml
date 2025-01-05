@@ -91,4 +91,48 @@
         FROM tbl_companys
         WHERE username=#{username};
     </select>
+
+    <select id="selectApplicationList" resultType="org.green.backend.dto.jeyeon.ApplicationResponseDto">
+        SELECT
+            a.application_no,
+            a.username,
+            c.name,
+            a.application_title,
+            a.start_date,
+            a.deadline_date,
+            a.application_code,
+            a.salary,
+            a.career_code,
+            a.position_code,
+            a.education_gbn_code,
+            a.employment_code,
+            a.working_area,
+            a.role_code,
+            a.content,
+            a.procedure_code,
+            CASE
+            WHEN a.deadline_date IS NOT NULL THEN DATEDIFF(a.deadline_date, CURDATE())
+            END AS day
+        FROM tbl_applications a
+        JOIN tbl_companys c
+        <where>
+            <if test="username != null">
+                c.username = #{username}
+            </if>
+            <if test="username == null">
+                a.username = c.username
+            </if>
+        </where>
+    </select>
+
+    <select id="selectApplicatinoCnt">
+        SELECT COUNT(*)
+        FROM tbl_applications
+        <where>
+            <if test="username != null and username != ''">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
 </mapper>
