@@ -32,4 +32,5 @@ public class ApplicationResponseDto {
     private Integer procedureCode;         // 1차(1), 2차(2), 3차(3)
     private List<ApplicationStack> skillList;        // 스킬리스트
     private List<File> fileList;           // 파일리스트
+    private int bookmarkCheck;          // 북마크
 }

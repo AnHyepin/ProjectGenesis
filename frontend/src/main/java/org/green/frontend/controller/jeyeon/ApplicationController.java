@@ -8,6 +8,7 @@ import org.green.frontend.dto.hws.UserDto;
 import org.green.frontend.dto.jeyeon.ApplicationResponseDto;
 import org.green.frontend.dto.jeyeon.ApplicationStackDto;
 import org.green.frontend.dto.jeyeon.GubnDto;
+import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.green.frontend.service.jeyeon.ApplicaitonService;
 import org.springframework.stereotype.Controller;
@@ -114,18 +115,22 @@ public class ApplicationController {
 
         //System.out.println(applicationListResponse.getBody());
         UserDto user = (UserDto) session.getAttribute("user");
+        ApiResponse applicationListResponse;
         if(user != null){
+            Map<String, String> params = Map.of("username", user.getUsername());
+            applicationListResponse = apiService.fetchData("/api/application/list",params, true);
             // 모델에 username을 추가
             model.addAttribute("user", user);
         }
-
-        var applicationListResponse = apiService.fetchData("/api/application/list");
+        else{
+            applicationListResponse = apiService.fetchData("/api/application/list");
+        }
         var applicationCount = apiService.fetchData("/api/application/count");
 
         System.out.println(applicationListResponse.getBody());
-
-        model.addAttribute("applicationCount", applicationCount.getBody());
         model.addAttribute("applicationList", applicationListResponse.getBody());
+        model.addAttribute("applicationCount", applicationCount.getBody());
+
         return "/jeyeon/application-list";
     }
 
@@ -134,8 +139,10 @@ public class ApplicationController {
 
         System.out.println(username + "--------------------");
 
-        var applicationListResponse = apiService.fetchData("/api/application/list?username="+username);
-        var applicationCount = apiService.fetchData("/api/application/count?username="+username);
+        Map<String, String> params = Map.of("username", username);
+
+        var applicationListResponse = apiService.fetchData("/api/application/list",params, true);
+        var applicationCount = apiService.fetchData("/api/application/count",params, true);
 
         model.addAttribute("applicationCount", applicationCount.getBody());
         model.addAttribute("applicationList", applicationListResponse.getBody());

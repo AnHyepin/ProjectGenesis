@@ -112,17 +112,17 @@
             a.procedure_code,
             CASE
             WHEN a.deadline_date IS NOT NULL THEN DATEDIFF(a.deadline_date, CURDATE())
-            END AS day
+            END AS DAY,
+            if(l.like_code = 'S', 1, 0) AS bookmarkCheck
         FROM tbl_applications a
-        JOIN tbl_companys c
+        JOIN tbl_companys c ON a.username = c.username
+        left JOIN tbl_likes l ON a.application_no = l.like_id AND l.username = #{username} AND l.like_code = 'S'
         <where>
             <if test="username != null">
                 c.username = #{username}
             </if>
-            <if test="username == null">
-                a.username = c.username
-            </if>
         </where>
+
     </select>
 
     <select id="selectApplicatinoCnt">
@@ -134,5 +134,6 @@
             </if>
         </where>
     </select>
+
 
 </mapper>
