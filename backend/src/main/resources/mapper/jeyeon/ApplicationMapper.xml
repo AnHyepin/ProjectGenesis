@@ -117,11 +117,6 @@
         FROM tbl_applications a
         JOIN tbl_companys c ON a.username = c.username
         left JOIN tbl_likes l ON a.application_no = l.like_id AND l.username = #{username} AND l.like_code = 'S'
-        <where>
-            <if test="username != null">
-                c.username = #{username}
-            </if>
-        </where>
 
     </select>
 
