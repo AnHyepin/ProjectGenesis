@@ -31,6 +31,7 @@
         <div class="genesis-main-cards">
             <div th:each="like : ${mainData.likeApplications}" class="genesis-main-card">
                 <img th:src="${#lists.isEmpty(like.files) ? '/static/img/img_default_gonggo.png' : like.files[0].fileUrl}"
+                     onerror="this.src='/static/img/img_default_gonggo.png';"
                      alt="topCompany Application">
 
                 <div class="genesis-card-heart">
@@ -69,6 +70,7 @@
         <div class="genesis-main-cards">
             <div th:each="bookmark : ${mainData.bookmarkApplications}" class="genesis-main-card">
                 <img th:src="${#lists.isEmpty(bookmark.files) ? '/static/img/img_default_gonggo.png' : bookmark.files[0].fileUrl}"
+                     onerror="this.src='/static/img/img_default_gonggo.png';"
                      alt="topCompany Application">
                 <div class="genesis-card-heart">
                     <i class="scrap-icon" data-action-type="S"
@@ -106,6 +108,7 @@
         <div class="genesis-main-cards">
             <div th:each="popularApp : ${mainData.popularApplications}" class="genesis-main-card two">
                 <img th:src="${#lists.isEmpty(popularApp.files) ? '/static/img/img_default_gonggo.png' : popularApp.files[0].fileUrl}"
+                     onerror="this.src='/static/img/img_default_gonggo.png';"
                      alt="Popular Application">
 
                 <div class="genesis-card-heart">
@@ -166,6 +169,7 @@
                  class="genesis-main-card">
 
                 <img th:src="${#lists.isEmpty(topCompany.files) ? '/static/img/img_default_gonggo.png' : topCompany.files[0].fileUrl}"
+                     onerror="this.src='/static/img/img_default_gonggo.png';"
                      alt="topCompany Application">
 
                 <div class="genesis-card-heart"
