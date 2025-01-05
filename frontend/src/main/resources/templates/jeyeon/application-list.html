@@ -10,6 +10,8 @@
 <body layout:fragment="content">
     <div class="applicationList">
         <div class="list-container">
+            <input type="hidden" name="sessionUsername" id="sessionUsername" th:value="${session.user.getUsername}">
+
             <div>
                 <h2 style="margin-top: 10px; font-weight: bold">채용 공고 목록</h2>
                  <div th:if="${user == null}" style="margin: 15px 0; font-size: 18px">총 <span style="color: #3af26e; font-weight: bold">[[${applicationCount}]]</span>건</div>
@@ -20,7 +22,7 @@
             <!--기업 로그인이 되지 않았을 경우-->
             <div style="padding: 0px 20px 10px 20px;" >
                 <th:block th:each="applicate : ${applicationList}">
-
+                    <input type="hidden" name="applicationNo" id="applicationNo" th:value="${applicate.applicationNo}">
                     <div class="job-posting">
                         <div class="company-info">
                             <div class="company-name">[[${applicate.name}]]</div>
@@ -55,6 +57,6 @@
         </div>
     </div>
     <script src="/static/js/hyepin/detail-application-modal.js"></script>
-    <script src="/static/js/hyepin/resume-detail-company.js"></script>
+    <script src="/static/js/jeyeon/list-application.js"></script>
 </body>
 </html>

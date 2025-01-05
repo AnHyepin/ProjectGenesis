@@ -55,13 +55,11 @@ public class ApplicationApiController {
 
     @GetMapping("/list")
     public List<ApplicationResponseDto> getApplicationList(@RequestParam(value = "username", required = false) String username) {
-        System.out.println(username + "여기는 백단! list쪽!");
         return applicationService.getApplicationList(username);
     }
 
     @GetMapping("/count")
     public int getApplicationCount(@RequestParam(value = "username", required = false) String username) throws IOException{
-        System.out.println(username + "여기는 백단! Count쪽!");
         return applicationService.getApplicationCount(username);
     }
 

@@ -107,4 +107,5 @@
     display: flex;                       /* Flexbox 활성화 */
     gap: 10px;                           /* 항목 간 간격 설정 */
     width: 100%;
+    align-items: start !important;
 }
