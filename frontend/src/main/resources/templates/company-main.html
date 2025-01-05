@@ -40,10 +40,14 @@
     <div class="job-list-section">
         <h2 class="section-title">
             진행 중인 공고 <span th:text="'(총 ' + ${mainData.applicationList.size()} + '건)'">(총 0건)</span>
-        </h2>        <div class="job-card-container">
+        </h2>
+        <div class="job-card-container">
             <div class="job-card" th:each="applications : ${mainData.applicationList}">
-                <img th:src="${applications.fileUrl == null ? '/static/img/img_default_gonggo.png' : applications.fileUrl}"
-                     alt="topCompany Application">
+                <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applications.applicationNo})}">
+                    <img th:src="${applications.fileUrl == null ? '/static/img/img_default_gonggo.png' : applications.fileUrl}"
+                         onerror="this.src='/static/img/img_default_gonggo.png';"
+                         alt="topCompany Application">
+                </a>
                 <div class="genesis-card-label"
                      th:text="${applications.daysLeft != null && applications.daysLeft != 'D-0'
                            ? applications.daysLeft
@@ -60,15 +64,20 @@
     <div class="recent-applications">
         <div class="section-header">
             <h2 class="section-title">최신 입사 지원 내역</h2>
-            <a href="#" class="more-link">
-                더보기
-                <span class="more-link-icon">+</span>
-            </a>        </div>
+            <div th:if="${session.user.username != null}">
+                <a th:href="@{/resume/applyStatus(userName=${session.user.username})}" class="more-link">
+                    더보기
+                    <span class="more-link-icon">+</span>
+                </a>
+            </div>
+        </div>
         <div class="application-list">
 
             <div class="application-item" th:each="applicants : ${mainData.applicants}">
                 <div class="application-content">
+                    <a style="display: none" th:href="@{/resume/detail(resumeNo=${applicants.resumeNo})}"></a>
                     <h3 th:text="${applicants.resumeTitle}">백엔드 엔지니어</h3>
+
                     <p th:text="${applicants.name + (applicants.resumeMyTitle != null ? ' | ' + applicants.resumeMyTitle : '')}">
                         유희원 | 저는 참하는 개발자가 되고 싶습니다.
                     </p>
@@ -83,11 +92,11 @@
                     <div th:if="${#lists.isEmpty(applicants.topSkills)}">
                         <span class="tag">대표 기술 없음</span>
                     </div>
-                    <div class="application-tags" th:if="${!#lists.isEmpty(applicants.topSkills)}" th:each="skill : ${applicants.topSkills}">
+                    <div class="application-tags" th:if="${!#lists.isEmpty(applicants.topSkills)}"
+                         th:each="skill : ${applicants.topSkills}">
                         <span class="tag" th:text="${skill}">JAVA</span>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -106,6 +115,13 @@
         },
         speed: 600,
     });
+    document.querySelectorAll('.application-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const link = this.querySelector('a').getAttribute('href');
+            window.location.href = link;
+        });
+    });
+
 </script>
 
 </body>

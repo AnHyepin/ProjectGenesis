@@ -141,11 +141,13 @@
         <h2>채용중인 공고</h2>
         <div class="genesis-main-cards">
             <div th:each=" applicationList: ${company.applications}" class="genesis-main-card">
+                <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applicationList.applicationNo})}">
                 <img th:src="${applicationList.files != null && applicationList.files[0]?.fileUrl != null
                             ? applicationList.files[0].fileUrl
                             : '/static/img/img_default_gonggo.png'}"
                      onerror="this.src='/static/img/img_default_gonggo.png';"
                      alt="채용 이미지">
+                </a>
 
                 <div class="genesis-card-label"
                      th:text="${applicationList.daysLeft != null && applicationList.daysLeft != 'D-0'
