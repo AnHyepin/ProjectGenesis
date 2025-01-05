@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookmarkCompanyDto {
+public class ScrapApplicationDto {
 
-    private String likeCode;
     private String name;
-    private String address;
-    private int count;
+    private String title;
+    private String workingArea;
+    private String careerCode;
+    private String likeCode;
 
 }

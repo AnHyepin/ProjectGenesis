@@ -11,6 +11,6 @@ public class CompanyScoreDto {
     private String address;
     private int employees;
     private int sale;
-    private char likeCode;
+    private String likeCode;
 
 }
