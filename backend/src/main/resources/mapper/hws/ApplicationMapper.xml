@@ -85,13 +85,12 @@
         0 ) AS isScrapPerApplication
         FROM tbl_companys c
         LEFT JOIN tbl_ratings r ON c.username = r.company_name
-        LEFT JOIN tbl_applications a ON c.username = a.username
+        LEFT JOIN tbl_applications a ON c.username = a.username  AND a.delete_yn = 'N'
         LEFT JOIN tbl_likes l ON (l.like_code = 'G' AND c.username = l.like_id) OR (l.like_code = 'S' AND
         a.application_no = l.like_id)
         LEFT JOIN tbl_file f ON f.file_ref_no = a.application_no
         LEFT JOIN tbl_file f2 ON f2.file_ref_no = #{companyName} AND f2.file_gubn_code = 'company_detail'
         WHERE c.username = #{companyName}
-        AND a.delete_yn = 'N'
         GROUP BY c.username, a.application_no, f.file_no;
     </select>
 
