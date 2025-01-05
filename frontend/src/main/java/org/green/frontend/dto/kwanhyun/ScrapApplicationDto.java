@@ -14,5 +14,6 @@ public class ScrapApplicationDto {
     private String workingArea;
     private String careerCode;
     private String likeCode;
+    private String applicationNo;
 
 }

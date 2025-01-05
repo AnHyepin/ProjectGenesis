@@ -6,7 +6,7 @@
 <mapper namespace="org.green.backend.repository.dao.kwanhyun.UserDao">
     <select id="scrapList" resultType="org.green.backend.dto.kwanhyun.ScrapApplicationDto">
         <![CDATA[
-SELECT c.name, a.application_title, a.working_area, a.career_code, l.like_code
+SELECT c.name, a.application_title, a.working_area, a.career_code, l.like_code, a.application_no
         FROM tbl_applications a
         join tbl_companys c on a.username = c.username
         join tbl_likes l on a.application_no = l.like_id AND l.username = #{username} AND l.like_code = 'S'
