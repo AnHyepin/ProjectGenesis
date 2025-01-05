@@ -110,6 +110,7 @@ public class CompanyService {
         return companyRepository.findByUsername(username) != null ? "중복됨" : "사용 가능";
     }
 
+
     /**
      * 회사 정보 조회 - 관현(25.01.02. 12:30)
      */
@@ -122,6 +123,7 @@ public class CompanyService {
         }
         return null;
     }
+
 
     /**
      * 회사 정보 수정 - 관현(25.01.02. 14:00)

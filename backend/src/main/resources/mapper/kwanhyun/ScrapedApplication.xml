@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
+    <select id="myScrapApplicationList" resultType="org.green.backend.dto.kwanhyun.ScrapApplicationDto">
+        <![CDATA[
+SELECT c.name, a.application_title as 'title', a.working_area, a.career_code, l.like_code
+        FROM tbl_applications a
+        join tbl_companys c on a.username = c.username
+        join tbl_likes l on a.application_no = l.like_id AND l.username = 'yiok79' AND l.like_code = 'S'
+        WHERE a.delete_yn = 'N'
+        AND a.application_code = 'O'
+        AND a.start_date <= NOW()
+        AND (a.deadline_date IS NULL OR a.deadline_date > NOW());
+        ]]>
+    </select>
+</mapper>

@@ -10,8 +10,8 @@ import java.util.List;
 
 @Mapper
 public interface CompanyDao {
+
     public CompanyDto findCompanyByUsername(String username);
     public void updateCompany(@Param("company") CompanyDto company);
-    public List<CompanyScoreDto> myScoreList(String username);
-    public List<BookmarkCompanyDto> bookmarkList(String username);
+
 }

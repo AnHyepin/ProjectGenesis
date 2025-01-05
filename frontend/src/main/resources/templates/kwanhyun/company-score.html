@@ -106,9 +106,7 @@
     <h2>별점 목록</h2>
     <div class="info-summary">별점 기업 정보 <span class="info-count" th:text="${companyScoreList.size}">3</span>건</div>
   </div>
-
   <hr class="divider">
-
   <th:block th:each="companyScore : ${companyScoreList}">
     <div class="company-item">
       <div class="company-info">

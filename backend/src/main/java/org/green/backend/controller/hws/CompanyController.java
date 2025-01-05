@@ -48,10 +48,12 @@ public class CompanyController {
         return companyService.duplicateCheck(username);
     }
 
+
     @GetMapping("/{username}")
     public CompanyDto getUser(@PathVariable String username) {
         return companyService.getCompanyByUsername(username);
     }
+
 
     @PutMapping
     public String updateCompany(@ModelAttribute CompanyDto companyDto) throws IOException {

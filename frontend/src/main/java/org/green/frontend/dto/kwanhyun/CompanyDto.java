@@ -14,4 +14,5 @@ public class CompanyDto {
     private String username;
     private String name;
     private String role;
+
 }
