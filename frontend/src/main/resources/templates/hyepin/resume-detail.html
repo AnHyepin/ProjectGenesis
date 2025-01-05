@@ -41,7 +41,12 @@
                     </div>
                 </div>
                 <div class="information_right_box">
-                    <div class="right_img"><img th:src="${user.fileUrl}"></div>
+                    <th:block th:if="${user.fileUrl != null}">
+                        <div class="right_img"><img th:src="${user.fileUrl}"></div>
+                    </th:block>
+                    <th:block th:if="${user.fileUrl == null}">
+                        <div class="right_img"><img src="/static/upload/20241230094808802.jpg"></div>
+                    </th:block>
                     <div><i class="bi bi-pencil"></i> </div>
                 </div>
             </div>

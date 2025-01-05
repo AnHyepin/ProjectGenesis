@@ -30,4 +30,13 @@ public class ResumeDto {
     private List<String> gubnCode; //기술 스택 이름 리스트
     private int applyCount; //지원한 공고 카운트
 
+
+
+    //매칭리스트로 날라오는 부분
+    private String stackCodes;
+    private List<String> stackList; //기술 스택 이름 리스트로 서비스에서 변환하기
+    private String educationName; //학력 gubnName
+    private String fileUrl; //유저 프로필 사진
+    private boolean bookmarkCheck;
+
 }

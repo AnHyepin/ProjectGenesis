@@ -42,8 +42,8 @@
             <div style="display: flex; justify-content: space-between; padding: 0px 20px;">
                 <div style="display: flex; flex-direction: column; justify-content: center;">
                     <div style="display: flex; gap: 10px; align-items: baseline">
-                        <a href="">  <span style="font-size: 20px; font-weight: bold;">
-                             [[${as.applicationTitle}]]  </span> </a>
+                        <a th:href="@{/application/detail/{applicationNo}(applicationNo=${as.applicationNo})}">
+                            <span style="font-size: 20px; font-weight: bold;"> [[${as.applicationTitle}]]  </span> </a>
                         <span style="font-size: 16px; color: #4e4e4e;">[[${as.companyName}]]</span>
                     </div>
                     <div style="font-size: 16px; margin-top: 5px;">
