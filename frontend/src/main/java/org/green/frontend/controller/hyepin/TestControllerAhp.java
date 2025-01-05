@@ -98,9 +98,12 @@ public class TestControllerAhp {
     //기업 매칭 페이지
     @GetMapping("/resume/matching")
     public String resumeMatching(Model model, HttpSession session){
-        UserDto user = (UserDto) session.getAttribute( "user");
-        Map<String, String> params = Map.of("username", user.getUsername());
+        //UserDto user = (UserDto) session.getAttribute( "user");
+        //Map<String, String> params = Map.of("username", user.getUsername());
 
+        //가라값
+        Map<String, String> params = Map.of("username", "혜빈컴퍼니");
+        
         var resumeResponse = apiService.fetchData("/api/resume/company/matching", params, true);
         var resumeList = resumeResponse.getBody();
 

@@ -2,7 +2,10 @@ package org.green.backend.repository.dao.hyepin;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.hyepin.ResumeDto;
+import org.green.backend.dto.jeyeon.ApplicationRequestDto;
+import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 
 import java.util.List;
 
@@ -14,4 +17,5 @@ import java.util.List;
 public interface OfferDao {
     public int save(int resumeNo, int applicationNo, String username);
     public List<ResumeDto> getResumeMatchingList();
+    public List<ApplicationResponseDto> getApplicaionList(@Param("username") String username);
 }

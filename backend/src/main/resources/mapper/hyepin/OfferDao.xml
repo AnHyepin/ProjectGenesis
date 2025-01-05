@@ -49,4 +49,10 @@
         ORDER BY r.regist_dt DESC
         LIMIT 100;
     </select>
+
+    <select id="getApplicaionList" resultType="org.green.backend.dto.jeyeon.ApplicationResponseDto">
+        SELECT *
+        FROM tbl_applications
+        WHERE username = #{username};
+    </select>
 </mapper>
