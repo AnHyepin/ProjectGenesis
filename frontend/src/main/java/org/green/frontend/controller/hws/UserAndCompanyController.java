@@ -109,7 +109,7 @@ public class UserAndCompanyController {
     @GetMapping("/bookmark-company")
     public String bookmarkCompany(HttpSession session, Model model) {
         UserDto user = SessionUtil.getUser(session);
-/*
+        /*
         if (user == null) {
             log.warn("세션에 유저 정보가 없습니다.");
             return "redirect:/login";
