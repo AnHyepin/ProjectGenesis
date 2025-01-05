@@ -4,8 +4,8 @@
       layout:decorate="~{layout-test/layout}">
 <head>
     <title>Main Page</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/static/css/hws/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/static/css/hws/main.css"/>
 </head>
 <body layout:fragment="content">
 
@@ -30,9 +30,11 @@
         </div>
         <div class="genesis-main-cards">
             <div th:each="like : ${mainData.likeApplications}" class="genesis-main-card">
-                <img th:src="${#lists.isEmpty(like.files) ? '/static/img/img_default_gonggo.png' : like.files[0].fileUrl}"
-                     alt="topCompany Application">
-
+                <a th:href="@{/application/detail/{applicationNo}(applicationNo=${like.applicationData.applicationNo})}">
+                    <img th:src="${#lists.isEmpty(like.files) ? '/static/img/img_default_gonggo.png' : like.files[0].fileUrl}"
+                         onerror="this.src='/static/img/img_default_gonggo.png';"
+                         alt="topCompany Application">
+                </a>
                 <div class="genesis-card-heart">
                     <i class="scrap-icon" data-action-type="S"
                        th:data-action-id="${like.applicationData.applicationNo}"
@@ -68,8 +70,11 @@
         </div>
         <div class="genesis-main-cards">
             <div th:each="bookmark : ${mainData.bookmarkApplications}" class="genesis-main-card">
-                <img th:src="${#lists.isEmpty(bookmark.files) ? '/static/img/img_default_gonggo.png' : bookmark.files[0].fileUrl}"
-                     alt="topCompany Application">
+                <a th:href="@{/application/detail/{applicationNo}(applicationNo=${bookmark.applicationData.applicationNo})}">
+                    <img th:src="${#lists.isEmpty(bookmark.files) ? '/static/img/img_default_gonggo.png' : bookmark.files[0].fileUrl}"
+                         onerror="this.src='/static/img/img_default_gonggo.png';"
+                         alt="topCompany Application">
+                </a>
                 <div class="genesis-card-heart">
                     <i class="scrap-icon" data-action-type="S"
                        th:data-action-id="${bookmark.applicationData.applicationNo}"
@@ -105,9 +110,11 @@
         </div>
         <div class="genesis-main-cards">
             <div th:each="popularApp : ${mainData.popularApplications}" class="genesis-main-card two">
-                <img th:src="${#lists.isEmpty(popularApp.files) ? '/static/img/img_default_gonggo.png' : popularApp.files[0].fileUrl}"
-                     alt="Popular Application">
-
+                <a th:href="@{/application/detail/{applicationNo}(applicationNo=${popularApp.applicationData.applicationNo})}">
+                    <img th:src="${#lists.isEmpty(popularApp.files) ? '/static/img/img_default_gonggo.png' : popularApp.files[0].fileUrl}"
+                         onerror="this.src='/static/img/img_default_gonggo.png';"
+                         alt="Popular Application">
+                </a>
                 <div class="genesis-card-heart">
                     <i class="scrap-icon" data-action-type="S"
                        th:data-action-id="${popularApp.applicationData.applicationNo}"
@@ -158,16 +165,16 @@
          th:if="${!#lists.isEmpty(mainData.topRatedCompanies)}">
         <div class="genesis-main-section-header">
             <h2>평점 높은 기업공고</h2>
-            <a href="#" class="genesis-more-link">더보기 +</a>
         </div>
         <div class="genesis-main-cards">
             <div th:each="topCompany : ${mainData.topRatedCompanies}"
                  th:if="${topCompany.applicationData != null && topCompany.applicationData.applicationNo != null}"
                  class="genesis-main-card">
-
-                <img th:src="${#lists.isEmpty(topCompany.files) ? '/static/img/img_default_gonggo.png' : topCompany.files[0].fileUrl}"
-                     alt="topCompany Application">
-
+                <a th:href="@{/application/detail/{applicationNo}(applicationNo=${topCompany.applicationData.applicationNo})}">
+                    <img th:src="${#lists.isEmpty(topCompany.files) ? '/static/img/img_default_gonggo.png' : topCompany.files[0].fileUrl}"
+                         onerror="this.src='/static/img/img_default_gonggo.png';"
+                         alt="topCompany Application">
+                </a>
                 <div class="genesis-card-heart"
                      th:data-id="${topCompany.applicationData.applicationNo}"
                      th:data-is-scrapped="${topCompany.applicationData.isScrap}"

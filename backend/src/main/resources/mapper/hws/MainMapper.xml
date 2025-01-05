@@ -62,6 +62,7 @@
         LEFT JOIN tbl_file b on a.application_no = b.file_ref_no
         WHERE username = #{companyUsername}
         AND delete_yn ='N'
+        GROUP BY a.application_no
         ORDER BY regist_dt desc;
     </select>
 

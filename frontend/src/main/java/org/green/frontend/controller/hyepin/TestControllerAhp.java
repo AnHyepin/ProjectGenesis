@@ -95,19 +95,6 @@ public class TestControllerAhp {
         return "/hyepin/resume-detail-company";
     }
 
-    //기업 매칭 페이지
-    @GetMapping("/resume/matching")
-    public String resumeMatching(Model model, HttpSession session){
-        UserDto user = (UserDto) session.getAttribute( "user");
-        Map<String, String> params = Map.of("username", user.getUsername());
-
-        var resumeResponse = apiService.fetchData("/api/resume/company/matching", params, true);
-        var resumeList = resumeResponse.getBody();
-
-        System.out.println("프론트 컨트롤러: " + resumeList);
-        model.addAttribute("resumeList", resumeList);
-        return "/hyepin/resume-matchingList";
-    }
 
 
 

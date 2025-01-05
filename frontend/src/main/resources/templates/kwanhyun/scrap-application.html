@@ -84,8 +84,8 @@
 
     .details-button {
       background-color: white;
-      color: black;
-      border: 1px solid #3af26e;
+      color: red;
+      border: 1px solid red;
       padding: 5px 10px;
       border-radius: 5px;
       cursor: pointer;
@@ -93,13 +93,8 @@
       text-align: center;
     }
 
-    .details-button a {
-      color: black;
-      text-decoration: none;
-    }
-
     .details-button:hover {
-      background-color: #32cd32;
+      background-color: red;
       color: white;
     }
   </style>
@@ -108,28 +103,28 @@
 
 <div class="company-score-container">
   <div class="header">
-    <h2>별점 목록</h2>
-    <div class="info-summary">별점 기업 정보 <span class="info-count" th:text="${companyScoreList.size}">3</span>건</div>
+    <h2>스크랩 공고 목록</h2>
+    <div class="info-summary">스크랩한 공고 <span class="info-count" th:text="${scrapApplicationList.size}">3</span>건</div>
   </div>
   <hr class="divider">
-  <th:block th:each="companyScore : ${companyScoreList}">
+  <th:block th:each="scrapapplication : ${scrapApplicationList}">
     <div class="company-item">
       <div class="company-info">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <i class="scrap-icon" th:classappend="${companyScore.likeCode == 'G' ? 'bi-bookmark-fill' : 'bi-bookmark'}"></i>
-          <span th:text="${companyScore.name}">회사 이름</span>
+          <span th:text="${scrapapplication.name}">회사 이름</span>
         </div>
-        <span class="rating-badge" th:text="'⭐ ' + ${companyScore.jrStar}">⭐ 5.0</span>
       </div>
       <div class="company-details">
-        <span th:text="${companyScore.address}">주소</span>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span th:text="${scrapapplication.applicationTitle}" style="font-weight: bold; color: #333;">공고제목</span>
+          <i class="scrap-icon" th:classappend="${scrapapplication.likeCode == 'S' ? 'fas fa-heart fa' : 'far fa-heart fa'}"></i>
+        </div>
         <div style="display: flex; gap: 10px;">
-          <span th:text="'사원수: ' + ${companyScore.employees} + '명'"></span>
-          <span th:text="'매출액: ' + ${companyScore.sale} + '원'"></span>
+          <span th:text="${scrapapplication.workingArea}"></span>
+          <span th:text="${scrapapplication.careerCode == 'S' ? '신입' : '경력'}"></span>
         </div>
       </div>
-      <button class="details-button"> <a th:href="@{/company-detail/{company}(company=${companyScore.companyName})}">상세보기</a>
-      </button>
+      <button class="details-button">입사지원</button>
     </div>
   </th:block>
 </div>

@@ -3,10 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
+<mapper namespace="org.green.backend.repository.dao.kwanhyun.UserDao">
     <select id="myScoreList" resultType="org.green.backend.dto.kwanhyun.CompanyScoreDto">
         SELECT
         r.username,
+        r.company_name,
         c.name,
         (SELECT ROUND(AVG(COALESCE(r.jr_star, 0)), 1)
         FROM tbl_ratings r
@@ -20,7 +21,5 @@
         INNER JOIN tbl_ratings r ON r.company_name = c.username AND r.username = #{username}
         LEFT JOIN tbl_likes l ON c.username = l.like_id AND l.username = #{username}
         GROUP BY c.username;
-
-
     </select>
 </mapper>
