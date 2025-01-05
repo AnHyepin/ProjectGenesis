@@ -99,6 +99,7 @@ public class ApplicationController {
         model.addAttribute("fileList",applicationDto.getFileList());
         model.addAttribute("skillNameList",skillNameList);
         model.addAttribute("applicationResponse", applicationResponse.getBody());
+        model.addAttribute("applicationNo", applicationNo);
         return "/jeyeon/application-detail";
     }
 

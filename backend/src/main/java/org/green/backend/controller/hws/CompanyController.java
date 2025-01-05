@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.dto.hws.RatingDto2;
+import org.green.backend.dto.kwanhyun.CompanyScoreDto;
 import org.green.backend.service.hws.CompanyService;
 import org.green.backend.utils.JWTUtil;
 import org.green.backend.utils.TokenGetUtil;

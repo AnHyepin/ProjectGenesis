@@ -1,3 +1,4 @@
+let isDuplicateChecked = false;
 /**
  * 파일 목록 업데이트
  */

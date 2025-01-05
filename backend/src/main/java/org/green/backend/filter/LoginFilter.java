@@ -41,6 +41,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
+            response.setCharacterEncoding("UTF-8");
             String body = request.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -53,6 +54,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             if (username == null || password == null || userType == null) {
                 throw new RuntimeException("Username, Password 또는 UserType이 비었음");
             }
+
+            log.info("username : {} , password  : {} , userType , {} " , username, password, userType);
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password, null);
             Authentication authentication = authenticationManager.authenticate(authToken);
@@ -116,7 +119,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 
-        log.error("로그인 실패 이유: {}", failed.getMessage());
+        // 로그인 실패 로그 상세히 기록
+        log.error("로그인 실패: 원인 메시지 - {}", failed.getMessage(), failed); // 스택 트레이스 포함
+        log.error("로그인 실패: 인증 예외 클래스 - {}", failed.getClass().getName());
+        log.error("로그인 실패: 요청 URI - {}", request.getRequestURI());
+        log.error("로그인 실패: 요청 IP - {}", request.getRemoteAddr());
+
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 

@@ -66,7 +66,11 @@
 
             <section class="user-management-btn">
                 <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
-                <button type="button" class="jobBtn applyBtn">입사지원</button>
+                <!-- 혜빈 작업!-->
+                <th:block th:if="${session.user != null}">
+                    <input type="hidden" name="sessionUsername" id="sessionUsername" th:value="${session.user.getUsername}">
+                    <button type="button" onclick="getResumeList()" class="jobBtn applyBtn">입사지원</button>
+                </th:block>
             </section>
 
             <section class="job-slider">
@@ -195,11 +199,27 @@
             </section>
         </div>
     </div>
+
+    <!-- 혜빈 작업 !-->
+    <input type="hidden" name="applicationNo" id="applicationNo" th:value="${applicationNo}">
+    <div class="modal2" id="modal2">
+        <div>
+            <div><h2>내 이력서 목록</h2></div>
+            <hr style="border: 1px solid #4e4e4e;">
+            <div class="modalList2" id="modalList2">
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 20px; gap: 10px; align-items: center;">
+                <button class="cancelBtn" id="cancelBtn" onclick="cancelBtn2()">닫기</button>
+                <button class="applyStatus" id="applyStatus"><a href="/resume/applyStatus"> 입사지원 현황 바로가기 </a></button>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="/static/js/hyepin/detail-application-modal.js"></script>
 <script>
 
     const swiper = new Swiper('.swiper-container', {
@@ -248,5 +268,6 @@
         }
     });
 </script>
+
 </body>
 </html>
