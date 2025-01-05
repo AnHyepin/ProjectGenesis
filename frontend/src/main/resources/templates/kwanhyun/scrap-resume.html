@@ -18,7 +18,7 @@
     </div>
     <hr style="border: 1px solid #4e4e4e; margin-top: 5px;">
     <div>
-        <th:block th:each="resume : ${resumeList}">
+        <th:block th:each="resume : ${scrapResumeList}">
             <input type="hidden" name="resumeNo" id="resumeNo" th:value="${resume.resumeNo}">
             <div style="display: flex; gap: 30px; padding: 20px;">
                 <div style="display: flex; align-items: center;">
@@ -37,11 +37,11 @@
                         <a th:href="@{/resume/detail(resumeNo=${resume.resumeNo})}">
                             <span style="font-size: 20px; font-weight: bold;"> [[${resume.resumeTitle}]]  </span> </a>
                         <span style="font-size: 16px; color: #4e4e4e;">
-                              <th:block th:if="${!resume.bookmarkCheck}">
+                              <th:block th:if="${resume.likeCode == null}">
                                   <input type="button" class="bookmark" data-resume-no="[[${resume.resumeNo}]]" id="bookmark"
                                          value="♡" onclick="bookmarkToggle(this)">
                               </th:block>
-                              <th:block th:if="${resume.bookmarkCheck}">
+                              <th:block th:if="${resume.likeCode != null and resume.likeCode == 'S'}">
                                 <input type="button" class="bookmark" data-resume-no="[[${resume.resumeNo}]]" id="bookmark"
                                        value="♥" onclick="bookmarkToggle(this)">
                               </th:block>

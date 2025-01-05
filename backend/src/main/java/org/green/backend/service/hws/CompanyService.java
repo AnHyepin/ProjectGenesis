@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.dto.hws.RatingDto2;
+import org.green.backend.dto.hyepin.ResumeDto;
 import org.green.backend.dto.kwanhyun.CompanyScoreDto;
+import org.green.backend.dto.kwanhyun.ScrapResumeDto;
 import org.green.backend.entity.Company;
 import org.green.backend.entity.common.Address;
 import org.green.backend.exception.hws.UserAlreadyExistsException;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -175,5 +178,18 @@ public class CompanyService {
         company.setDeleteYn('Y');
         companyRepository.save(company);
         return "성공";
+    }
+
+    public List<ScrapResumeDto> scrapResumeList(String username) {
+        List<ScrapResumeDto> scrapResumeList = companyDao.scrapResumeList(username);
+
+        for(ScrapResumeDto resume : scrapResumeList){
+            if (resume.getStackCodes() != null && !resume.getStackCodes().isEmpty()) {
+                List<String> stackList = new ArrayList<>();
+                stackList.addAll(Arrays.asList(resume.getStackCodes().split(",")));
+                resume.setStackList(stackList);
+            }
+        }
+        return scrapResumeList;
     }
 }
