@@ -93,10 +93,19 @@
       text-align: center;
     }
 
+    .details-button a {
+      color: red;
+      text-decoration: none;
+    }
+
     .details-button:hover {
       background-color: red;
+    }
+
+    .details-button a:hover {
       color: white;
     }
+
   </style>
 </head>
 <body layout:fragment="content">
@@ -124,11 +133,10 @@
           <span th:text="${scrapapplication.careerCode == 'S' ? '신입' : '경력'}"></span>
         </div>
       </div>
-      <button class="details-button">입사지원</button>
+      <button class="details-button"><a th:href="@{/application/detail/{applicationNo}(applicationNo=${scrapapplication.applicationNo})}">공고 상세보기</a></button>
     </div>
   </th:block>
 </div>
 
-<script src="/static/js/hyepin/detail-application-modal.js"></script>
 </body>
 </html>
