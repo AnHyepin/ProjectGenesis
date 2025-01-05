@@ -121,7 +121,7 @@
           <span th:text="'현재 채용중: ' + ${bookmarkCompany.count} + '건'"></span>
         </div>
       </div>
-      <button class="details-button">상세보기</button>
+      <button class="details-button"> <a th:href="@{/company-detail/{company}(company=${bookmarkCompany.likeId})}">상세보기</a></button>
     </div>
   </th:block>
 </div>
