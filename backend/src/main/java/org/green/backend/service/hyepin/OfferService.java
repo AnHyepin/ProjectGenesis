@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hyepin.OfferDto;
 import org.green.backend.dto.hyepin.ResumeDto;
+import org.green.backend.dto.jeyeon.ApplicationRequestDto;
+import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.repository.dao.hyepin.EducationDao;
 import org.green.backend.repository.dao.hyepin.OfferDao;
 import org.green.backend.repository.dao.hyepin.ResumeDao;
@@ -49,6 +51,12 @@ public class OfferService {
             }
         }
         return resumeList;
+    }
+
+
+    public List<ApplicationResponseDto> getApplicaionList(String username){
+        List<ApplicationResponseDto> applicationList = offerDao.getApplicaionList(username);
+        return applicationList;
     }
 
 }

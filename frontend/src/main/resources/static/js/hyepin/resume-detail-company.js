@@ -44,7 +44,7 @@ function positionOffer() {
     const username = document.getElementById("sessionUsername").value;
 
     //공고 목록 api
-    api.get('/api/application/list?username=' + username)
+    api.get('/api/resume/company/application?username=' + username)
         .then(data => {
             // 'body' 속성에서 배열을 추출하여 StackList에 할당
             applyList = data.body;  // body 속성의 배열을 할당
@@ -60,12 +60,9 @@ function positionOffer() {
 //모달 추가
 function addModal(applyList) {
 
-    const applicationNo = document.getElementById("applicationNo").value;
-    console.log("applicationNo: " + applicationNo);
-
     const modal = document.getElementById('modal');
     modal.style.display = 'block';
-    const modalList = document.getElementById('modalList2');
+    const modalList = document.getElementById('modalList');
     modalList.innerHTML = "";
 
     applyList.forEach(apply => {
@@ -75,10 +72,10 @@ function addModal(applyList) {
         modalBox.innerHTML = `
            <div style="display: flex; justify-content: space-between; padding: 0px 20px;">
                 <div style="display: flex; gap: 20px; align-items: center;">
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox1" class="applicationCheckbox" data-applicationNo="${apply.applicationNo}">
                     <div style="display: flex; flex-direction: column; justify-content: center; padding: 20px 0px;">
                         <a href="/application/detail/${apply.applicationNo}">
-                        <div style="font-size: 18px; font-weight: bold; cursor: pointer;">${apply.applicationName}</div>
+                        <div style="font-size: 18px; font-weight: bold; cursor: pointer;">${apply.applicationTitle}</div>
                         </a>
                     </div>
                 </div>
@@ -94,19 +91,34 @@ function cancelBtn() {
 }
 
 function offerComplet() {
-    //체크박스 값들 담아오기
-    const applicationNo = document.getElementById('applicationNo').value;
+    /*
+    const selectedCheckboxes = document.querySelectorAll('.applicationCheckbox:checked');
+
+    // 선택된 체크박스들의 applicationNo 값을 배열로 저장
+    const applicationNos = [];
+    selectedCheckboxes.forEach(checkbox => {
+        const applicationNo = checkbox.getAttribute('data-applicationNo');
+        applicationNos.push(applicationNo);
+    });
+
+    // 선택된 공고 번호가 없으면 알림
+    if (applicationNos.length === 0) {
+        alert('공고를 선택해주세요!');
+        return;
+    }
+
+    const resumeNo = document.getElementById('resumeNo').value;
     const sessionUsername = document.getElementById('sessionUsername').value;
 
     const formData = new FormData();
     formData.append('resumeNo', resumeNo);
-    formData.append('applicationNo', applicationNo);
     formData.append('registId', sessionUsername);
+    formData.append('applicationNos', JSON.stringify(applicationNos));
 
-    //offer에 보내기
+    // offer에 보내기
     api.post('/api/resume/company/offer', formData, {})
         .then(res => {
-            if (res.body == '지원 성공') {  // 응답의 본문은 res.data에 담김
+            if (res.body == '지원 성공') {
                 alert("지원 성공");
             } else {
                 alert("지원 실패");
@@ -116,8 +128,9 @@ function offerComplet() {
             console.error("오류:", error);
             alert("저장 오류");
         });
+     */
 
-    alert(resumeNo + '번 이력서 지원 완료');
+    alert("포지션 제안 완료!");
     const modal = document.getElementById('modal');
     modal.style.display = 'none';
 }

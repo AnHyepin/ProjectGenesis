@@ -176,8 +176,8 @@ input[type="date"] {
 
 .cancelBtn{
     background-color: transparent;
-    border: 2px solid #3AF26E;
-    color: #3AF26E;
+    border: 2px solid #F2BB16;
+    color: #F2BB16;
     padding: 5px 20px;
     width: 90px;
     font-size: 16px;
@@ -187,7 +187,7 @@ input[type="date"] {
 }
 
 .cancelBtn:hover, .saveBtn:hover{
-    background-color: #3AF26E;
+    background-color: white;
     transform: scale(1.1);
 }
 
@@ -500,13 +500,13 @@ input[type="file"], .file-section_plus_box_detail2{
 
 .cancelBtn{
     background-color: white;
-    border: #3af26e 2px solid;
+    border: #F2BB16 2px solid;
 }
 
 .offerComplet{
-    padding: 0px;
-    background-color: #3af26e;
-    border: #3af26e 2px solid;
+    padding: 8px 16px;
+    background-color: #F2BB16;
+    border: #F2BB16 2px solid;
     display: inline-block;
     width: auto;
 }

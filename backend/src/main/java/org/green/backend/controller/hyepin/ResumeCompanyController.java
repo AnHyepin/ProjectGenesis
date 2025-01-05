@@ -6,6 +6,8 @@ import org.green.backend.controller.common.LikeController;
 import org.green.backend.dto.common.LikeDto;
 import org.green.backend.dto.hyepin.OfferDto;
 import org.green.backend.dto.hyepin.ResumeDto;
+import org.green.backend.dto.jeyeon.ApplicationRequestDto;
+import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.repository.dao.common.LikeDao;
 import org.green.backend.service.hyepin.OfferService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,22 +42,22 @@ public class ResumeCompanyController {
     @GetMapping("/offer")
     public String offer(OfferDto offerDto) throws IOException {
         int result = offerService.registOffer(offerDto);
-        if(result == -1) {
+        if (result == -1) {
             return "포지션 제안 성공";
-        }else{
+        } else {
             return "포지션 제안 실패";
         }
     }
 
     @GetMapping("/matching")
-    public List<ResumeDto> resumeMatching (@RequestParam("username") String username) throws IOException {
+    public List<ResumeDto> resumeMatching(@RequestParam("username") String username) throws IOException {
         List<ResumeDto> resumeList = offerService.getResumeMatchingList();
-        for(ResumeDto resume : resumeList){
+        for (ResumeDto resume : resumeList) {
             int bmCheck = getBookmarkCheck(username, "S", String.valueOf(resume.getResumeNo()));
             System.out.println("username: " + username + "resumeNo: " + resume.getResumeNo());
             System.out.println("bmCheck: " + bmCheck);
             boolean bookmarkCheck = false;
-            if(bmCheck == 1){
+            if (bmCheck == 1) {
                 bookmarkCheck = true;
             }
             resume.setBookmarkCheck(bookmarkCheck);
@@ -65,5 +67,11 @@ public class ResumeCompanyController {
         return resumeList;
     }
 
+    @GetMapping("/application")
+    public List<ApplicationResponseDto> getApplicationList(@RequestParam("username") String username) throws IOException {
+        List<ApplicationResponseDto> applicationList = offerService.getApplicaionList(username);
+        System.out.println("백 컨트롤러: applicationList: " + applicationList);
+        return applicationList;
+    }
 
 }
