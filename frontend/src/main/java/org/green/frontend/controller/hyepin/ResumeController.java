@@ -161,7 +161,7 @@ public class ResumeController {
 
     //입사지원현황 리스트 페이지
     @GetMapping("/applyStatus")
-    public String resumeApplyStatus(Model model) {
+    public String resumeApplyStatus(Model model, HttpSession session) {
 
         //지원완료(submitCnt) = list.size()
         //전형진행중(processCnt) = if(list.getApply_status_gbn_code.equals("H"))
@@ -173,8 +173,10 @@ public class ResumeController {
         int processCnt = 0;
         int finalCnt = 0;
 
+        UserDto sessionUser = (UserDto) session.getAttribute( "user");
+
         //유저 지원현황 가져오기
-        Map<String, String> params = Map.of("username", "안혜빈");
+        Map<String, String> params = Map.of("username", sessionUser.getUsername());
         
         //이거 for문 돌리는 로직
         ApiResponse<?> response = apiService.fetchData("/api/resume/applyStatus", params, true);
@@ -205,5 +207,18 @@ public class ResumeController {
         return "/hyepin/resume-applyStatus";
     }
 
+    //기업 매칭 페이지
+    @GetMapping("/resume/matching")
+    public String resumeMatching(Model model, HttpSession session){
+        UserDto user = (UserDto) session.getAttribute( "user");
+        Map<String, String> params = Map.of("username", user.getUsername());
+
+        var resumeResponse = apiService.fetchData("/api/resume/company/matching", params, true);
+        var resumeList = resumeResponse.getBody();
+
+        System.out.println("프론트 컨트롤러: " + resumeList);
+        model.addAttribute("resumeList", resumeList);
+        return "/hyepin/resume-matchingList";
+    }
 
 }

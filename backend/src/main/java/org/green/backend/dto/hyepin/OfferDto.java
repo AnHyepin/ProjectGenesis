@@ -8,6 +8,6 @@ import java.util.List;
 public class OfferDto {
 
     private List<Integer> checkList;
-    private List<Integer> applicationNo;
+    private int applicationNo;
     private String uesrname;
 }

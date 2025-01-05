@@ -9,6 +9,6 @@ import java.util.List;
 public class OfferDto {
 
     private List<Integer> checkList; //이력서 번호 리스트
-    private List<Integer> applicationNo; //공고 번호
+    private int applicationNo; //공고 번호
     private String uesrname; //회사ID
 }
