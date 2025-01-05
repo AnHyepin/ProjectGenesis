@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Data
 public class ApplicationResponseDto {
-    private Long applicationNo;            // 채용공고 번호
+    private int applicationNo;            // 채용공고 번호
     private String username;               // 사용자 고유 ID
     private String name;                    //회사명
     private String applicationTitle;       // 채용공고 제목
@@ -29,4 +29,5 @@ public class ApplicationResponseDto {
     private Integer procedureCode;         // 1차(1), 2차(2), 3차(3)
     private List<ApplicationStackDto> skillList;        // 스킬리스트
     private List<FileDto> fileList;        // 파일리스트
+    private int bookmarkCheck;          // 북마크
 }

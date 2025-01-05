@@ -33,12 +33,12 @@
     color: #000;
     text-decoration: none;
 
-    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
-    overflow: hidden; /* 넘치는 텍스트를 숨김 */
-    text-overflow: ellipsis; /* 넘치는 텍스트는 '...'으로 표시 */
+    /*white-space: nowrap; !* 텍스트가 한 줄로 표시되도록 설정 *!
+    overflow: hidden; !* 넘치는 텍스트를 숨김 *!
+    text-overflow: ellipsis; !* 넘치는 텍스트는 '...'으로 표시 *!
 
-    max-width: 95%; /* 부모 요소의 너비에 맞게 조정 */
-    display: block; /* 기본적으로 a 태그는 인라인 요소이므로 블록 레벨로 변경 */
+    max-width: 80%; !* 부모 요소의 너비에 맞게 조정 *!
+    display: block; !* 기본적으로 a 태그는 인라인 요소이므로 블록 레벨로 변경 *!*/
 }
 
 .applicationList .apply-now {
@@ -87,4 +87,24 @@
 
 .applicationList .job-title:hover {
     color: #3AF26E;
+}
+
+.applicationList #bookmark{
+    background-color: white;
+    font-weight: bold;
+    color: #F2BB16;
+    cursor: pointer;
+    padding: 0px;
+    border: none;
+    font-size: 20px;
+}
+
+.applicationList #bookmark:hover {
+    transform: scale(1.1);
+}
+
+.applicationList .flex-box {
+    display: flex;                       /* Flexbox 활성화 */
+    gap: 10px;                           /* 항목 간 간격 설정 */
+    width: 100%;
 }

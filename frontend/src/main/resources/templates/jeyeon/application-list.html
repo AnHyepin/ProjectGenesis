@@ -25,9 +25,20 @@
                         <div class="company-info">
                             <div class="company-name">[[${applicate.name}]]</div>
                         </div>
-                        <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applicate.applicationNo})}" class="job-title">
-                            [[${applicate.applicationTitle}]]
-                        </a>
+                        <div class="flex-box">
+                            <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applicate.applicationNo})}" class="job-title">
+                                [[${applicate.applicationTitle}]]
+
+                            </a>
+                            <th:block th:if="${applicate.bookmarkCheck != 1}">
+                                <input type="button" class="bookmark" data-application-no="[[${applicate.applicationNo}]]" id="bookmark"
+                                       value="♡" onclick="bookmarkToggle(this)">
+                            </th:block>
+                            <th:block th:if="${applicate.bookmarkCheck == 1}">
+                                <input type="button" class="bookmark" data-application-no="[[${applicate.applicationNo}]]" id="bookmark"
+                                       value="♥" onclick="bookmarkToggle(this)">
+                            </th:block>
+                        </div>
                         <span class="apply-now" th:if="${user == null || user.role == 'ROLE_COMPANY'}" th:text="${applicate.day != null ? 'D-'+applicate.day + ' 마감' : '상시채용 공고'}"></span>
                         <button type="button" th:if="${user != null && user.role == 'ROLE_USER'}" class="apply-now" onclick="getResumeList()">입사지원</button>
                         <div class="job-details">
