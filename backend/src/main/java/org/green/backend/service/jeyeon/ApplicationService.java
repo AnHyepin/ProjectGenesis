@@ -81,6 +81,7 @@ public class ApplicationService {
     }
 
     public List<ApplicationResponseDto> getApplicationList(String username) {
+        System.out.println(applicationDao.selectApplicationList(username));
         return applicationDao.selectApplicationList(username);
     }
 

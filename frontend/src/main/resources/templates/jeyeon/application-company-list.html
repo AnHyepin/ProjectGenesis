@@ -5,15 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/static/css/jeyeon/applicationList.css" />
-    <title>applicationList</title>
+    <title>ApplicationCompanyList</title>
 </head>
-<body layout:fragment="content">
+<body>
     <div class="applicationList">
         <div class="list-container">
             <div>
                 <h2 style="margin-top: 10px; font-weight: bold">채용 공고 목록</h2>
-                 <div th:if="${user == null}" style="margin: 15px 0; font-size: 18px">총 <span style="color: #3af26e; font-weight: bold">[[${applicationCount}]]</span>건</div>
-                 <div th:if="${user != null}" style="margin: 15px 0; font-size: 18px " >총 <span style="color: #3af26e; font-weight: bold">[[${applicationCount}]]</span>건</div>
+                <div style="margin: 15px 0; font-size: 18px " >총 <span style="color: #3af26e; font-weight: bold">[[${applicationCount}]]</span>건</div>
             </div>
             <hr style="border: 1px solid #4e4e4e;">
 
@@ -28,8 +27,6 @@
                         <a th:href="@{/application/detail/{applicationNo}(applicationNo=${applicate.applicationNo})}" class="job-title">
                             [[${applicate.applicationTitle}]]
                         </a>
-                        <span class="apply-now" th:if="${user == null || user.role == 'ROLE_COMPANY'}" th:text="${applicate.day != null ? 'D-'+applicate.day + ' 마감' : '상시채용 공고'}"></span>
-                        <button type="button" th:if="${user != null && user.role == 'ROLE_USER'}" class="apply-now" onclick="getResumeList()">입사지원</button>
                         <div class="job-details">
                             <span class="job-address">[[${applicate.workingArea}]] · </span>
                             <span class="job-experience" th:text="${applicate.careerCode == 'G' ? '경력' :
@@ -43,7 +40,6 @@
             </div>
         </div>
     </div>
-    <script src="/static/js/hyepin/detail-application-modal.js"></script>
-    <script src="/static/js/hyepin/resume-detail-company.js"></script>
+    </div>
 </body>
 </html>

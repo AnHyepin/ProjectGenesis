@@ -6,6 +6,7 @@ import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.entity.Application;
 import org.green.backend.entity.Company;
+import org.green.backend.repository.dao.common.LikeDao;
 import org.green.backend.service.common.GubnService;
 import org.green.backend.service.hws.CompanyService;
 import org.green.backend.service.jeyeon.ApplicationService;
@@ -26,6 +27,7 @@ public class ApplicationApiController {
 
     private final ApplicationService applicationService;
     private final GubnService gubnService;
+    private final LikeDao likeDao;
 
     @PostMapping("/regist")
     public void register(@ModelAttribute ApplicationRequestDto applicationRequestDto,
@@ -53,11 +55,21 @@ public class ApplicationApiController {
 
     @GetMapping("/list")
     public List<ApplicationResponseDto> getApplicationList(@RequestParam(value = "username", required = false) String username) {
+        System.out.println(username + "여기는 백단! list쪽!");
         return applicationService.getApplicationList(username);
     }
 
     @GetMapping("/count")
-    public int getApplicationCount(@RequestParam(value = "username", required = false) String username) {
+    public int getApplicationCount(@RequestParam(value = "username", required = false) String username) throws IOException{
+        System.out.println(username + "여기는 백단! Count쪽!");
         return applicationService.getApplicationCount(username);
+    }
+
+    @GetMapping("/bookmark")
+    public int getBookmarkCheck(@RequestParam("username") String username,
+                                @RequestParam("likeCode") String likeCode,
+                                @RequestParam("likeId") String likeId) throws IOException {
+        int bookmarkCheck = likeDao.checkLike(username, likeCode, likeId);
+        return bookmarkCheck;
     }
 }

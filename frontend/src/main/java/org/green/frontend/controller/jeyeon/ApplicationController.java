@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -34,7 +35,7 @@ public class ApplicationController {
     private final ApplicaitonService applicaitonService;
 
     @GetMapping("/regist")
-    public String applicationRegist(Model model) {
+    public String applicationRegist(HttpSession session, Model model) {
         var careerResponse = apiService.fetchData("/api/gubn/career");
         var positionResponse = apiService.fetchData("/api/gubn/position");
         var educationResponse = apiService.fetchData("/api/gubn/education");
@@ -46,6 +47,12 @@ public class ApplicationController {
 
         /*System.out.println(jobResponse.getBody());
           System.out.println(jobResponse);*/
+
+        UserDto user = (UserDto) session.getAttribute("user");
+        if(user != null){
+            // 모델에 username을 추가
+            model.addAttribute("username", user.getUsername());
+        }
 
         var careerList =  careerResponse.getBody();
         var positionList = positionResponse.getBody();
@@ -92,7 +99,6 @@ public class ApplicationController {
         if(user != null){
             // 모델에 username을 추가
             model.addAttribute("username", user.getUsername());
-
         }
 
         model.addAttribute("companyResponse", companyResponse.getBody());
@@ -110,18 +116,34 @@ public class ApplicationController {
         UserDto user = (UserDto) session.getAttribute("user");
         if(user != null){
             // 모델에 username을 추가
-            model.addAttribute("username", user.getUsername());
-            String username = user.getUsername();
-            var applicationCount = apiService.fetchData("/api/application/count?username="+username);
-            model.addAttribute("applicationCount", applicationCount);
-            return "/jeyeon/application-list?username="+username;
-
+            model.addAttribute("user", user);
         }
+
         var applicationListResponse = apiService.fetchData("/api/application/list");
         var applicationCount = apiService.fetchData("/api/application/count");
 
-        model.addAttribute("applicationCount", applicationCount);
+        System.out.println(applicationListResponse.getBody());
+
+        model.addAttribute("applicationCount", applicationCount.getBody());
         model.addAttribute("applicationList", applicationListResponse.getBody());
         return "/jeyeon/application-list";
+    }
+
+    @GetMapping("/applicationList/{username}")
+    public String applicationList(@PathVariable("username") String username, HttpSession session, Model model) {
+
+        System.out.println(username + "--------------------");
+
+        var applicationListResponse = apiService.fetchData("/api/application/list?username="+username);
+        var applicationCount = apiService.fetchData("/api/application/count?username="+username);
+
+        model.addAttribute("applicationCount", applicationCount.getBody());
+        model.addAttribute("applicationList", applicationListResponse.getBody());
+
+        System.out.println(applicationCount.getBody());
+        System.out.println(applicationListResponse.getBody());
+
+        return "/jeyeon/application-company-list";
+
     }
 }

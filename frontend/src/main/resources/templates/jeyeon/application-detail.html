@@ -20,8 +20,10 @@
                     <span class="company-name">[[${companyResponse.name}]]</span>
                     <button type="button" class="subscribeBtn"><i class="bi bi-bookmark"></i>구독기업</button>
                 </div>
-                <h1> <span class="job-title">[[${applicationResponse.applicationTitle}]]</span></h1>
-
+                <div class="flex-box">
+                    <h1> <span class="job-title">[[${applicationResponse.applicationTitle}]]</span></h1>
+                    <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
+                </div>
                 <th:block th:if="${companyResponse.username != null && username != null}">
                     <div class="company-management-btn" th:if="${companyResponse.username == username}">
                         <button type="button" class="jobBtn resume-listBtn" >지원이력서 보기</button>
@@ -65,7 +67,6 @@
             </section>
 
             <section class="user-management-btn">
-                <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
                 <!-- 혜빈 작업!-->
                 <th:block th:if="${session.user != null}">
                     <input type="hidden" name="sessionUsername" id="sessionUsername" th:value="${session.user.getUsername}">
@@ -186,7 +187,7 @@
                             </th:block>
                         </dl>
                         <div style="display: flex; justify-content: center; align-items: center;">
-                            <button type="button" class="jobBtn applyBtn" style="margin-top: 25px; ">입사지원</button>
+                            <button type="button" class="jobBtn applyBtn" style="margin-top: 25px;" onclick="getResumeList()">입사지원</button>
                         </div>
                     </div>
                     <div class="guid">
