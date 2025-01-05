@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.hws.CompanyDetailsDto;
 import org.green.backend.dto.hws.CompanyDto;
 import org.green.backend.dto.hws.RatingDto2;
+import org.green.backend.dto.hyepin.ResumeDto;
 import org.green.backend.dto.kwanhyun.CompanyScoreDto;
+import org.green.backend.dto.kwanhyun.ScrapResumeDto;
 import org.green.backend.service.hws.CompanyService;
 import org.green.backend.utils.JWTUtil;
 import org.green.backend.utils.TokenGetUtil;
@@ -80,5 +82,10 @@ public class CompanyController {
         return companyService.deleteUser(username);
     }
 
+    @GetMapping("/scrap-resume")
+    public List<ScrapResumeDto> resumeMatching(@RequestParam("username") String username) throws IOException {
+        List<ScrapResumeDto> scrapResumeList = companyService.scrapResumeList(username);
+        return scrapResumeList;
+    }
 }
 
