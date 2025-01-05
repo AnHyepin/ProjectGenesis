@@ -20,5 +20,7 @@
         INNER JOIN tbl_ratings r ON r.company_name = c.username AND r.username = #{username}
         LEFT JOIN tbl_likes l ON c.username = l.like_id AND l.username = #{username}
         GROUP BY c.username;
+
+
     </select>
 </mapper>
