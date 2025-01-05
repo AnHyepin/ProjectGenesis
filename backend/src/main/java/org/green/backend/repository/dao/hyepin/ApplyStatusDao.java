@@ -15,6 +15,8 @@ import java.util.List;
 public interface ApplyStatusDao {
 
     public int insertApply(ApplyStatusDto applyStatusDto);
-
+    public int updatePassCode(@Param("applicationNo") int applicationNo,
+                              @Param("resumeNo") int resumeNo,
+                              @Param("passCode") String passCode);
 
 }
