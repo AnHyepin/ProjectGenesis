@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -136,6 +138,20 @@ public class ResumeService {
     public List<ApplyStatusDto>  getApplyStatusList(String username){
         List<ApplyStatusDto> applyStatusListList = resumeDao.getApplyStatusList(username);
         return applyStatusListList;
+    }
+
+    //공고에 지원한 이력서 스트 뽑아오기
+    public List<ResumeDto> getApplicationResumeApply (String username) {
+        List<ResumeDto> resumeList = resumeDao.getApplicationResumeApply(username);
+        // 기술 스택 리스트를 "," 기준으로 분리
+        for(ResumeDto resume : resumeList){
+            if (resume.getStackCodes() != null && !resume.getStackCodes().isEmpty()) {
+                List<String> stackList = new ArrayList<>();
+                stackList.addAll(Arrays.asList(resume.getStackCodes().split(",")));
+                resume.setStackList(stackList);
+            }
+        }
+        return resumeList;
     }
 
 

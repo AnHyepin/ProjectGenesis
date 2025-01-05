@@ -135,3 +135,5 @@ function offerComplet() {
     modal.style.display = 'none';
 }
 
+
+

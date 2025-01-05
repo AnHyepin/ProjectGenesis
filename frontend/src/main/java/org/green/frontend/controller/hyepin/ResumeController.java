@@ -221,4 +221,19 @@ public class ResumeController {
         return "/hyepin/resume-matchingList";
     }
 
+    //기업 지원 이력서 페이지
+    @GetMapping("/appliction/apply")
+    public String applicationResume(Model model, HttpSession session){
+        UserDto user = (UserDto) session.getAttribute( "user");
+        Map<String, String> params = Map.of("username", user.getUsername());
+
+        var resumeResponse = apiService.fetchData("/api/resume/company/application/apply", params, true);
+        var resumeList = resumeResponse.getBody();
+
+        System.out.println("프론트 컨트롤러: " + resumeList);
+        model.addAttribute("resumeList", resumeList);
+        return "/hyepin/application-resumeApply";
+    }
+
+
 }

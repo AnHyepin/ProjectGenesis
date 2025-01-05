@@ -4,16 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.controller.common.LikeController;
 import org.green.backend.dto.common.LikeDto;
+import org.green.backend.dto.hyepin.ApplyStatusDto;
 import org.green.backend.dto.hyepin.OfferDto;
+import org.green.backend.dto.hyepin.PassDto;
 import org.green.backend.dto.hyepin.ResumeDto;
 import org.green.backend.dto.jeyeon.ApplicationRequestDto;
 import org.green.backend.dto.jeyeon.ApplicationResponseDto;
 import org.green.backend.repository.dao.common.LikeDao;
+import org.green.backend.repository.dao.hyepin.ApplyStatusDao;
 import org.green.backend.service.hyepin.OfferService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.green.backend.service.hyepin.ResumeService;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +31,8 @@ public class ResumeCompanyController {
 
     private final LikeDao likeDao;
     private final OfferService offerService;
+    private final ResumeService resumeService;
+    private final ApplyStatusDao applyStatusDao;
 
     @GetMapping("/bookmark")
     public int getBookmarkCheck(@RequestParam("username") String username,
@@ -73,5 +76,34 @@ public class ResumeCompanyController {
         System.out.println("백 컨트롤러: applicationList: " + applicationList);
         return applicationList;
     }
+
+    @GetMapping("/application/apply")
+    public List<ResumeDto> applicationResumeApply(@RequestParam("username") String username) throws IOException {
+        List<ResumeDto> applicationList = resumeService.getApplicationResumeApply(username);
+        for (ResumeDto resume : applicationList) {
+            int bmCheck = getBookmarkCheck(username, "S", String.valueOf(resume.getResumeNo()));
+            System.out.println("username: " + username + "resumeNo: " + resume.getResumeNo());
+            System.out.println("bmCheck: " + bmCheck);
+            boolean bookmarkCheck = false;
+            if (bmCheck == 1) {
+                bookmarkCheck = true;
+            }
+            resume.setBookmarkCheck(bookmarkCheck);
+        }
+        System.out.println("백 컨트롤러: applicationList: " + applicationList);
+        return applicationList;
+    }
+
+    @PostMapping("/application/update")
+    public String applicationResumeApply (@RequestBody PassDto passDto){
+        int result = applyStatusDao.updatePassCode(passDto.getApplicationNo(), passDto.getResumeNo(), passDto.getPassCode());
+        if(result == 1){
+            return "성공";
+        }else{
+            return "실패";
+        }
+    }
+
+
 
 }

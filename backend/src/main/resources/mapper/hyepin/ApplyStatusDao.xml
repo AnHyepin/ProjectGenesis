@@ -11,4 +11,9 @@
         VALUES
             (#{resumeNo}, #{applicationNo}, #{registId})
     </insert>
+    <update id="updatePassCode">
+        UPDATE tbl_apply_status
+        SET apply_status_gbn_code = #{passCode}
+        WHERE application_no = #{applicationNo} AND resume_no = #{resumeNo}
+    </update>
 </mapper>
