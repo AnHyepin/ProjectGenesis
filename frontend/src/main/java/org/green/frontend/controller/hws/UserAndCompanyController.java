@@ -89,7 +89,7 @@ public class UserAndCompanyController {
         return "kwanhyun/company-edit";
     }
 
-    @GetMapping("/companyscore")
+    @GetMapping("/company-score")
     public String companyScore(HttpSession session, Model model) {
         UserDto user = SessionUtil.getUser(session);
 
@@ -98,28 +98,28 @@ public class UserAndCompanyController {
             return "redirect:/login";
         }
 
-        var apiResponse = apiRequestService.fetchData("/api/user/companyscore/" + user.getUsername());
+        var apiResponse = apiRequestService.fetchData("/api/user/company-score/" + user.getUsername());
         log.info("apiResponse: {}", apiResponse.getBody());
 
         model.addAttribute("companyScoreList",  apiResponse.getBody());
 
-        return "kwanhyun/companyscore";
+        return "kwanhyun/company-score";
     }
 
-    @GetMapping("/bookmarkCompany")
+    @GetMapping("/bookmark-company")
     public String bookmarkCompany(HttpSession session, Model model) {
         UserDto user = SessionUtil.getUser(session);
-/*
+        /*
         if (user == null) {
             log.warn("세션에 유저 정보가 없습니다.");
             return "redirect:/login";
         }*/
 
-        var apiResponse = apiRequestService.fetchData("/api/user/bookmarkCompany/" + user.getUsername());
+        var apiResponse = apiRequestService.fetchData("/api/user/bookmark-company/" + user.getUsername());
         log.info("apiResponse: {}", apiResponse.getBody());
 
         model.addAttribute("bookmarkCompanyList", apiResponse.getBody());
 
-        return "kwanhyun/bookmarkCompany";
+        return "kwanhyun/bookmark-company";
     }
 }
