@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="org.green.backend.repository.dao.kwanhyun.CompanyDao">
     <select id="bookmarkList" resultType="org.green.backend.dto.kwanhyun.BookmarkCompanyDto">
-        <![CDATA[
+          <![CDATA[
     SELECT l.like_code,
            c.name,
            c.address,
