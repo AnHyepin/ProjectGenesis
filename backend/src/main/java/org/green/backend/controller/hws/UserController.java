@@ -6,6 +6,7 @@ import org.green.backend.dto.hws.UserDto;
 import org.green.backend.dto.hws.UserWithFileDto;
 import org.green.backend.dto.kwanhyun.BookmarkCompanyDto;
 import org.green.backend.dto.kwanhyun.CompanyScoreDto;
+import org.green.backend.dto.kwanhyun.ScrapApplicationDto;
 import org.green.backend.service.hws.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,6 +71,11 @@ public class UserController {
     @GetMapping("/bookmark-company/{username}")
     public List<BookmarkCompanyDto> bookmarkCompanyList(@PathVariable String username) {
         return userService.bookmarkCompanyLists(username);
+    }
+
+    @GetMapping("/scrap-application/{username}")
+    public List<ScrapApplicationDto> scrapApplicationList(@PathVariable String username) {
+        return userService.scrapApplicationLists(username);
     }
 
 }

@@ -1,4 +1,4 @@
-package org.green.backend.dto.kwanhyun;
+package org.green.frontend.dto.kwanhyun;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
