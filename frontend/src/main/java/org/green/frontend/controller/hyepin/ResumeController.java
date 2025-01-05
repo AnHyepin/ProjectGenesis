@@ -208,7 +208,7 @@ public class ResumeController {
     }
 
     //기업 매칭 페이지
-    @GetMapping("/resume/matching")
+    @GetMapping("/matching")
     public String resumeMatching(Model model, HttpSession session){
         UserDto user = (UserDto) session.getAttribute( "user");
         Map<String, String> params = Map.of("username", user.getUsername());
