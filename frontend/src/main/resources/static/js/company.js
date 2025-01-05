@@ -15,8 +15,7 @@ function handleClick(event) {
         window.location.href = '';
         alert('공고 관리');
     } else if (clickedId === 'matching') {
-        window.location.href = '';
-        alert('매칭리스트');
+        window.location.href = '/resume/matching';
     } else if (clickedId === 'support') {
         window.location.href = '';
         alert('고객센터');

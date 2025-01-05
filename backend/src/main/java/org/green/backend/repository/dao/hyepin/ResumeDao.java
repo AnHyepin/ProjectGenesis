@@ -26,4 +26,5 @@ public interface ResumeDao {
     public List<ApplyApplycationDto> getApplyList(@Param("resumeNo") int resumeNo);
     public List<ApplyStatusDto> getApplyStatusList(@Param("username") String username);
     public ResumeDto getResumeByResumeNo(@Param("resumeNo") int resumeNo);
+
 }

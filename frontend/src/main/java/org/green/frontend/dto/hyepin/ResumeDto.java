@@ -1,5 +1,6 @@
 package org.green.frontend.dto.hyepin;
 
+
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,8 @@ import java.util.List;
 @Data
 public class ResumeDto {
 
-    private String usename; //구직자 이름
+    private int resumeNo;   //이력서 번호
+    private String username; //구직자 이름
     private String gender; // 성별
     private Date birth; //생일
     private String email; //이메일
@@ -24,6 +26,16 @@ public class ResumeDto {
     private LocalDateTime modiDt;
     private String salary;  //요구연봉
     private String career;  //지원할 때 경력(신입/경력)
+    private boolean savedraft; //임시저장 여부
     private List<String> gubnCode; //기술 스택 이름 리스트
     private int applyCount; //지원한 공고 카운트
+
+
+
+    //매칭리스트로 날라오는 부분
+    private String stackCodes;
+    private List<String> stackList; //기술 스택 이름 리스트로 서비스에서 변환하기
+    private String educationName; //학력 gubnName
+    private String fileUrl; //유저 프로필 사진
+
 }

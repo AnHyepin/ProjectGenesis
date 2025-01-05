@@ -97,7 +97,7 @@
     <div class="genesis-company-detail-header">
         <div class="genesis-company-detail-header-left">
             <div>
-                <span th:text="${'⭐ ' + company.avgRating}" class="rating-badge">⭐ 3.0</span>
+                <span th:text="${'⭐ ' + (company.avgRating != null ? company.avgRating : 0)}" class="rating-badge">⭐ 3.0</span>
                 <span class="rating-badge scrap-icon" data-action-type="G"
                       th:data-action-id="${company.company.username}">
                             <i th:classappend="${company.isBookMark == 1 ? 'bi-bookmark-fill' : 'bi-bookmark'}"

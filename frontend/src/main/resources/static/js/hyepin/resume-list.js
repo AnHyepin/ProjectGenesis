@@ -83,7 +83,7 @@ function addModal(applyList){
         modalBox.innerHTML = `
                    <div style="display: flex; justify-content: space-between;">
                         <div style="display: flex; flex-direction: column; justify-content: center; padding: 20px;">
-                            <a href="">
+                            <a href="/application/detail/${apply.applicationNo}">
                             <div style="font-size: 18px; font-weight: bold; cursor: pointer;" onclick="applycation(${apply.applicationNo})">${apply.applicationTitle}</div>
                             </a>
                             <div style="font-size: 14px; color: #929292">${apply.companyName}</div>
