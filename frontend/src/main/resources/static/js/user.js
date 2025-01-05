@@ -12,8 +12,7 @@ function handleClick(event) {
         window.location.href = '';
         alert('채용공고');
     }else if(clickedId === 'resumeManagement'){
-        window.location.href = '';
-        alert('이력서 관리');
+        window.location.href = '/resume/list';
     }else if(clickedId === 'matching'){
         window.location.href = '';
         alert('매칭리스트');

@@ -184,7 +184,6 @@ function stackSave(){
     })
         .then(res => {
             if (res.body == '스택 저장 성공') {  // 응답의 본문은 res.data에 담김
-                careerInsert();
                 alert("저장 성공");
             } else {
                 alert("저장 실패");
@@ -313,7 +312,7 @@ function portfolioSave(){
     const resumePortfolioStartDate = document.getElementById('resumePortfolioStartDate').value;
     const resumePortfolioEndDate = document.getElementById('resumePortfolioEndDate').value;
 
-    if(resumePortfolioStartDate.trim() === "" || resumePortfolioEndDate.trim()) {
+    if(resumePortfolioStartDate.trim() === "" || resumePortfolioEndDate.trim() === "") {
         alert("필수 항목을 입력하세요.");
     }else{
         // 폼 데이터 가져오기
@@ -394,7 +393,7 @@ function resumeMyinfoSave(){
     const inputResumeMyTitle = document.getElementById('inputResumeMyTitle').value;
     const inputResumeMyContent = document.getElementById('inputResumeMyContent').value;
 
-    if(inputResumeMyTitle.trim() === "" || inputResumeMyContent.trim()) {
+    if(inputResumeMyTitle.trim() === "" || inputResumeMyContent.trim() === "") {
         alert("필수 항목을 입력하세요.");
     }else{
         document.getElementById('resumeMyTitle').innerHTML = inputResumeMyTitle;

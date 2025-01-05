@@ -31,9 +31,10 @@ public class ResumeController {
 
     //이력서 등록 페이지
     @GetMapping
-    public String resumeRegist(Model model) {
+    public String resumeRegist(Model model, HttpSession session) {
+        UserDto sessionUser = (UserDto) session.getAttribute( "user");
         // 파라미터를 Map 형태로 구성
-        Map<String, String> params = Map.of("username", "안혜빈");
+        Map<String, String> params = Map.of("username", sessionUser.getUsername());
         var userResponse = apiService.fetchData("/api/resume",  params, true);
         var user =  userResponse.getBody();
 
@@ -202,59 +203,6 @@ public class ResumeController {
         model.addAttribute("processCnt", processCnt);
         model.addAttribute("finalCnt", finalCnt);
         return "/hyepin/resume-applyStatus";
-    }
-
-
-    @GetMapping("/detail/company")
-    public String resumeDetailCompany(@RequestParam("resumeNo") int resumeNum,
-                               Model model, HttpSession session) {
-
-        // 이력서 번호로 이력서 상세내용 가져오기
-        Map<String, String> resumeNo = Map.of("resumeNo", String.valueOf(resumeNum));
-        var resumeResponse = apiService.fetchData("/api/resume/detail/resume", resumeNo, true);
-
-        // 이력서 객체를 원하는 타입으로 변환
-        Map<String, Object> resume = (Map<String, Object>) resumeResponse.getBody();
-        String username = (String) resume.get("username");
-
-        // 이력서 번호의 유저 상세정보 가져오기
-        Map<String, String> params = Map.of("username", username);
-        var userResponse = apiService.fetchData("/api/resume", params, true);
-        var user = userResponse.getBody();
-
-        //이력서 번호로 기술스택 들고오기
-        var stackResponse = apiService.fetchData("/api/resume/detail/stack",  resumeNo, true);
-        //이력서 번호로 학력 들고오기
-        var educationResponse = apiService.fetchData("/api/resume/detail/education",  resumeNo, true);
-        //이력서 번호로 경력 들고오기
-        var careerListResponse = apiService.fetchData("/api/resume/detail/career",  resumeNo, true);
-        //이력서 번호로 자격증 들고오기
-        var certificateResponse = apiService.fetchData("/api/resume/detail/certificate",  resumeNo, true);
-        //이력서 번호로 포트폴리오 들고오기
-        var portfolioResponse = apiService.fetchData("/api/resume/detail/portfolio",  resumeNo, true);
-
-        var stackList =  stackResponse.getBody();
-        var educationList =  educationResponse.getBody();
-        var careerList =  careerListResponse.getBody();
-        var certificateList =  certificateResponse.getBody();
-        var portfolioList =  portfolioResponse.getBody();
-
-        model.addAttribute("user", user);
-        model.addAttribute("resume", resume);
-        model.addAttribute("stackList", stackList);
-        model.addAttribute("educationList", educationList);
-        model.addAttribute("careerList", careerList);
-        model.addAttribute("certificateList", certificateList);
-        model.addAttribute("portfolioList", portfolioList);
-
-        System.out.println("resume : " +resume);
-        System.out.println("stack 리스트 : " +stackList);
-        System.out.println("educationList 리스트 : " +educationList);
-        System.out.println("career 리스트 : " + careerList);
-        System.out.println("certificate 리스트 : " +certificateList);
-        System.out.println("portfolioList 리스트 : " +portfolioList);
-
-        return "/hyepin/resume-detail-company";
     }
 
 

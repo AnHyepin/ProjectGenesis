@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.backend.repository.dao.hyepin.OfferDao">
+
+    <insert id="save">
+        INSERT INTO tbl_offer
+        (resume_no, application_no, username)
+        VALUES
+        (#{resumeNo}, #{applicationNo}, #{username})
+    </insert>
+    <select id="getResumeMatchingList" resultType="org.green.backend.dto.hyepin.ResumeDto">
+        SELECT
+        r.resume_no,
+        r.username,
+        r.resume_title,
+        r.salary,
+        GROUP_CONCAT(g.gubn_name) AS stack_codes,
+        COUNT(s.stack_code) AS stack_count,
+        (SELECT gubn_name
+        FROM tbl_gubn
+        WHERE group_code = 'education_code'
+        AND gubn_code = MAX(e.resume_education_gbn_code)) AS educationName,
+        (SELECT gubn_name
+        FROM tbl_gubn
+        WHERE group_code = 'career_code'
+        AND gubn_code = r.career) AS career,
+        f.file_url
+        FROM tbl_resumes r
+        LEFT JOIN tbl_resume_stack s
+        ON s.resume_no = r.resume_no
+        LEFT JOIN tbl_gubn g
+        ON g.gubn_code = s.stack_code
+        LEFT JOIN tbl_resume_education e
+        ON e.resume_no = r.resume_no
+        LEFT JOIN tbl_file f
+        ON f.file_gubn_code = 'profile_user'
+        AND f.file_ref_no = r.username
+        WHERE r.resume_pubilce_yn = 'Y'
+        AND r.delete_yn = 'N'
+        AND g.group_code IN (
+        SELECT gubn_code
+        FROM tbl_gubn
+        WHERE group_code = 'stack_code'
+        )
+        GROUP BY r.resume_no
+        ORDER BY r.regist_dt DESC
+        LIMIT 100;
+    </select>
+</mapper>

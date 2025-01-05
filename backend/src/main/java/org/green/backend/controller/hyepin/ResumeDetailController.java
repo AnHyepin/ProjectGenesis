@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.GubnDto;
 import org.green.backend.dto.hyepin.*;
 import org.green.backend.repository.dao.hyepin.ResumeDao;
+import org.green.backend.service.hyepin.OfferService;
 import org.green.backend.service.hyepin.ResumeDetailService;
 import org.green.backend.service.hyepin.ResumeService;
 import org.green.backend.service.hyepin.UserServiceAhp;
@@ -25,6 +26,7 @@ import java.util.List;
 public class ResumeDetailController {
 
     private final ResumeDetailService resumeDeatilService;
+    private final OfferService offerService;
 
     @GetMapping("/resume")
     public ResumeDto resumeList (@RequestParam("resumeNo") int resumeNo) throws IOException {
@@ -62,5 +64,11 @@ public class ResumeDetailController {
         List<PortfolioDto> portfolioList = resumeDeatilService.getPortfolioListByResumeNo(resumeNo);
         return portfolioList;
     }
+
+
+
+
+
+
 
 }
