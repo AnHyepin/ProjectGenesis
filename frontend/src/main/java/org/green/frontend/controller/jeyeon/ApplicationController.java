@@ -52,7 +52,7 @@ public class ApplicationController {
         UserDto user = (UserDto) session.getAttribute("user");
         if(user != null){
             // 모델에 username을 추가
-            model.addAttribute("username", user.getUsername());
+            model.addAttribute("user", user);
         }
 
         var careerList =  careerResponse.getBody();
@@ -141,7 +141,7 @@ public class ApplicationController {
 
         Map<String, String> params = Map.of("username", username);
 
-        var applicationListResponse = apiService.fetchData("/api/application/list",params, true);
+        var applicationListResponse = apiService.fetchData("/api/application/companyList/"+ username);
         var applicationCount = apiService.fetchData("/api/application/count",params, true);
 
         model.addAttribute("applicationCount", applicationCount.getBody());
