@@ -109,8 +109,12 @@
 <div class="company-score-container">
   <div class="header">
     <h2>별점 목록</h2>
-    <div class="info-summary">별점 기업 정보 <span class="info-count" th:text="${companyScoreList.size}">3</span>건</div>
+    <th:block th:if="${scrapApplicationList == null}">
+      <div>별점 정보가 존재하지 않습니다.</div>
+    </th:block>
   </div>
+  <th:block th:if="${scrapApplicationList != null}">
+    <div class="info-summary">별점 기업 정보 <span class="info-count" th:text="${companyScoreList.size}">3</span>건</div>
   <hr class="divider">
   <th:block th:each="companyScore : ${companyScoreList}">
     <div class="company-item">
@@ -131,6 +135,7 @@
       <button class="details-button"> <a th:href="@{/company-detail/{company}(company=${companyScore.companyName})}">상세보기</a>
       </button>
     </div>
+  </th:block>
   </th:block>
 </div>
 

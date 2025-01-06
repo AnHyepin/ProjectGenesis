@@ -155,8 +155,9 @@ public class UserAndCompanyController {
         Map<String, String> params = Map.of("username", user.getUsername());
         var apiResponse = apiRequestService.fetchData("/api/company/scrap-resume", params, true);
         log.info("apiResponse: {}", apiResponse.getBody());
-
-        model.addAttribute("scrapResumeList", apiResponse.getBody());
+        var scrapResumeList = apiResponse.getBody();
+        model.addAttribute("scrapResumeList", scrapResumeList);
+        System.out.println(scrapResumeList);
 
         return "kwanhyun/scrap-resume";
     }

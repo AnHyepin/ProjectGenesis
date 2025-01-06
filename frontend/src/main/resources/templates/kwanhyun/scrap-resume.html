@@ -8,22 +8,25 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
+
+<div id="user-data"
+     th:data-is-logged-in="${session.user != null}"
+     th:data-username="${session.user?.username}">
+</div>
+
 <div class="detail-container" style="display: flex; flex-direction: column; gap: 10px;">
     <input type="hidden" name="sessionUsername" id="sessionUsername" th:value="${session.user.getUsername}">
 
-    <div style="display: flex; align-items: center;margin-top: 10px;"><h2>기업 매칭 리스트</h2></div>
-    <div style="display: flex; gap: 5px; align-items: center;">
-        <input type="checkbox" id="selectAll"  style="margin: 0px; width: 10px; height: 10px; margin-right: 0px;" onclick="toggleSelectAll(this)">
-        <label for="selectAll">전체선택</label>
-    </div>
+    <div style="display: flex; align-items: center;margin-top: 10px;"><h2>스크랩 이력서 목록</h2></div>
+    <th:block th:if="${#lists.isEmpty(scrapResumeList)}">
+        <div>스크랩 정보가 존재하지 않습니다.</div>
+    </th:block>
     <hr style="border: 1px solid #4e4e4e; margin-top: 5px;">
+    <th:block th:if="${!#lists.isEmpty(scrapResumeList)}">
     <div>
         <th:block th:each="resume : ${scrapResumeList}">
             <input type="hidden" name="resumeNo" id="resumeNo" th:value="${resume.resumeNo}">
             <div style="display: flex; gap: 30px; padding: 20px;">
-                <div style="display: flex; align-items: center;">
-                    <input type="checkbox" class="resume-checkbox"  style="width:30px; height: 30px; margin-right: 0px;">
-                </div>
                 <div style="width: 100px; height: 100px; display: flex; align-items: center;">
                     <th:block th:if="${resume.fileUrl == null}">
                         <img src="/static/upload/20241230094808802.jpg" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;  border-radius: 50%; object-fit: cover;">
@@ -36,16 +39,10 @@
                     <div style="display: flex; gap: 10px; align-items: baseline;">
                         <a th:href="@{/resume/detail(resumeNo=${resume.resumeNo})}">
                             <span style="font-size: 20px; font-weight: bold;"> [[${resume.resumeTitle}]]  </span> </a>
-                        <span style="font-size: 16px; color: #4e4e4e;">
-                              <th:block th:if="${resume.likeCode == null}">
-                                  <input type="button" class="bookmark" data-resume-no="[[${resume.resumeNo}]]" id="bookmark"
-                                         value="♡" onclick="bookmarkToggle(this)">
-                              </th:block>
-                              <th:block th:if="${resume.likeCode != null and resume.likeCode == 'S'}">
-                                <input type="button" class="bookmark" data-resume-no="[[${resume.resumeNo}]]" id="bookmark"
-                                       value="♥" onclick="bookmarkToggle(this)">
-                              </th:block>
-                        </span>
+                        <i class="scrap-icon" th:data-action-id="${resume.resumeNo}"
+                           data-action-type="S" style="color: #F2BB16"
+                           th:classappend="${resume.likeCode == 'S' ? 'fas fa-heart fa' : 'far fa-heart fa'}">
+                        </i>
                     </div>
 
                     <div style="display: flex; gap: 15px; align-items: center;">
@@ -69,27 +66,9 @@
             <hr>
         </th:block>
     </div>
-
-    <div style="margin: 0 auto; margin-top: 30px;">
-        <button class="completBtn" onclick="positionOffer()">포지션 제안하기</button>
-    </div>
+    </th:block>
 </div>
-
-<div class="modal" id="modal">
-    <div>
-        <div><h2>포지션 제안 - 진행중인 공고 리스트</h2></div>
-        <hr style="border: 1px solid #4e4e4e;">
-        <div class="modalList" id="modalList">
-        </div>
-        <div style="display: flex; justify-content: center; margin-top: 20px; gap: 10px; align-items: center;">
-            <button class="cancelBtn" id="cancelBtn" onclick="cancelBtn()"> 닫기 </button>
-            <button class="offerComplet" id="offerComplet" onclick="offerComplet()"> 포지션 제안하기 </button>
-        </div>
-    </div>
-</div>
-
-<script src="/static/js/hyepin/resume-matchingList.js"></script>
-<script src="/static/js/hyepin/resume-detail-company.js"></script>
 
 </body>
 </html>
+<script src="/static/js/scrap-bookmark.js"></script>
