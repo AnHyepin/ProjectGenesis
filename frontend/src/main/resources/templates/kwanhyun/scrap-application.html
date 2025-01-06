@@ -106,11 +106,20 @@
 </head>
 <body layout:fragment="content">
 
+<div id="user-data"
+     th:data-is-logged-in="${session.user != null}"
+     th:data-username="${session.user?.username}">
+</div>
+
 <div class="company-score-container">
   <div class="header">
     <h2>스크랩 공고 목록</h2>
-    <div class="info-summary">스크랩한 공고 <span class="info-count" th:text="${scrapApplicationList.size}">3</span>건</div>
+    <th:block th:if="${scrapApplicationList == null}">
+      <div>스크랩 정보가 존재하지 않습니다.</div>
+    </th:block>
   </div>
+  <th:block th:if="${scrapApplicationList != null}">
+    <div class="info-summary">스크랩한 공고 <span class="info-count" th:text="${scrapApplicationList.size}">3</span>건</div>
   <hr class="divider">
   <th:block th:each="scrapapplication : ${scrapApplicationList}">
     <div class="company-item">
@@ -122,7 +131,10 @@
       <div class="company-details">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span th:text="${scrapapplication.applicationTitle}" style="font-weight: bold; color: #333;">공고제목</span>
-          <i class="scrap-icon" th:classappend="${scrapapplication.likeCode == 'S' ? 'fas fa-heart fa' : 'far fa-heart fa'}"></i>
+          <i class="scrap-icon"
+             th:data-action-id="${scrapapplication.applicationNo}"
+             data-action-type="S"
+             th:classappend="${scrapapplication.likeCode == 'S' ? 'fas fa-heart fa' : 'far fa-heart fa'}"></i>
         </div>
         <div style="display: flex; gap: 10px;">
           <span th:text="${scrapapplication.workingArea}"></span>
@@ -132,7 +144,60 @@
       <button class="details-button"><a th:href="@{/application/detail/{applicationNo}(applicationNo=${scrapapplication.applicationNo})}">공고 상세보기</a></button>
     </div>
   </th:block>
+  </th:block>
 </div>
+
+<script>
+  function toggleSelectAll(selectAllCheckbox) {
+    const checkboxes = document.querySelectorAll('.resume-checkbox'); // 개별 체크박스들
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = selectAllCheckbox.checked; // 전체선택 체크박스 상태로 동기화
+    });
+  }
+
+  function bookmarkToggle(button){
+    //likeDto 형식으로 폼데이터 만들어서 likeController에 보내면 됨
+    const username = document.getElementById("sessionUsername").value;
+    const likeCode = 'S';
+    const likeId = document.getElementById("rapplicationNo").value;
+
+    console.log(username);
+    console.log(likeCode);
+    console.log(likeId);
+
+    const jsonData = {
+      'username' : username,
+      'likeCode' : likeCode,
+      'likeId' : likeId
+    }
+
+    //제이슨 보내기
+    api.post('/api/likes/toggle', jsonData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+            .then(res => {
+              if (res.body == '성공') {  // 응답의 본문은 res.data에 담김
+                const resumeNo = button.getAttribute('data-resume-no');
+                if (button.value === '♡') {
+                  button.value = '♥';
+                } else {
+                  button.value = '♡';
+                }
+                alert("저장 성공");
+                location.reload();
+              } else {
+                alert("저장 실패");
+              }
+            })
+            .catch(error => {
+              console.error("오류:", error);
+              alert("저장 오류");
+            });
+  }
+</script>
 
 </body>
 </html>
+<script src="/static/js/scrap-bookmark.js"></script>
