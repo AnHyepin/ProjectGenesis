@@ -39,8 +39,8 @@ public class ApplicationApiController {
     }
 
     @GetMapping("/detail/{applicationNo}")
-    public ApplicationResponseDto detail(@PathVariable("applicationNo") int applicationNo) {
-        return applicationService.getApplication(applicationNo);
+    public ApplicationResponseDto detail(@PathVariable("applicationNo") int applicationNo, @RequestParam("username") String username) {
+        return applicationService.getApplication(username, applicationNo);
     }
 
     @GetMapping("/detail/company/{username}")

@@ -64,8 +64,8 @@ public class ApplicationService {
         return applicationDao.selectLastApplicationNo();
     }
 
-    public ApplicationResponseDto getApplication(int applicationNo) {
-        ApplicationResponseDto application = applicationDao.selectApplication(applicationNo);
+    public ApplicationResponseDto getApplication(String username, int applicationNo) {
+        ApplicationResponseDto application = applicationDao.selectApplication(username, applicationNo);
         List<File> fileList = fileRepository.findFilesByApplicationNo(applicationNo,"application_no");
         application.setFileList(fileList);
 

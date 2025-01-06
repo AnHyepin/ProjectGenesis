@@ -29,5 +29,6 @@ public class ApplicationResponseDto {
     private Integer procedureCode;         // 1차(1), 2차(2), 3차(3)
     private List<ApplicationStackDto> skillList;        // 스킬리스트
     private List<FileDto> fileList;        // 파일리스트
-    private int bookmarkCheck;          // 북마크
+    private int bookmarkCheck;              // 스크랩
+    private int bookmarkCheck2;            // 북마크
 }
