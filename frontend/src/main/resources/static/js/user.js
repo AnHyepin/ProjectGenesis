@@ -9,35 +9,34 @@ function handleClick(event) {
     localStorage.setItem('activeMenu', clickedId);
 
     if(clickedId === 'recruitment'){
-        window.location.href = '';
-        alert('채용공고');
-    }else if(clickedId === 'resumeManagement'){
-        window.location.href = '/resume/list';
-    }else if(clickedId === 'matching'){
-        window.location.href = '';
-        alert('매칭리스트');
-    } else if(clickedId === 'support'){
-        window.location.href = '';
-        alert('고객센터');
-    }
-}
+        window.location.href = "/application/applicationList";
+        }else if(clickedId === 'resumeManagement'){
+            window.location.href = '/resume/list';
+        }else if(clickedId === 'matching'){
+            window.location.href = '';
+            alert('매칭리스트');
+        } else if(clickedId === 'support'){
+            window.location.href = '';
+            alert('고객센터');
+        }
+            }
 
-window.onload = function () {
-    const activeMenu = localStorage.getItem('activeMenu');
-    if (activeMenu) {
-        const activeItem = document.getElementById(activeMenu);
-        if (activeItem) {
+            window.onload = function () {
+            const activeMenu = localStorage.getItem('activeMenu');
+            if (activeMenu) {
+            const activeItem = document.getElementById(activeMenu);
+            if (activeItem) {
             activeItem.classList.add('active');
         }
-    }
-};
+        }
+        };
 
-function secondHandleClick(event){
-    const clickedId = event.target.id;
-    localStorage.setItem('activeMenu', 'resumeManagement');
-}
+            function secondHandleClick(event){
+            const clickedId = event.target.id;
+            localStorage.setItem('activeMenu', 'resumeManagement');
+        }
 
-function bellClick(){
-    document.getElementById('header-bell-block').style.display = "block";
-    document.getElementById('header-redbell-block').style.display = "none";
-}
+            function bellClick(){
+            document.getElementById('header-bell-block').style.display = "block";
+            document.getElementById('header-redbell-block').style.display = "none";
+        }

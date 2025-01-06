@@ -15,7 +15,7 @@
     </div>
 
     <div class="header-menu">
-        <p id="recruitment" onclick="handleClick(event)"><a href="/application/applicationList">채용공고</a></p>
+        <p id="recruitment" onclick="handleClick(event)">채용공고</p>
         <div class="header-resumeManagement">
             <p id="resumeManagement" onclick="handleClick(event)">이력서 관리</p>
             <div class="header-resume-dropdown">
@@ -46,6 +46,7 @@
                 <span class="header-redbell"></span>
             </div>
             <p>
+
                 <img th:src="${session.user != null and session.user.fileUrl != null ? session.user.fileUrl : '/static/img/증명사진.jpg'}"
                      width="50px"
                      height="50px"
