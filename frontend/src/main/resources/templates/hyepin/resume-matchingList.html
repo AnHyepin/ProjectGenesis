@@ -38,12 +38,12 @@
                             <span style="font-size: 20px; font-weight: bold;"> [[${resume.resumeTitle}]]  </span> </a>
                         <span style="font-size: 16px; color: #4e4e4e;">
                               <th:block th:if="${!resume.bookmarkCheck}">
-                                  <input type="button" class="bookmark" data-resume="[[${resume.resumeNo}]]" id="bookmark"
-                                         value="♡" onclick="bookmarkToggle()">
+                                  <input type="button" class="bookmark" th:data-resume="${resume.resumeNo}" id="bookmark"
+                                         value="♡" onclick="bookmarkToggle(this)">
                               </th:block>
                               <th:block th:if="${resume.bookmarkCheck}">
-                                <input type="button" class="bookmark" data-resume="[[${resume.resumeNo}]]" id="bookmark"
-                                       value="♥" onclick="bookmarkToggle()">
+                                <input type="button" class="bookmark" th:data-resume="${resume.resumeNo}" id="bookmark"
+                                       value="♥" onclick="bookmarkToggle(this)">
                               </th:block>
                         </span>
                     </div>
@@ -89,7 +89,7 @@
 </div>
 
 <script src="/static/js/hyepin/resume-matchingList.js"></script>
-<script src="/static/js/hyepin/resume-detail-company.js"></script>
+<!--<script src="/static/js/hyepin/resume-detail-company.js"></script>-->
 
 </body>
 </html>

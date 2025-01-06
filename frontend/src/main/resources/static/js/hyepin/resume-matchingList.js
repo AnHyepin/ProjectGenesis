@@ -7,12 +7,14 @@ function toggleSelectAll(selectAllCheckbox) {
 
 function bookmarkToggle(button){
     //likeDto 형식으로 폼데이터 만들어서 likeController에 보내면 됨
-    const resumeElement = document.getElementById("bookmark");
-    const resumeNo = resumeElement.dataset.resume;
+    const resumeNo = button.dataset.resume;
     const username = document.getElementById("sessionUsername").value;
     const likeCode = 'S';
 
     console.log(username);
+
+    console.log(button)
+    console.log("asdfsafsadfsafjsdalkfj")
     console.log(likeCode);
     console.log(resumeNo);
 
