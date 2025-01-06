@@ -50,25 +50,29 @@
 
     <select id="selectApplication">
         SELECT
-            application_no,
-            username,
-            application_title,
-            start_date,
-            deadline_date,
-            application_code,
-            salary,
-            career_code,
-            position_code,
-            education_gbn_code,
-            employment_code,
-            working_area,
-            role_code,
-            content,
-            procedure_code,
-            CASE
-            WHEN deadline_date IS NOT NULL THEN DATEDIFF(deadline_date, CURDATE())
-            END AS day
-        FROM tbl_applications
+        a.application_no,
+        a.username,
+        a.application_title,
+        a.start_date,
+        a.deadline_date,
+        a.application_code,
+        a.salary,
+        a.career_code,
+        a.position_code,
+        a.education_gbn_code,
+        a.employment_code,
+        a.working_area,
+        a.role_code,
+        a.content,
+        a.procedure_code,
+        CASE
+        WHEN deadline_date IS NOT NULL THEN DATEDIFF(deadline_date, CURDATE())
+        END AS day,
+        if(l.like_code = 'S', 1, 0) AS bookmarkCheck,
+        if(l2.like_code = 'G', 1, 0) AS bookmarkCheck2
+        FROM tbl_applications a
+        LEFT JOIN tbl_likes l ON a.application_no = l.like_id AND l.like_code = 'S' AND l.username = #{username}
+        LEFT JOIN tbl_likes l2 ON a.username = l2.like_id AND l2.like_code = 'G' AND l2.username = #{username}
         WHERE application_no = #{applicationNo};
     </select>
 
@@ -116,7 +120,7 @@
             if(l.like_code = 'S', 1, 0) AS bookmarkCheck
         FROM tbl_applications a
         JOIN tbl_companys c ON a.username = c.username
-        left JOIN tbl_likes l ON a.application_no = l.like_id AND l.username = #{username} AND l.like_code = 'S'
+        LEFT JOIN tbl_likes l ON a.application_no = l.like_id AND l.username = #{username} AND l.like_code = 'S'
 
     </select>
 

@@ -111,7 +111,7 @@
     align-items: center;
     white-space: nowrap;   /* 텍스트가 한 줄로 표시되도록 설정 */
     flex-shrink: 0;        /* 텍스트 크기에 맞게 크기 고정 */
-    min-width: 30px;       /* 최소 너비 설정 (필요시 조정) */
+   /* min-width: 30px;       !* 최소 너비 설정 (필요시 조정) *!*/
 
 }
 
@@ -561,6 +561,9 @@
 /* Make sure connectors are hidden when there are fewer than the maximum steps */
 .applicationDetail .connector.hidden {
     display: none;
+}
+.applicationDetail .subscribeBtn>i:hover{
+    color: #3af26e;
 }
 
 

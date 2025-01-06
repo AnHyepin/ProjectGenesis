@@ -93,7 +93,7 @@
 .applicationList #bookmark{
     background-color: white;
     font-weight: bold;
-    color: #F2BB16;
+    color: #3AF26E;
     cursor: pointer;
     padding: 0px;
     border: none;
@@ -110,8 +110,6 @@
     width: 100%;
     align-items: start !important;
 }
-
-/*혜빈작업*/
 
 
 /*혜빈 작업*/
@@ -189,3 +187,4 @@ a{
     text-decoration: none;
     color: inherit;
 }
+
