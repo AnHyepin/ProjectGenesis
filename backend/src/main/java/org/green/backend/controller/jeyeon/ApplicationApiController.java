@@ -70,4 +70,9 @@ public class ApplicationApiController {
         int bookmarkCheck = likeDao.checkLike(username, likeCode, likeId);
         return bookmarkCheck;
     }
+
+    @GetMapping("/companyList/{username}")
+    public List<ApplicationResponseDto> getApplicationCompanyList(@PathVariable("username") String username) {
+        return applicationService.getApplicationCompanyList(username);
+    }
 }

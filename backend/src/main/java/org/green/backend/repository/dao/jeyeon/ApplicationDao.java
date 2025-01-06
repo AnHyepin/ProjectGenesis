@@ -23,4 +23,6 @@ public interface ApplicationDao {
     public List<ApplicationResponseDto> selectApplicationList(@Param("username") String username);
     public int selectApplicatinoCnt(@Param("username") String username);
 
+    public List<ApplicationResponseDto> selectApplicationCompanyList(@Param("username") String username);
+
 }

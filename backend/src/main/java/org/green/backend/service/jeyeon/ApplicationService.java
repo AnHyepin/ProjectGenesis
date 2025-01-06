@@ -88,4 +88,8 @@ public class ApplicationService {
     public int getApplicationCount(String username) {
         return applicationDao.selectApplicatinoCnt(username);
     }
+
+    public List<ApplicationResponseDto> getApplicationCompanyList(String username) {
+        return applicationDao.selectApplicationCompanyList(username);
+    }
 }

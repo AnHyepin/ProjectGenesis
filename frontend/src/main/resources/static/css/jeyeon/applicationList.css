@@ -56,6 +56,7 @@
     width: auto; /* 버튼 너비 자동으로 설정 */
     height: auto; /* 버튼 높이 자동으로 설정 */
     line-height: 1.2; /* 텍스트의 줄 높이 조정 */
+    background-color: white;
 
 }
 

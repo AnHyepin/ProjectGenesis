@@ -130,5 +130,29 @@
         </where>
     </select>
 
+    <select id="selectApplicationCompanyList" resultType="org.green.backend.dto.jeyeon.ApplicationResponseDto">
+        SELECT
+            a.application_no,
+            a.username,
+            c.name,
+            a.application_title,
+            a.start_date,
+            a.deadline_date,
+            a.application_code,
+            a.salary,
+            a.career_code,
+            a.position_code,
+            a.education_gbn_code,
+            a.employment_code,
+            a.working_area,
+            a.role_code,
+            a.content,
+            a.procedure_code,
+            CASE
+            WHEN a.deadline_date IS NOT NULL THEN DATEDIFF(a.deadline_date, CURDATE())
+            END AS DAY
+        FROM tbl_applications a
+        JOIN tbl_companys c ON a.username = c.username AND a.username = #{username}
 
+    </select>
 </mapper>

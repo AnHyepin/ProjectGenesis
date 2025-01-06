@@ -18,11 +18,15 @@
             <header class="job-header">
                 <div class="flex-box">
                     <span class="company-name">[[${companyResponse.name}]]</span>
-                    <button type="button" class="subscribeBtn"><i class="bi bi-bookmark"></i>구독기업</button>
+                    <th:block th:if="${username != null}">
+                        <button type="button" class="subscribeBtn"><i class="bi bi-bookmark"></i>구독기업</button>
+                    </th:block>
                 </div>
                 <div class="flex-box">
                     <h1> <span class="job-title">[[${applicationResponse.applicationTitle}]]</span></h1>
-                    <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
+                    <th:block th:if="${username != null}">
+                        <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
+                    </th:block>
                 </div>
                 <th:block th:if="${companyResponse.username != null && username != null}">
                     <div class="company-management-btn" th:if="${companyResponse.username == username}">
@@ -186,7 +190,7 @@
                                 <dd>[[${applicationResponse.deadlineDate}]]</dd>
                             </th:block>
                         </dl>
-                        <div style="display: flex; justify-content: center; align-items: center;">
+                        <div style="display: flex; justify-content: center; align-items: center;" th:if="${username != null}">
                             <button type="button" class="jobBtn applyBtn" style="margin-top: 25px;" onclick="getResumeList()">입사지원</button>
                         </div>
                     </div>
