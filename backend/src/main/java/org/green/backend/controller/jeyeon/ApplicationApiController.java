@@ -39,8 +39,8 @@ public class ApplicationApiController {
     }
 
     @GetMapping("/detail/{applicationNo}")
-    public ApplicationResponseDto detail(@PathVariable("applicationNo") int applicationNo) {
-        return applicationService.getApplication(applicationNo);
+    public ApplicationResponseDto detail(@PathVariable("applicationNo") int applicationNo, @RequestParam("username") String username) {
+        return applicationService.getApplication(username, applicationNo);
     }
 
     @GetMapping("/detail/company/{username}")
@@ -69,5 +69,10 @@ public class ApplicationApiController {
                                 @RequestParam("likeId") String likeId) throws IOException {
         int bookmarkCheck = likeDao.checkLike(username, likeCode, likeId);
         return bookmarkCheck;
+    }
+
+    @GetMapping("/companyList/{username}")
+    public List<ApplicationResponseDto> getApplicationCompanyList(@PathVariable("username") String username) {
+        return applicationService.getApplicationCompanyList(username);
     }
 }

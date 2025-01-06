@@ -56,6 +56,7 @@
     width: auto; /* 버튼 너비 자동으로 설정 */
     height: auto; /* 버튼 높이 자동으로 설정 */
     line-height: 1.2; /* 텍스트의 줄 높이 조정 */
+    background-color: white;
 
 }
 
@@ -92,7 +93,7 @@
 .applicationList #bookmark{
     background-color: white;
     font-weight: bold;
-    color: #F2BB16;
+    color: #3AF26E;
     cursor: pointer;
     padding: 0px;
     border: none;
@@ -109,8 +110,6 @@
     width: 100%;
     align-items: start !important;
 }
-
-/*혜빈작업*/
 
 
 /*혜빈 작업*/
@@ -188,3 +187,4 @@ a{
     text-decoration: none;
     color: inherit;
 }
+

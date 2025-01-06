@@ -64,8 +64,8 @@ public class ApplicationService {
         return applicationDao.selectLastApplicationNo();
     }
 
-    public ApplicationResponseDto getApplication(int applicationNo) {
-        ApplicationResponseDto application = applicationDao.selectApplication(applicationNo);
+    public ApplicationResponseDto getApplication(String username, int applicationNo) {
+        ApplicationResponseDto application = applicationDao.selectApplication(username, applicationNo);
         List<File> fileList = fileRepository.findFilesByApplicationNo(applicationNo,"application_no");
         application.setFileList(fileList);
 
@@ -87,5 +87,9 @@ public class ApplicationService {
 
     public int getApplicationCount(String username) {
         return applicationDao.selectApplicatinoCnt(username);
+    }
+
+    public List<ApplicationResponseDto> getApplicationCompanyList(String username) {
+        return applicationDao.selectApplicationCompanyList(username);
     }
 }

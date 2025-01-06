@@ -106,20 +106,32 @@
   </style>
 </head>
 <body layout:fragment="content">
+<div id="user-data"
+     th:data-is-logged-in="${session.user != null}"
+     th:data-username="${session.user?.username}">
+</div>
 
 <div class="company-score-container">
   <div class="header">
     <h2>북마크 목록</h2>
-    <div class="info-summary">북마크 <span class="info-count" th:text="${bookmarkCompanyList.size}">3</span>건</div>
+    <th:block th:if="${bookmarkCompanyList == null}">
+      <div>북마크 정보가 존재하지 않습니다.</div>
+    </th:block>
   </div>
+  <th:block th:if="${bookmarkCompanyList != null}">
+    <div class="info-summary">북마크 <span class="info-count" th:text="${bookmarkCompanyList.size}">3</span>건</div>
   <hr class="divider">
   <th:block th:each="bookmarkCompany : ${bookmarkCompanyList}">
     <div class="company-item">
       <div class="company-info">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <i class="scrap-icon" th:classappend="${bookmarkCompany.likeCode == 'G' ? 'bi-bookmark-fill' : 'bi-bookmark'}"></i>
+          <i class="scrap-icon"
+             th:data-action-id="${bookmarkCompany.likeId}"
+             data-action-type="G"
+             th:classappend="${bookmarkCompany.likeCode == 'G' ? 'bi-bookmark-fill' : 'bi-bookmark'}"></i>
           <span th:text="${bookmarkCompany.name}">회사 이름</span>
         </div>
+
       </div>
       <div class="company-details">
         <span th:text="${bookmarkCompany.address}">주소</span>
@@ -130,8 +142,9 @@
       <button class="details-button"> <a th:href="@{/company-detail/{company}(company=${bookmarkCompany.likeId})}">상세보기</a></button>
     </div>
   </th:block>
+  </th:block>
 </div>
 
-<script src="/static/js/api.js"></script>
 </body>
 </html>
+<script src="/static/js/scrap-bookmark.js"></script>

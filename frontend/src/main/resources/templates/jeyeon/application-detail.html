@@ -18,11 +18,25 @@
             <header class="job-header">
                 <div class="flex-box">
                     <span class="company-name">[[${companyResponse.name}]]</span>
-                    <button type="button" class="subscribeBtn"><i class="bi bi-bookmark"></i>구독기업</button>
+                    <th:block th:if="${username != null && session.user.role != 'ROLE_COMPANY'}">
+                        <button type="button" class="subscribeBtn">
+                            <i class="scrap-icon" data-action-type="G"
+                               th:data-action-id="${applicationResponse.username}"
+                               th:classappend="${applicationResponse.bookmarkCheck2 == 1} ? 'bi-bookmark-fill' : 'bi-bookmark'">
+                            </i>
+                            구독기업</button>
+                    </th:block>
                 </div>
                 <div class="flex-box">
                     <h1> <span class="job-title">[[${applicationResponse.applicationTitle}]]</span></h1>
-                    <button type="button" class="jobBtn likeBtn"><i class="bi bi-heart"></i></button>
+                    <th:block th:if="${username != null && session.user.role != 'ROLE_COMPANY'}">
+                        <button type="button" class="jobBtn likeBtn" >
+                            <i class="scrap-icon" data-action-type="S"
+                               th:data-action-id="${applicationResponse.applicationNo}"
+                               th:classappend="${applicationResponse.bookmarkCheck == 1} ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x'">
+                            </i>
+                        </button>
+                    </th:block>
                 </div>
                 <th:block th:if="${companyResponse.username != null && username != null}">
                     <div class="company-management-btn" th:if="${companyResponse.username == username}">
@@ -68,7 +82,7 @@
 
             <section class="user-management-btn">
                 <!-- 혜빈 작업!-->
-                <th:block th:if="${session.user != null}">
+                <th:block th:if="${session.user != null && session.user.role != 'ROLE_COMPANY'}">
                     <input type="hidden" name="sessionUsername" id="sessionUsername" th:value="${session.user.getUsername}">
                     <button type="button" onclick="getResumeList()" class="jobBtn applyBtn">입사지원</button>
                 </th:block>
@@ -186,7 +200,7 @@
                                 <dd>[[${applicationResponse.deadlineDate}]]</dd>
                             </th:block>
                         </dl>
-                        <div style="display: flex; justify-content: center; align-items: center;">
+                        <div style="display: flex; justify-content: center; align-items: center;" th:if="${username != null && session.user.role != 'ROLE_COMPANY'}">
                             <button type="button" class="jobBtn applyBtn" style="margin-top: 25px;" onclick="getResumeList()">입사지원</button>
                         </div>
                     </div>
@@ -199,6 +213,11 @@
                 </ul>
             </section>
         </div>
+    </div>
+
+    <div id="user-data"
+         th:data-is-logged-in="${session.user != null}"
+         th:data-username="${session.user?.username}">
     </div>
 
     <!-- 혜빈 작업 !-->
@@ -221,6 +240,7 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script src="/static/js/hyepin/detail-application-modal.js"></script>
+<script src="/static/js/scrap-bookmark.js"></script>
 <script>
 
     const swiper = new Swiper('.swiper-container', {

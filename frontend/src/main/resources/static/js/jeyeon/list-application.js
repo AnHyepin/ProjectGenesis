@@ -4,7 +4,7 @@ function bookmarkToggle(button){
     //likeDto 형식으로 폼데이터 만들어서 likeController에 보내면 됨
     const username = document.getElementById("sessionUsername").value;
     const likeCode = 'S';
-    const likeId = document.getElementById("applicationNo").value;
+    const likeId = button.dataset.applicationNo;
 
     console.log(username);
     console.log(likeCode);

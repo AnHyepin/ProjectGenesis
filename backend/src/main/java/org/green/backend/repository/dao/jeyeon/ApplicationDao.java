@@ -17,10 +17,12 @@ import java.util.List;
 public interface ApplicationDao {
     public void insertApplication(@Param("applicationRequestDto") ApplicationRequestDto applicationRequestDto);
     public int selectLastApplicationNo();
-    public ApplicationResponseDto selectApplication(@Param("applicationNo") int applicationNo);
+    public ApplicationResponseDto selectApplication(@Param("username") String username, @Param("applicationNo") int applicationNo);
     public Company selectApplicatinCompany(@Param("username") String username);
 
     public List<ApplicationResponseDto> selectApplicationList(@Param("username") String username);
     public int selectApplicatinoCnt(@Param("username") String username);
+
+    public List<ApplicationResponseDto> selectApplicationCompanyList(@Param("username") String username);
 
 }

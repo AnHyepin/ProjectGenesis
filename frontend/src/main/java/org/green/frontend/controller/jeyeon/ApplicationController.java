@@ -11,6 +11,7 @@ import org.green.frontend.dto.jeyeon.GubnDto;
 import org.green.frontend.global.ApiResponse;
 import org.green.frontend.service.ApiRequestService;
 import org.green.frontend.service.jeyeon.ApplicaitonService;
+import org.green.frontend.utils.SessionUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,7 @@ public class ApplicationController {
         UserDto user = (UserDto) session.getAttribute("user");
         if(user != null){
             // 모델에 username을 추가
-            model.addAttribute("username", user.getUsername());
+            model.addAttribute("user", user);
         }
 
         var careerList =  careerResponse.getBody();
@@ -78,11 +79,23 @@ public class ApplicationController {
 
     @GetMapping("/detail/{applicationNo}")
     public String applicationDetail(@PathVariable("applicationNo") int applicationNo, HttpSession session, Model model) {
-        var applicationResponse = apiService.fetchData("/api/application/detail/" + applicationNo);
+
+
+        UserDto user = SessionUtil.getUser(session);
+        if(user != null){
+            // 모델에 username을 추가
+            model.addAttribute("username", user.getUsername());
+        }else{
+            return "redirect:/login";
+        }
+
+        Map<String, String> params = Map.of("username", user.getUsername());
+        ApiResponse apiResponse = apiService.fetchData("/api/application/detail/" + applicationNo, params, true);
+
 
         // ObjectMapper를 사용하여 LinkedHashMap을 DTO로 변환
         ObjectMapper objectMapper = new ObjectMapper();
-        ApplicationResponseDto applicationDto = objectMapper.convertValue(applicationResponse.getBody(), ApplicationResponseDto.class);
+        ApplicationResponseDto applicationDto = objectMapper.convertValue(apiResponse.getBody(), ApplicationResponseDto.class);
 
 
         if(applicationDto.getContent() != null){
@@ -96,16 +109,12 @@ public class ApplicationController {
         /*System.out.println(companyResponse.getBody());
         System.out.println(companyResponse);*/
 
-        UserDto user = (UserDto) session.getAttribute("user");
-        if(user != null){
-            // 모델에 username을 추가
-            model.addAttribute("username", user.getUsername());
-        }
+
 
         model.addAttribute("companyResponse", companyResponse.getBody());
         model.addAttribute("fileList",applicationDto.getFileList());
         model.addAttribute("skillNameList",skillNameList);
-        model.addAttribute("applicationResponse", applicationResponse.getBody());
+        model.addAttribute("applicationResponse", apiResponse.getBody());
         model.addAttribute("applicationNo", applicationNo);
         return "/jeyeon/application-detail";
     }
@@ -141,7 +150,7 @@ public class ApplicationController {
 
         Map<String, String> params = Map.of("username", username);
 
-        var applicationListResponse = apiService.fetchData("/api/application/list",params, true);
+        var applicationListResponse = apiService.fetchData("/api/application/companyList/"+ username);
         var applicationCount = apiService.fetchData("/api/application/count",params, true);
 
         model.addAttribute("applicationCount", applicationCount.getBody());
