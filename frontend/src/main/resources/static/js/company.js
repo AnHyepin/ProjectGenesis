@@ -9,8 +9,7 @@ function handleClick(event) {
     localStorage.setItem('activeMenu', clickedId);
 
     if (clickedId === 'recruitment') {
-        window.location.href = '';
-        alert('채용공고');
+        window.location.href = "/application/applicationList";
     } else if (clickedId === 'applicationManagement') {
         window.location.href = '';
         alert('공고 관리');
