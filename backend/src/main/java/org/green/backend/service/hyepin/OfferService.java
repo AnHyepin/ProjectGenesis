@@ -42,6 +42,8 @@ public class OfferService {
     //매칭 리스트 뽑아오기
     public List<ResumeDto> getResumeMatchingList () {
         List<ResumeDto> resumeList = offerDao.getResumeMatchingList();
+
+        log.info("resume list siz@@@@@@@@@@@@@@@@@@@@@@###########$$$$$$%e: {} " + resumeList);
         // 기술 스택 리스트를 "," 기준으로 분리
         for(ResumeDto resume : resumeList){
             if (resume.getStackCodes() != null && !resume.getStackCodes().isEmpty()) {

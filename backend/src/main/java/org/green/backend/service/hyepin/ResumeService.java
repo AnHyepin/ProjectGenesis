@@ -140,9 +140,10 @@ public class ResumeService {
         return applyStatusListList;
     }
 
-    //공고에 지원한 이력서 스트 뽑아오기
+    //공고에 지원한 이력서 리스트 뽑아오기
     public List<ResumeDto> getApplicationResumeApply (String username) {
         List<ResumeDto> resumeList = resumeDao.getApplicationResumeApply(username);
+        log.info("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb{}", resumeList);
         // 기술 스택 리스트를 "," 기준으로 분리
         for(ResumeDto resume : resumeList){
             if (resume.getStackCodes() != null && !resume.getStackCodes().isEmpty()) {
@@ -153,6 +154,24 @@ public class ResumeService {
         }
         return resumeList;
     }
+
+    //공고에 지원한 이력서 리스트 뽑아오기
+    public List<ResumeDto> getApplyResumeByApplicationNo (String username, int applicationNo) {
+        List<ResumeDto> resumeList = resumeDao.getApplyResumeByApplicationNo(username, applicationNo);
+
+        log.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa{}", resumeList);
+
+        // 기술 스택 리스트를 "," 기준으로 분리
+        for(ResumeDto resume : resumeList){
+            if (resume.getStackCodes() != null && !resume.getStackCodes().isEmpty()) {
+                List<String> stackList = new ArrayList<>();
+                stackList.addAll(Arrays.asList(resume.getStackCodes().split(",")));
+                resume.setStackList(stackList);
+            }
+        }
+        return resumeList;
+    }
+
 
 
 }

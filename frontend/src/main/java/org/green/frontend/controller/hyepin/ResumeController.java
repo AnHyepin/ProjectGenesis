@@ -235,5 +235,24 @@ public class ResumeController {
         return "/hyepin/application-resumeApply";
     }
 
+    //기업 지원 이력서 페이지
+    @GetMapping("/appliction/apply/applicaitonNo")
+    public String applyResumeByApplicationNo(@RequestParam("applicationNo") String applicationNo,
+                                    Model model, HttpSession session){
+        UserDto user = (UserDto) session.getAttribute( "user");
+        Map<String, String> params = Map.of("username", user.getUsername());
+
+        Map<String, String> applyMap = Map.of(
+                "username", user.getUsername(),
+                "applicaionNo", applicationNo
+        );
+
+        var resumeResponse = apiService.fetchData("/api/resume/company/application/apply/applicaitonNo", applyMap, true);
+        var resumeList = resumeResponse.getBody();
+
+        System.out.println("프론트 컨트롤러: " + resumeList);
+        model.addAttribute("resumeList", resumeList);
+        return "/hyepin/application-resumeApply";
+    }
 
 }

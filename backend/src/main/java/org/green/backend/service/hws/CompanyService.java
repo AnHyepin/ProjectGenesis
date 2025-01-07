@@ -132,8 +132,7 @@ public class CompanyService {
      * 회사 정보 수정 - 관현(25.01.02. 14:00)
      */
     public String updateCompany(CompanyDto companyDto) {
-        CompanyDto company = companyDao.findCompanyByUsername(companyDto.getUsername());
-        companyDao.updateCompany(company);
+        companyDao.updateCompany(companyDto);
 
         return "성공";
     }

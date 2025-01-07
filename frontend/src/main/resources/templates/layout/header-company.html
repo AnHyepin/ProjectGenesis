@@ -15,7 +15,7 @@
                 <div class="header-application-dropdown">
                     <p id="application-regist" onclick="secondHandleClick(event)"><a href="/application/regist">공고 등록</a></p>
                     <p id="application-list" onclick="secondHandleClick(event)"><a th:href="@{/application/applicationList/{username}(username=${session.user.getUsername()})}">내 공고 목록</a></p>
-                    <p id="application-management" onclick="secondHandleClick(event)"><a href="">지원자 관리</a></p>
+                    <p id="application-management" onclick="secondHandleClick(event)"><a href="/resume/appliction/apply">지원자 관리</a></p>
                 </div>
             </div>
 

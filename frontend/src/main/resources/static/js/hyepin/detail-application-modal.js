@@ -1,5 +1,5 @@
 //이력서 목록
-function getResumeList() {
+function getResumeList(applicationNo) {
     const username = document.getElementById("sessionUsername").value;
 
     api.get('/api/resume/list?username=' + username)
@@ -7,7 +7,7 @@ function getResumeList() {
             // 'body' 속성에서 배열을 추출하여 StackList에 할당
             resumeList = data.body;  // body 속성의 배열을 할당
             console.log('resumeList:', resumeList);  // 배열 확인
-            addModal2(resumeList, username);
+            addModal2(resumeList, username, applicationNo);
         })
         .catch(error => {
             console.error(error);
@@ -17,9 +17,8 @@ function getResumeList() {
 
 
 //모달 추가
-function addModal2(resumeList) {
+function addModal2(resumeList, username, applicationNo) {
 
-    const applicationNo = document.getElementById("applicationNo").value;
     console.log("applicationNo: " + applicationNo);
 
     const modal = document.getElementById('modal2');

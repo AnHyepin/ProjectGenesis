@@ -579,6 +579,7 @@ function submitForm(){
             .then(res => {
                 if (res.body == '이력서 저장 성공') {  // 응답의 본문은 res.data에 담김
                     alert("저장 성공");
+                    window.location.href = "/resume/list";
                 } else {
                     alert("저장 실패");
                 }

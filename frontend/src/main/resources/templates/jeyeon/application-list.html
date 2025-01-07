@@ -41,7 +41,7 @@
                             </th:block>
                         </div>
                         <span class="apply-now" th:if="${user == null || user.role == 'ROLE_COMPANY'}" th:text="${applicate.day != null ? 'D-'+applicate.day + ' 마감' : '상시채용 공고'}"></span>
-                        <button type="button" th:if="${user != null && user.role == 'ROLE_USER'}" class="apply-now" onclick="getResumeList()">입사지원</button>
+                        <button type="button" th:if="${user != null && user.role == 'ROLE_USER'}" class="apply-now" th:onclick="'getResumeList(' + ${applicate.applicationNo} + ')'">입사지원</button>
                         <div class="job-details">
                             <span class="job-address">[[${applicate.workingArea}]] · </span>
                             <span class="job-experience" th:text="${applicate.careerCode == 'G' ? '경력' :
@@ -58,7 +58,6 @@
 
 
     <!-- 혜빈 작업 !-->
-    <input type="hidden" name="applicationNo" id="applicationNo" th:value="${applicationNo}">
     <div class="modal2" id="modal2">
         <div>
             <div><h2>내 이력서 목록</h2></div>

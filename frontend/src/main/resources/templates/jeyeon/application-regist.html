@@ -14,7 +14,7 @@
 <div class="form-container">
     <h1>채용 공고 등록</h1>
 <form enctype="multipart/form-data" id="applicationRegForm">
-    <input type="hidden" name="username" id="username" th:value="${username}">
+    <input type="hidden" name="username" id="username" th:value="${session.user.username}">
     <div class="form-group">
         <label for="applicationTitle"><span>*</span>제목</label>
         <input type="text" id="applicationTitle" name="applicationTitle" placeholder="공고 제목을 입력하세요">
@@ -207,7 +207,7 @@
         if(validationCheck()){
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/application/regist', // 서버의 정확한 URL
+                url: 'http://192.168.0.222:8080/api/application/regist', // 서버의 정확한 URL
                 data: formData,  // FormData 객체를 그대로 전송
                 headers: {
                     'Content-Type': 'multipart/form-data'  // 이 헤더는 axios가 자동으로 설정하지만, 명시적으로 설정할 수도 있습니다

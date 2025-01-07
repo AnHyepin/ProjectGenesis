@@ -17,8 +17,7 @@
         r.username,
         r.resume_title,
         r.salary,
-        GROUP_CONCAT(g.gubn_name) AS stack_codes,
-        COUNT(s.stack_code) AS stack_count,
+        GROUP_CONCAT(DISTINCT g.gubn_name) AS stack_codes,
         (SELECT gubn_name
         FROM tbl_gubn
         WHERE group_code = 'education_code'

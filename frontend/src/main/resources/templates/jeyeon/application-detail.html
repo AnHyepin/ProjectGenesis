@@ -40,7 +40,9 @@
                 </div>
                 <th:block th:if="${companyResponse.username != null && username != null}">
                     <div class="company-management-btn" th:if="${companyResponse.username == username}">
-                        <button type="button" class="jobBtn resume-listBtn" >지원이력서 보기</button>
+                        <button type="button" class="jobBtn resume-listBtn" onclick="goResumeList()">
+                            지원이력서 보기
+                        </button>
                         <button type="button" class="jobBtn updateBtn">수정</button>
                         <button type="button" class="jobBtn deleteBtn">삭제</button>
                     </div>
@@ -288,6 +290,12 @@
             stepElements[totalSteps - 1].classList.add('last-step');
         }
     });
+
+    function goResumeList(){
+        const applicationNo = document.getElementById("applicationNo").value;
+        window.location.href = "/resume/appliction/apply/applicaitonNo?applicationNo=" + applicationNo;
+
+    }
 </script>
 
 </body>
