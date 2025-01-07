@@ -95,8 +95,8 @@
         r.salary,
         app.application_no,
         app.application_title,
-        GROUP_CONCAT(g.gubn_name) AS stack_codes,
-        COUNT(s.stack_code) AS stack_count,
+        GROUP_CONCAT(DISTINCT g.gubn_name) AS stack_codes,  -- DISTINCT 추가
+        COUNT(DISTINCT s.stack_code) AS stack_count,  -- COUNT에서 DISTINCT 추가
         (SELECT gubn_name
         FROM tbl_gubn
         WHERE group_code = 'education_code'
@@ -110,7 +110,7 @@
         LEFT JOIN tbl_resume_stack s
         ON s.resume_no = r.resume_no
         LEFT JOIN tbl_gubn g
-        ON g.gubn_code = s.stack_code
+        ON g.gubn_code = s.stack_code AND g.group_code IN (SELECT gubn_code FROM tbl_gubn WHERE group_code = 'stack_code')
         LEFT JOIN tbl_resume_education e
         ON e.resume_no = r.resume_no
         LEFT JOIN tbl_file f
@@ -118,13 +118,46 @@
         AND f.file_ref_no = r.username
         JOIN tbl_apply_status a
         ON a.resume_no = r.resume_no
-        AND a.apply_status_gbn_code = 'H'  -- apply_status_gbn_code가 'H'인 조건 추가
+        AND a.apply_status_gbn_code = 'H'
         JOIN tbl_applications app
         ON app.application_no = a.application_no
-        AND app.username = '1234567890'
+        AND app.username = #{username}
         WHERE r.resume_pubilce_yn = 'Y'
         AND r.delete_yn = 'N'
         GROUP BY r.resume_no;
     </select>
+
+    <select id="getApplyResumeByApplicationNo" resultType="org.green.backend.dto.hyepin.ResumeDto">
+        SELECT
+        r.resume_no,
+        r.username,
+        r.resume_title,
+        r.salary,
+        app.application_no,
+        app.application_title,
+        GROUP_CONCAT(DISTINCT g.gubn_name) AS stack_codes,  -- 중복 제거
+        (SELECT gubn_name
+        FROM tbl_gubn
+        WHERE group_code = 'education_code'
+        AND gubn_code = MAX(e.resume_education_gbn_code)) AS educationName,
+        (SELECT gubn_name
+        FROM tbl_gubn
+        WHERE group_code = 'career_code'
+        AND gubn_code = r.career) AS career,
+        f.file_url
+        FROM tbl_resumes r
+        LEFT JOIN tbl_resume_stack s ON s.resume_no = r.resume_no
+        LEFT JOIN tbl_gubn g ON g.gubn_code = s.stack_code
+        AND g.group_code IN (SELECT gubn_code FROM tbl_gubn WHERE group_code = 'stack_code')
+        LEFT JOIN tbl_resume_education e ON e.resume_no = r.resume_no
+        LEFT JOIN tbl_file f ON f.file_gubn_code = 'profile_user' AND f.file_ref_no = r.username
+        JOIN tbl_apply_status a ON a.resume_no = r.resume_no AND a.apply_status_gbn_code = 'H'
+        JOIN tbl_applications app ON app.application_no = a.application_no AND app.username = #{username}
+        WHERE r.resume_pubilce_yn = 'Y'
+        AND r.delete_yn = 'N'
+        AND app.application_no = #{applicationNo}
+        GROUP BY r.resume_no;
+    </select>
+
 </mapper>
 

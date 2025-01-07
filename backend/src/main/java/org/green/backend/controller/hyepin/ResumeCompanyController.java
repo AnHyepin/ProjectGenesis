@@ -1,6 +1,7 @@
 package org.green.backend.controller.hyepin;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.controller.common.LikeController;
 import org.green.backend.dto.common.LikeDto;
@@ -27,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/resume/company")
 @RequiredArgsConstructor
+@Slf4j
 public class ResumeCompanyController {
 
     private final LikeDao likeDao;
@@ -80,6 +82,31 @@ public class ResumeCompanyController {
     @GetMapping("/application/apply")
     public List<ResumeDto> applicationResumeApply(@RequestParam("username") String username) throws IOException {
         List<ResumeDto> applicationList = resumeService.getApplicationResumeApply(username);
+        for (ResumeDto resume : applicationList) {
+            int bmCheck = getBookmarkCheck(username, "S", String.valueOf(resume.getResumeNo()));
+            System.out.println("username: " + username + "resumeNo: " + resume.getResumeNo());
+            System.out.println("bmCheck: " + bmCheck);
+            boolean bookmarkCheck = false;
+            if (bmCheck == 1) {
+                bookmarkCheck = true;
+            }
+            resume.setBookmarkCheck(bookmarkCheck);
+        }
+        System.out.println("백 컨트롤러: applicationList: " + applicationList);
+        return applicationList;
+    }
+
+    @GetMapping("/application/apply/applicaitonNo")
+    public List<ResumeDto> applyResumeByApplicationNo(@RequestParam("username") String username,
+                                                  @RequestParam("applicaionNo") String applicaionNo) throws IOException {
+
+        log.info("Asdsasadf12jsalkf {}",username );
+        log.info("Asdsasadfjsa12lkf {}", applicaionNo );
+
+        List<ResumeDto> applicationList = resumeService.getApplyResumeByApplicationNo(username, Integer.valueOf(applicaionNo));
+
+        log.info("Asdsasadfjsa12lkf {}", applicationList );
+
         for (ResumeDto resume : applicationList) {
             int bmCheck = getBookmarkCheck(username, "S", String.valueOf(resume.getResumeNo()));
             System.out.println("username: " + username + "resumeNo: " + resume.getResumeNo());
