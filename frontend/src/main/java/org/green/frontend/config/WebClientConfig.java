@@ -30,7 +30,7 @@ public class WebClientConfig implements WebMvcConfigurer {
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
         return builder
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://localhost:8090")
                 .build();
     }
 }
